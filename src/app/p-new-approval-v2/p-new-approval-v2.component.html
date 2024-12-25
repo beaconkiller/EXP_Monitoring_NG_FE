@@ -1,0 +1,30 @@
+<div class="mom p-3">
+
+    <p class="w-fit text-2xl mb-4">
+        Pengajuan MI/FPPU
+    </p>
+
+
+    <div class="mom_c">
+        <p class="text-lg mb-2">Pilih Pengajuan</p>
+        <select [(ngModel)]="act_pengajuan_type"
+            class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 ">
+            >
+            <option *ngFor="let item of arr_pengajuan_type" [value]="item.pengajuan_name">{{item.pengajuan_name}}
+            </option>
+        </select>
+
+        <div class="mom_c_1 mt-10">
+            <div *ngIf="act_pengajuan_type == 'Biaya Operasional'">
+                <app-f-biaya-operasional></app-f-biaya-operasional>
+            </div>
+
+            <div *ngIf="act_pengajuan_type == 'Biaya Pembelian Materai'">
+                <app-f-pembelian-materai></app-f-pembelian-materai>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>

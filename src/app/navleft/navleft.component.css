@@ -1,0 +1,15 @@
+.active-link {
+    transition: cubic-bezier();
+    color: #3a3208; 
+    background-color: #e7e0b7;
+}
+
+
+.menu_c_con:hover{
+    background-color: #eee8c686; 
+    /* color: #b8aa5f;  */
+}
+
+
+
+

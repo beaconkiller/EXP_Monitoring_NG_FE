@@ -1,0 +1,37 @@
+<div class="w-screen h-screen flex items-center justify-center">
+
+    <div class="w-[26vw] p-4 rounded-md border-2 border-[#917b0075] flex flex-col items-center">
+
+        <div class="w-full flex items-center justify-center py-4 ">
+            <div class="flex flex-row items-center justify-center">
+                <img class="w-10" src='assets/img/w_nav_logo_small.png'>
+                <p class="ml-4 text-nowrap text-3xl tracking-wide">E-Approval</p>
+            </div>
+        </div>
+
+        <div class="py-2"></div>
+
+        <div class="flex flex-col w-full">
+            <p class="mb-2">Username</p>
+            <input [(ngModel)]="usn"
+                class="p-2 w-full tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"
+                type="text">
+        </div>
+
+        <div class="py-2"></div>
+
+        <div class="flex flex-col w-full">
+            <p class="mb-2">Password</p>
+            <input [(ngModel)]="pwd"
+                class="p-2 w-full tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"
+                type="text">
+        </div>
+
+        <div class="py-2"></div>
+
+        <button (click)="login()" class="p-2 px-6 text-white font-medium rounded-full bg-[#917C00]">Login</button>
+
+
+    </div>
+
+</div>
