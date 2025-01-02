@@ -29,8 +29,21 @@
 
         <div class="py-2"></div>
 
-        <button (click)="login()" class="p-2 px-6 text-white font-medium rounded-full bg-[#917C00]">Login</button>
+        <div>
+            <button (click)="login()" 
+                [ngClass]="{'bg-gray-300' : fetching == true, 'cursor-not-allowed' : fetching == true}"
+                class="p-2 px-6 text-white font-medium rounded-full bg-[#917C00]"
+            >
+                Login
+            </button>
+        </div>
 
+        <div  *ngIf="resp_login != ''"
+            class="mt-2 text-[#ab4444]"
+        >
+            <p>{{resp_login}}</p>
+            <!-- <p>Err</p> -->
+        </div>
 
     </div>
 

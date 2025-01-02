@@ -20,23 +20,42 @@ import { get_user_code } from '../shared/utils_general';
 export class HItemPengajuanComponent {
   constructor(private http: HttpClient) { };
 
-  arr_pengajuan_type = [
-    { pengajuan_name: 'Biaya Operasional' },
-    { pengajuan_name: 'Biaya Pembelian Materai' },
-    { pengajuan_name: 'Biaya Token Listrik' },
-    { pengajuan_name: 'MI Persetujuan Klaim Asuransi' },
-    { pengajuan_name: 'MI Pengembalian Klaim Asuransi' },
-    { pengajuan_name: 'Pengajuan Penjualan UTN' },
-    { pengajuan_name: 'Pengajuan Persetujuan Sewa Ruko' },
+  arr_rek_data = [
+    {
+      REK_NAME : '',
+      BANK_NAME : '',
+      REK_NUM : '',
+    }
   ];
+  
 
+  arr_request_type = [
+    {
+      NAME_TYPE : ''
+    }
+  ];
+  act_pengajuan = this.arr_request_type[0]['NAME_TYPE'];
+  
 
-  arr_bank = [
-    { bank_name: 'BCA', bank_code: '0' },
-    { bank_name: 'BRI', bank_code: '1' },
-    { bank_name: 'BNI', bank_code: '2' },
-    { bank_name: 'Bank Sinarmas', bank_code: '3' },
-  ]
+  arr_pajak = [
+      { pajak_type: '-', pajak_code: '0' },
+      { pajak_type: 'PPH', pajak_code: '1' },
+      { pajak_type: 'PPN', pajak_code: '2' },
+  ];
+  // act_ = this.arr_pajak[0]['NAME_TYPE'];
+  
+
+  arr_divisi = [
+    {
+      divisi_name : ''
+    }
+  ];
+  // act_pengajuan = this.arr_request_type[0]['NAME_TYPE'];
+
+  act_file = {
+    file_name : null as String | null,
+    file_base64 : null as String | null,
+  };
 
 
   arr_tipe_pajak = [
@@ -64,11 +83,13 @@ export class HItemPengajuanComponent {
       KETERANGAN: "",
       HARGA_SATUAN: 0,
       QTY: 0,
+      PAJAK_TYPE: '-',
+      PAJAK_AMOUNT: null as String | number | null,
       TOTAL_HARGA: 0,
-      NO_REK: "",
-      NAMA_REK: "",
-      BANK_NAME: this.arr_bank[0].bank_name,
-      JENIS_PEMBIAYAAN: "RUTIN BULANAN",
+      NO_REK: null as String | null,
+      NAMA_REK: null as String | null,
+      BANK_NAME: null as String  | null,
+      JENIS_PEMBIAYAAN: null as String | null,
       FILE_NAME: null as String | null,
       FILE_: null as File | String | null,
     },
@@ -99,12 +120,11 @@ export class HItemPengajuanComponent {
   ]
 
   act_office = this.arr_office[0]['office_code'];
-  act_pengajuan = this.arr_pengajuan_type[0]['pengajuan_name'];
   is_fetching = false;
 
 
   ngOnInit() {
-
+    this.initLoad();
   }
 
 
@@ -118,16 +138,17 @@ export class HItemPengajuanComponent {
       KETERANGAN: "",
       HARGA_SATUAN: 0,
       QTY: 0,
+      PAJAK_TYPE: '-',
+      PAJAK_AMOUNT: null,
       TOTAL_HARGA: 0,
-      NO_REK: "",
-      NAMA_REK: "",
-      BANK_NAME: this.arr_bank[0].bank_name,
-      JENIS_PEMBIAYAAN: "RUTIN BULANAN",
+      NO_REK: this.arr_rek_data[0].REK_NUM,
+      BANK_NAME: this.arr_rek_data[0].BANK_NAME,
+      NAMA_REK: this.arr_rek_data[0].REK_NAME,
+      JENIS_PEMBIAYAAN: this.arr_request_type[0].NAME_TYPE,
       FILE_NAME: null,
       FILE_: null,
     });
   }
-
 
 
   removeItem(i: number) {
@@ -206,10 +227,103 @@ export class HItemPengajuanComponent {
 
 
 
+
+
+  // ===============================================================
+  // ========================== INIT LOAD ===========================
+  // ===============================================================
+  
+  async initLoad(){
+    console.log('initLoad')
+    await this.get_rekening();
+    await this.get_request_type();
+    this.setInit();
+  }
+
+  async get_rekening(){
+    console.log('get_rekening');
+
+    let queryParams = {
+      data:'test',
+    }
+
+    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + '/api/get_rekening',{params:queryParams}));
+    this.arr_rek_data = xRes.data;    
+    console.log(this.arr_rek_data);
+
+  }
+
+  async get_request_type(){
+    console.log('get_request_type');
+
+    let queryParams = {
+      data:'test',
+    }
+
+    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + '/api/get_request_type',{params:queryParams}));
+    this.arr_request_type = xRes.data; 
+
+    console.log(xRes);
+
+    // if (this.arr_request_type.length > 0) {
+    //   this.act_pengajuan = this.arr_request_type[0]['NAME_TYPE'];
+    // }
+  }
+
+
+  setInit(){
+    this.items = [
+      {
+        KETERANGAN: "",
+        HARGA_SATUAN: 0,
+        QTY: 0,
+        PAJAK_TYPE: '-',
+        PAJAK_AMOUNT: null,
+        TOTAL_HARGA: 0,
+        NO_REK: this.arr_rek_data[0].REK_NUM,
+        BANK_NAME: this.arr_rek_data[0].BANK_NAME,
+        NAMA_REK: this.arr_rek_data[0].REK_NAME,
+        JENIS_PEMBIAYAAN: this.arr_request_type[0].NAME_TYPE,
+        FILE_NAME: null,
+        FILE_: null,
+      },
+    ];
+  }
+
+
+
+  // ===============================================================
+  // ========================== INPUTS ===========================
+  // ===============================================================
+
+
+  on_rek_changed(event:any, index:any){
+    const val = (event.target as HTMLSelectElement).value;
+    const act_rek = this.arr_rek_data[parseInt(val)];
+
+    
+    this.items[index]['NO_REK'] = act_rek['REK_NUM'];
+    this.items[index]['NAMA_REK'] = act_rek['REK_NAME'];
+    this.items[index]['BANK_NAME'] = act_rek['BANK_NAME'];
+
+    console.log(this.items);
+  }
+
+  on_type_pengajuan_changed(event:Event){
+    console.log()
+  }
+
+  on_pajak_changed(event:Event, i:any){
+    var val = (event.target as HTMLInputElement).value    
+    this.items[i]['PAJAK_TYPE'] = val;
+    this.items[i]['PAJAK_AMOUNT'] = null;
+    this.getTotalHarga(i)
+  }
+
+
   // ===============================================================
   // ========================== FILE UPLOADING ===========================
   // ===============================================================
-
 
 
   chooseFile(e: any, i: any) {
@@ -237,6 +351,45 @@ export class HItemPengajuanComponent {
 
       }
     }
+  }
+
+
+  chooseFile_v2(e: any) {
+    let src = (e.target as HTMLElement).parentElement
+    let inp = (src?.querySelector('.inputFile') as HTMLElement)
+
+    var inpFile = document.createElement("input");
+    inpFile.setAttribute('type', 'file');
+    inpFile.setAttribute("accept", ".pdf, .jpeg, .jpeg, .png");
+    inpFile.click();
+
+    inpFile.onchange = (event) => {
+      let files = (event.target as HTMLInputElement).files
+
+      if (files) {
+        let file = files[0];
+
+        const reader = new FileReader();
+        reader.onload = () => {
+          const base64String = reader.result as string;
+          this.act_file = {
+            file_name : files[0].name,
+            file_base64 : base64String
+          }
+
+          this.items.forEach((el)=>{
+            el.FILE_NAME = files[0].name
+          })
+        }
+
+        reader.readAsDataURL(file);
+      }
+    }
+  }
+
+  clear_file(){
+    this.act_file.file_base64 = null;
+    this.act_file.file_name = null;
   }
 
 
@@ -302,33 +455,40 @@ export class HItemPengajuanComponent {
   async savePengajuan() {
     // console.log(this.items);
     // console.log(this.items_kom_approve);
+    console.log(get_user_code())
 
     this.is_fetching = true;
 
     let xRes: any;
-
+    
     if (!this.allow_send_pengajuan()) {
       this.is_fetching = false;
       return false;
     }
 
 
+
     let queryParams = {
       user_data: {
-        empl_code: get_user_code()['empl_code'],
+        empl_code: get_user_code(),
         office_code: this.act_office,
         pengajuan_type: this.act_pengajuan,
+        selected_file : this.act_file
       },
-      data: { pengajuan: this.items, komite_approve: this.items_kom_approve }
+      data: { pengajuan: this.items, komite_approve: this.items_kom_approve },
+      file_data: this.act_file
     }
 
     console.log(queryParams);
 
-    xRes = await lastValueFrom(this.http.post(config.env_dev.host + '/api/new_pengajuan', queryParams));
-    console.log(xRes);
+    // xRes = await lastValueFrom(this.http.post(config.env_dev.host + '/api/new_pengajuan', queryParams));
+    // console.log(xRes);
 
 
+    this.is_fetching=false;
+    
     return this.filter_kom_approve();
+
   }
 
 
@@ -343,13 +503,12 @@ export class HItemPengajuanComponent {
   getTotal() {
     let total: number = 0;
     for (var el of this.items) {
-      // console.log(el['jumlah']);
       total = total + Number(el['TOTAL_HARGA']);
     }
 
-    // console.log(total);
     return total;
   }
+
 
   getTotalHarga(i: any) {
     // console.log(i);
@@ -357,9 +516,15 @@ export class HItemPengajuanComponent {
     let qty = act_item.QTY;
     let hrg_satuan = act_item.HARGA_SATUAN;
 
-    // console.log(act_item);
+    if(act_item['PAJAK_AMOUNT'] != null){
+      act_item.TOTAL_HARGA = (qty * hrg_satuan) + ((qty * hrg_satuan) * (Number(act_item['PAJAK_AMOUNT'])/100));
+    }else{
+      act_item.TOTAL_HARGA = (qty * hrg_satuan);
+    }
 
-    act_item.TOTAL_HARGA = qty * hrg_satuan;
+
+    
+    // act_item.TOTAL_HARGA = qty * hrg_satuan;
 
   }
 

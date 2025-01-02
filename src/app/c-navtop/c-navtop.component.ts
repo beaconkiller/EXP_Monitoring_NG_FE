@@ -24,12 +24,18 @@ export class CNavtopComponent {
 
 
   async fetch_user_data() {
+
+    var usr_data:any = localStorage.getItem('user_dtl');
+    var data_json:any = JSON.parse(usr_data)['data'][0];
+
+    console.log(data_json);
+
     await new Promise<void>((resolve) => {
       setTimeout(() => {
 
-        this.empl_name = 'Muhammad Ramzy';
-        this.empl_jobcode = 'IT';
-        this.office_name = 'Depok';
+        this.empl_name = data_json['EMPL_NAME'];
+        this.empl_jobcode = data_json['JOB_DESCRIPTION'];
+        this.office_name = data_json['NAME_SHORT'];
 
         this.fetching = true;
 
@@ -58,6 +64,10 @@ export class CNavtopComponent {
 
 
   async ngOnInit() {
+    this.initLoad();
+  }
+
+  async initLoad(){
     await this.fetch_user_data();
   }
 

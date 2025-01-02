@@ -21,7 +21,7 @@ export const routes: Routes = [
     {
         path: '',
         component: PLayoutComponent,
-        // canActivateChild: [AuthGuard],
+        canActivateChild: [AuthGuard],
         children: [
             { path: 'home', component: PHomeComponent },
             { path: 'new-approval', component: PNewApprovalComponent },
@@ -36,7 +36,7 @@ export const routes: Routes = [
     {
         path: 'login',
         component: PLoginComponent,
-        // canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
     },
     // { path: '**', component: PLoginComponent },
 

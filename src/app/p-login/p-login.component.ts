@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { config } from '../../config/config';
 import { HttpClient, HttpClientModule, HttpHeaders, provideHttpClient } from '@angular/common/http';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-p-login',
@@ -18,55 +19,67 @@ export class PLoginComponent {
   fetching = false;
 
 
-  usn: String = '';
-  pwd: String = '';
+  usn = '';
+  pwd = '';
+  resp_login = '';
 
-  deb_account: any = {
-    empl_name: 'Muhammad Ramzy',
-    empl_code: '71005122',
-    empl_jobcode: 'IT',
-    office_name: 'Depok',
-  }
+  // user_dtl: any = {
+  //   empl_name: 'Muhammad Ramzy',
+  //   empl_code: '71005122',
+  //   empl_jobcode: 'IT',
+  //   office_name: 'Depok',
+  // }
 
-  act_acc = {};
+  user_dtl = {};
 
 
   async login() {
-    let xRes: any;
 
-    this.fetching = true;
+    if(!this.fetching){
+      this.fetching = true;
+      this.resp_login = '';
+  
+      let queryParams = {
+        pwd : this.pwd.toString(),
+        usn : this.usn.toString(),
+      }
+  
+  
+      var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + '/api/login_main', {params: queryParams}));
+  
+      console.log(xRes);
+      if(xRes['isSuccess'] != true){
+        this.resp_login = xRes['message'];
+        this.fetching = false;
+      }else{
 
-    const x = new Promise<void>((resolve, reject) => {
-      this.http.get(config.env_dev.host + '/api/test').subscribe({
-        next: resp => {
-          xRes = (resp);
+        // ------------------------------------------ 
+        // ----------------- SUCCESS ----------------- 
+        // ------------------------------------------ 
 
-
-
-          // SUCCESS 
-          this.account_setup(xRes)
-
-
-
-          this.router.navigate(['/home']);
-
-
-          this.fetching = false;
-          return resolve();
-        }, error: err => console.log(err)
-      })
-    })
+        this.account_setup(xRes)
+        this.router.navigate(['/home']);
+        this.fetching = false;
+      }  
+  
+      this.fetching = false;
+    }
   }
 
 
+  
+
   account_setup(data: any) {
-    let act_acc = this.deb_account;
+    console.log(data);
+
+    let act_acc = this.user_dtl;
     let currTime: any = Date.now();
     let gen_token: any = this.usn + '|' + currTime;
 
-    localStorage.setItem('token', JSON.stringify(gen_token));
-    localStorage.setItem('user_dtl', JSON.stringify(act_acc));
+    
 
+    // localStorage.setItem('token', JSON.stringify(gen_token));
+    localStorage.setItem('user_dtl', JSON.stringify(data));
   }
 
 

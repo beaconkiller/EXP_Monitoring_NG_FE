@@ -1,4 +1,7 @@
 export function get_user_code() {
-    let x = localStorage.getItem('user_dtl');
-    return JSON.parse(x!);
+    let userDtl =  localStorage.getItem('user_dtl');
+    if(userDtl){
+        let x = JSON.parse(userDtl) 
+        return x['data'][0]['EMPL_CODE'];
+    }
 }

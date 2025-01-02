@@ -9,7 +9,7 @@ export class AuthGuard implements CanActivateChild, CanActivate {
 
   // Protect child routes
   canActivateChild(): boolean {
-    const isLoggedIn = !!localStorage.getItem('token'); // Example: Check for authentication token
+    const isLoggedIn = !!localStorage.getItem('user_dtl'); // Example: Check for authentication token
     if (!isLoggedIn) {
       this.router.navigate(['/login']); // Redirect to login if not authenticated
       return false;
@@ -19,11 +19,12 @@ export class AuthGuard implements CanActivateChild, CanActivate {
 
   // Prevent logged-in users from accessing the login page
   canActivate(): boolean {
-    const isLoggedIn = !!localStorage.getItem('token');
+    const isLoggedIn = !!localStorage.getItem('user_dtl');
     if (isLoggedIn) {
       this.router.navigate(['/home']); // Redirect to home if authenticated
       return false;
     }
     return true; // Allow access if not authenticated
   }
+
 }

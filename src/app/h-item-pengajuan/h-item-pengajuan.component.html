@@ -2,10 +2,11 @@
 
     <div class="">
         <p class="text-xl mb-2">Pilih Pengajuan</p>
-        <select [(ngModel)]="act_pengajuan"
+        <select 
+            (change)="on_type_pengajuan_changed($event)"
             class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 ">
             >
-            <option *ngFor="let item of arr_pengajuan_type" [value]="item.pengajuan_name">{{item.pengajuan_name}}
+            <option *ngFor="let item of arr_request_type" [value]="item.NAME_TYPE">{{item.NAME_TYPE}}
             </option>
         </select>
     </div>
@@ -31,21 +32,19 @@
 
 
         <div class="overflow-y-auto h-[50vh] pb-2 border-b-2">
-            <table class=" w-full table-fixed divide-y divide-gray-200  rounded-t-md">
+            <table class=" w-full table-fixed divide-y divide-gray-200 rounded-t-md">
                 <thead class="">
                     <tr>
                         <th class="w-[60px] border-slate-500 font-medium pl-2 py-4">No</th>
                         <th class="flex-grow border-slate-500 font-medium">Keterangan</th>
-                        <th class="w-40 border-slate-500 font-medium">Bank</th>
-                        <th class="w-36 border-slate-500 font-medium">No Rek</th>
-                        <th class="w-48 border-slate-500 font-medium">A/N</th>
-                        <!-- <th class="w-20 border-slate-500 font-medium">Tipe Pajak</th> -->
-                        <!-- <th class="w-40 border-slate-500 font-medium">Jumlah Pajak</th> -->
-                        <th class="w-40 border-slate-500 font-medium">Jenis Pembiayaan</th>
+                        <th class="flex-grow border-slate-500 font-medium">Bank</th>
+                        <th class="flex-grow border-slate-500 font-medium">Jenis Pembiayaan</th>
                         <th class="w-40 border-slate-500 font-medium">Harga Satuan</th>
                         <th class="w-40 border-slate-500 font-medium">Quantity</th>
+                        <th class="w-20 border-slate-500 font-medium">Tipe Pajak</th>
+                        <th class="w-40 border-slate-500 font-medium">Jumlah Pajak</th>
                         <th class="w-40 border-slate-500 font-medium">Total Harga</th>
-                        <th class="w-20 border-slate-500 font-medium">File</th>
+                        <th class="w-[50px] border-slate-500 font-medium"></th>
                         <th class="w-[50px] border-slate-500 font-medium"></th>
                     </tr>
                 </thead>
@@ -67,35 +66,26 @@
 
 
                         <td class="border-separate px-2 border-slate-500 ">
-                            <select [(ngModel)]="item.BANK_NAME"
+                            <select 
+                                (change)="on_rek_changed($event, i)"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                                <option *ngFor="let bank of arr_bank" value={{bank.bank_name}}>
-                                    {{bank.bank_name}}
+                                <option *ngFor="let rek of arr_rek_data; let i_rek = index" [value]="i_rek">
+                                    {{rek.BANK_NAME + ' - ' + rek.REK_NAME + ' - ' + rek.REK_NUM}}
                                 </option>
                             </select>
                         </td>
 
 
-                        <td class="border-separate px-2 border-slate-500">
-                            <input [(ngModel)]="item.NO_REK" [value]="item.NO_REK" placeholder="Nomor Rekening"
-                                class="p-2 w-full tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"
-                                type="text">
-                        </td>
-
-
-                        <td class="border-separate px-2 border-slate-500 ">
-                            <input [(ngModel)]="item.NAMA_REK" [value]="item.NAMA_REK" placeholder="Nama Rekening"
-                                class="p-2 w-full tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"
-                                type="text">
-                        </td>
-
-
                         <td>
                             <select [value]="item.JENIS_PEMBIAYAAN"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                (change)="on_type_pengajuan_changed($event)"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 tracking-wider">
                                 >
-                                <option *ngFor="let item_pembiayaan of arr_pembiayaan">
-                                    {{item_pembiayaan.jenis_pembiayaan}}</option>
+                                <option *ngFor="let i_jenis_pembiayaan of arr_request_type"
+                                    [value]="i_jenis_pembiayaan.NAME_TYPE"
+                                    class="tracking-wider"
+                                >
+                                    {{i_jenis_pembiayaan.NAME_TYPE}}</option>
                             </select>
                         </td>
 
@@ -116,37 +106,39 @@
                         </td>
 
 
+                        <td>
+                            <select [(ngModel)]="item.PAJAK_TYPE"
+                                (change)="on_pajak_changed($event,i)"
+                                class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 ">
+                                >
+                                <option *ngFor="let pajak of arr_pajak" [value]="pajak.pajak_type">
+                                    {{pajak.pajak_type}}
+                                </option>
+                            </select>
+                        </td>
+
+
                         <td class="border-separate px-2 border-slate-500">
-                            <input [(ngModel)]="item.TOTAL_HARGA" [value]="item.TOTAL_HARGA" disabled="true"
+                            <div class="w-full tracking-wide rounded-md border-gray-200 border-2 overflow-hidden focus:ring-0 outline-blue-200 transition-all flex flex-row"
+                                [ngClass]="{'bg-[#00000048]':item.PAJAK_TYPE == null, 'opacity-50':item.PAJAK_TYPE == '-'}">
+
+                                <input [disabled]="item.PAJAK_TYPE == '-'" [(ngModel)]="item.PAJAK_AMOUNT"
+                                (input)="getTotalHarga(i)" type="text"
+                                    class="p-2 w-full tracking-wide focus:ring-0 outline-blue-200 transition-all">
+                                <a class="p-2 bg-[#f7f7f7] shadow-md border-l-2">%</a>
+                            </div>
+                        </td>
+
+
+                        <td class="border-separate px-2 border-slate-500">
+                            <input disabled [(ngModel)]="item.TOTAL_HARGA" [value]="item.TOTAL_HARGA" (change)="getTotal()"
                                 class="p-2 w-full tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"
                                 type="text">
                         </td>
 
 
-                        <td class="border-separate border-slate-500 flex justify-center">
-                            <div class="flex flex-row mt-3">
-                                <button (click)="chooseFile($event, i)" class="fill-[#818181] ">
-                                    <div class="">
-                                        <input class="inputFile hidden" type="file" onchange="putFile($event, i)">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000"
-                                            viewBox="0 0 256 256">
-                                            <path
-                                                d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Zm-42.34-77.66a8,8,0,0,1-11.32,11.32L136,139.31V184a8,8,0,0,1-16,0V139.31l-10.34,10.35a8,8,0,0,1-11.32-11.32l24-24a8,8,0,0,1,11.32,0Z">
-                                            </path>
-                                        </svg>
-                                    </div>
-                                </button>
 
-                                <button *ngIf="item.FILE_ != null" (click)="rm_file(i)" class="ml-1 flex justify-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#000000"
-                                        viewBox="0 0 256 256">
-                                        <path
-                                            d="M216,48H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM192,208H64V64H192ZM80,24a8,8,0,0,1,8-8h80a8,8,0,0,1,0,16H88A8,8,0,0,1,80,24Z">
-                                        </path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </td>
+                        
 
 
 
@@ -185,14 +177,30 @@
 
     <div class="">
         <p class="text-2xl mb-4">Attachment</p>
-        <div
-            class="w-fit flex flex-row items-center rounded-md border p-2 bg-gray-200 hover:bg-gray-100 transition-all cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="fill-black p-1" viewBox="0 0 256 256">
-                <path
-                    d="M209.66,122.34a8,8,0,0,1,0,11.32l-82.05,82a56,56,0,0,1-79.2-79.21L147.67,35.73a40,40,0,1,1,56.61,56.55L105,193A24,24,0,1,1,71,159L154.3,74.38A8,8,0,1,1,165.7,85.6L82.39,170.31a8,8,0,1,0,11.27,11.36L192.93,81A24,24,0,1,0,159,47L59.76,147.68a40,40,0,1,0,56.53,56.62l82.06-82A8,8,0,0,1,209.66,122.34Z">
-                </path>
-            </svg>
-            <p class="ml-1 mr-1 text-nowrap">Upload file</p>
+        <div class="flex">
+            <div
+                (click)="chooseFile_v2($event)"
+                class="w-fit flex flex-row items-center rounded-md border p-2 bg-gray-200 hover:bg-gray-100 transition-all cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="fill-black p-1" viewBox="0 0 256 256">
+                    <path
+                        d="M209.66,122.34a8,8,0,0,1,0,11.32l-82.05,82a56,56,0,0,1-79.2-79.21L147.67,35.73a40,40,0,1,1,56.61,56.55L105,193A24,24,0,1,1,71,159L154.3,74.38A8,8,0,1,1,165.7,85.6L82.39,170.31a8,8,0,1,0,11.27,11.36L192.93,81A24,24,0,1,0,159,47L59.76,147.68a40,40,0,1,0,56.53,56.62l82.06-82A8,8,0,0,1,209.66,122.34Z">
+                    </path>
+                </svg>
+                <p class="ml-1 mr-1 text-nowrap">Upload file</p>
+            </div>
+            <div class="px-2"></div>
+            <div *ngIf="act_file.file_name != null" 
+            class="border-[#b8b8b8] border-2 text-[#848484]  p-1 px-2 w-fit rounded-md text-center flex justify-center items-center">
+                <p>{{act_file.file_name}}</p>
+                <div class="px-[1px]"></div>
+                <div class="px-1"></div>
+                <svg
+                 (click)="clear_file()"
+                 xmlns="http://www.w3.org/2000/svg" width="30" height="30" class="fill-[#d34b4b] cursor-pointer" viewBox="0 0 256 256">
+                    <path d="M165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"></path>
+                </svg>
+                
+            </div>
         </div>
     </div>
 
