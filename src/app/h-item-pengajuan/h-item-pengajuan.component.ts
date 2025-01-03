@@ -488,6 +488,7 @@ export class HItemPengajuanComponent {
       xRes = await lastValueFrom(this.http.post(config.env_dev.host + '/api/new_pengajuan', queryParams));
       // console.log(xRes);
 
+      
     } catch (error) {
       console.log(error)
     }
