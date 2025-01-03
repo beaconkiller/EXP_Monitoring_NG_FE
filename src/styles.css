@@ -3,3 +3,60 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* =================================== */
+
+.mdc-snackbar__surface {
+  width: fit-content !important;
+  border-radius: 6px !important;
+}
+
+.mdc-snackbar__label {
+  width: fit-content !important;
+  /* background-color: red; */
+}
+
+.matsnackbarlabel {
+  width: fit-content !important;
+}
+
+.mat-mdc-snack-bar-container {
+  display: block !important;
+  margin-bottom: 60px !important;
+  width: fit-content !important;
+  flex: none !important;
+  flex-grow: 0 !important;
+  flex-shrink: 0 !important;
+  flex-basis: 0 !important;
+}
+
+.notif_neutral {
+  color: white;
+  border-radius: 6px;
+  letter-spacing: 1px;
+  font-weight: 500;
+  font-size: medium;
+
+  background-color: #424242;
+  border: 2px solid #9b9b9be8;
+  /* border-color: #404040e8; */
+}
+
+.notif_success {
+  color: white;
+  border-radius: 6px;
+  letter-spacing: 1px;
+  font-weight: 500;
+  /* font-size: medium; */
+
+  background-color: rgb(33, 110, 33);
+}
+
+.notif_failed {
+  color: white;
+  border-radius: 6px;
+  letter-spacing: 1px;
+  font-weight: 500;
+
+  background-color: rgb(149, 62, 77);
+}

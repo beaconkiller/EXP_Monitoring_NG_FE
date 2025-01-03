@@ -77,9 +77,8 @@ export class PLoginComponent {
     let gen_token: any = this.usn + '|' + currTime;
 
     
-
-    // localStorage.setItem('token', JSON.stringify(gen_token));
     localStorage.setItem('user_dtl', JSON.stringify(data));
+    localStorage.setItem('q_paging', '0');
   }
 
 

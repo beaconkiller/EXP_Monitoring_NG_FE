@@ -1,3 +1,72 @@
 <div>
 
+    <!-- <div *ngIf="dialog_show">
+        <app-c-ubah-status (closePopupEvent)="closePopUp()" [act_contract]="act_contract"></app-c-ubah-status>
+    </div>
+ -->
+
+    <div class="flex flex-row items-center">
+        <div class="rounded-full border border-gray-400 p-1">
+            <input [(ngModel)]="q_search" placeholder="Search" class="p-2 bg-none rounded-full outline-none">
+        </div>
+
+        <div class="mx-3"></div>
+
+        <Button class="p-2 bg-[#252525] rounded-md text-white h-fit w-fit" (click)="getData()">
+            Search
+        </Button>
+
+    </div>
+
+    <div class="my-4"></div>
+
+    <div class=" border rounded-md h-[70vh] flex flex-col justify-between">
+        <table class=" w-full table-fixed divide-y divide-gray-200  rounded-t-md ">
+
+            <thead class="w-full  divide-y">
+                <tr class="">
+                    <th class="w-[60px] border-slate-500 font-medium pl-2 py-4">NO</th>
+                    <th class="w-[130px] border-slate-500 font-medium pl-2 py-4">REQUEST ID</th>
+                    <th class="w-[130px] border-slate-500 font-medium pl-2 py-4">CABANG</th>
+                    <th class="w-[130px] border-slate-500 font-medium pl-2 py-4">STATUS</th>
+                    <th class="w-[130px] border-slate-500 font-medium pl-2 py-4">TANGGAL DIBUAT</th>
+                </tr>
+            </thead>
+
+            <tbody class="border-separate pt-10 ">
+                <tr *ngFor="let item of tableData; let i = index" class="h-8 flex-grow-0 odd:bg-gray-100 ">
+                    <td class="px-2 text-center">{{i+1}}</td>
+                    <td class="px-2 text-center">{{item.REQUEST_ID}}</td>
+                    <td class="px-2 text-center">{{item.cabang}}</td>
+                    <td class="px-2 text-center">{{item.STATUS}}</td>
+                    <td class="px-2 text-center">{{item.CREATED_DATE}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ============== PAGINATION ============== -->
+
+        <div class="flex w-full flex-row justify-center items-center p-4">
+            <button (click)="pgDown()" class="p-2 border border-gray-700 rounded-md">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#000000" viewBox="0 0 256 256">
+                    <path
+                        d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z">
+                    </path>
+                </svg>
+            </button>
+
+            <p class="text-xl font-medium mx-4 w-10 text-center">{{act_page + 1}}</p>
+
+            <button (click)="pgUp()" class="p-2 border border-gray-700 rounded-md">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#000000" viewBox="0 0 256 256">
+                    <path
+                        d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z">
+                    </path>
+                </svg>
+            </button>
+        </div>
+
+    </div>
+
+
 </div>

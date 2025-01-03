@@ -8,18 +8,29 @@ import { config } from '../../config/config';
 import { lastValueFrom } from 'rxjs';
 import { get_user_code, get_user_detail } from '../shared/utils_general';
 import { CApprovalItemComponent } from "./c-approval-item/c-approval-item.component";
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 
 
 @Component({
   selector: 'app-h-item-pengajuan',
-  imports: [CItemPengajuanComponent, CApprovalItemComponent, FormsModule, CommonModule, CdkDropList, CdkDrag, HttpClientModule, CApprovalItemComponent],
+  imports: [
+    CItemPengajuanComponent, 
+    CApprovalItemComponent,
+    FormsModule, 
+    CommonModule, 
+    CdkDropList, 
+    CdkDrag, 
+    HttpClientModule, 
+    CApprovalItemComponent,
+  ],
   standalone: true,
   templateUrl: './h-item-pengajuan.component.html',
   styleUrl: './h-item-pengajuan.component.css'
 })
 export class HItemPengajuanComponent {
-  constructor(private http: HttpClient) { };
+  constructor(private http: HttpClient, private snackbar:MatSnackBar, private router:Router) { };
 
   arr_rek_data = [
     {
@@ -421,17 +432,16 @@ export class HItemPengajuanComponent {
 
 
   filter_kom_approve() {
-    // let arr_send: { empl_name: string; EMPL_CODE: string; office_code: string; office_name: string; function_name: string; POSISION: string; LVL: number; }[] = [];
     let arr_send = [ ...this.items_kom_approve ];
 
     console.log(arr_send);
 
     let i = 1;
-    arr_send.forEach(el => {
+    for(let el of arr_send){
       el['LVL'] = i;
       i++;
       console.log(el)
-    });
+    };
 
     return arr_send;
   }
@@ -439,14 +449,30 @@ export class HItemPengajuanComponent {
 
   allow_send_pengajuan() {
     // console.log('allow_send_pengajuan');
-    this.notif_str = '';
+    // this.notif_str = '';
 
     for (let el of this.items) {
       if (el.KETERANGAN == '' || el.NO_REK == '' || el.HARGA_SATUAN == 0 || el.QTY == 0) {
-        this.notif_str = 'Data pengajuan belum lengkap.';
+        let notif_str = 'Data pengajuan belum lengkap.';
+        this.snackbar.open(notif_str, undefined, {
+          duration: 5000,
+          panelClass: ['notif_failed']
+        })
         return false;
       }
     };
+
+    for(let el of this.items_kom_approve){
+      if(el['EMPL_CODE'] == null){
+        let notif_str = 'Silahkan cek kembali komite approval.';
+        this.snackbar.open(notif_str, undefined, {
+          duration: 5000,
+          panelClass: ['notif_failed']
+        })
+        return false
+      }    
+    }
+
 
     return true;
   }
@@ -483,17 +509,26 @@ export class HItemPengajuanComponent {
         file_data: this.act_file
       }
   
-      // console.log(queryParams.data.komite_approve);
-
       xRes = await lastValueFrom(this.http.post(config.env_dev.host + '/api/new_pengajuan', queryParams));
-      // console.log(xRes);
+      console.log(xRes);
 
-      
+      // ----- NOTIF -----
+      this.snackbar.open(xRes.message, undefined, {
+        duration: 5000,
+        panelClass: ['notif_neutral']
+      })
+
     } catch (error) {
       console.log(error)
     }
 
 
+    await new Promise<void>((resolve, reject) => {      
+      setTimeout(() => {
+        this.router.navigate(['/home']);
+        resolve()
+      }, 5000);
+    }) 
 
 
     this.is_fetching=false;
@@ -506,6 +541,7 @@ export class HItemPengajuanComponent {
   // ===============================================
   // =================== UTILS =====================
   // ===============================================
+
 
 
 
