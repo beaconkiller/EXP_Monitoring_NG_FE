@@ -6,13 +6,14 @@ import { CdkDrag, CdkDragDrop, CdkDropList, DragDrop, DragDropModule, moveItemIn
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { config } from '../../config/config';
 import { lastValueFrom } from 'rxjs';
-import { get_user_code } from '../shared/utils_general';
+import { get_user_code, get_user_detail } from '../shared/utils_general';
+import { CApprovalItemComponent } from "./c-approval-item/c-approval-item.component";
 
 
 
 @Component({
   selector: 'app-h-item-pengajuan',
-  imports: [CItemPengajuanComponent, FormsModule, CommonModule, CdkDropList, CdkDrag, HttpClientModule],
+  imports: [CItemPengajuanComponent, CApprovalItemComponent, FormsModule, CommonModule, CdkDropList, CdkDrag, HttpClientModule, CApprovalItemComponent],
   standalone: true,
   templateUrl: './h-item-pengajuan.component.html',
   styleUrl: './h-item-pengajuan.component.css'
@@ -42,15 +43,14 @@ export class HItemPengajuanComponent {
       { pajak_type: 'PPH', pajak_code: '1' },
       { pajak_type: 'PPN', pajak_code: '2' },
   ];
-  // act_ = this.arr_pajak[0]['NAME_TYPE'];
   
 
-  arr_divisi = [
-    {
-      divisi_name : ''
-    }
-  ];
-  // act_pengajuan = this.arr_request_type[0]['NAME_TYPE'];
+  act_divisi = {
+    EMPL_JOB : null as String | null,
+    EMPL_JOB_NAME : null as String | null,
+  }
+
+  user_cabang:any
 
   act_file = {
     file_name : null as String | null,
@@ -92,6 +92,7 @@ export class HItemPengajuanComponent {
       JENIS_PEMBIAYAAN: null as String | null,
       FILE_NAME: null as String | null,
       FILE_: null as File | String | null,
+      bind_calc: false,
     },
   ];
 
@@ -102,13 +103,10 @@ export class HItemPengajuanComponent {
 
   items_kom_approve = [
     {
-      empl_name: 'Abdul Gofur',
-      EMPL_CODE: '71002937',
-      office_code: '903',
-      office_name: 'Grogol',
-      function_name: 'Batman',
-      POSISION: 'APPROVE',
-      LVL: 0,
+      EMPL_NAME: null as String | null,
+      EMPL_CODE: null as String | null,
+      POSISION: null as String | null,
+      LVL: null as number | String | null,
     },
   ];
 
@@ -129,7 +127,7 @@ export class HItemPengajuanComponent {
 
 
   init_fetch() {
-    console.log('asdasd');
+    // console.log('asdasd');
   }
 
 
@@ -147,6 +145,7 @@ export class HItemPengajuanComponent {
       JENIS_PEMBIAYAAN: this.arr_request_type[0].NAME_TYPE,
       FILE_NAME: null,
       FILE_: null,
+      bind_calc:false,
     });
   }
 
@@ -165,13 +164,10 @@ export class HItemPengajuanComponent {
   addKomite() {
     this.items_kom_approve.push(
       {
-        empl_name: 'Abdul Gofur',
-        EMPL_CODE: '71002937',
-        office_code: '903',
-        office_name: 'Grogol',
-        function_name: 'Batman',
-        POSISION: 'APPROVE',
-        LVL: 0
+        EMPL_NAME: null as String | null,
+        EMPL_CODE: null as String | null,
+        POSISION: null as String | null,
+        LVL: null as number | String | null,  
       },
     )
   }
@@ -185,7 +181,7 @@ export class HItemPengajuanComponent {
   get_kom_appr_detail(e: any) {
     const kom_appr_code = e.target.value;
 
-    console.log(kom_appr_code);
+    // console.log(kom_appr_code);
   }
 
 
@@ -199,9 +195,9 @@ export class HItemPengajuanComponent {
 
 
 
-  get sortedItems() {
-    return this.items_kom_approve.sort((a, b) => a.LVL - b.LVL);
-  }
+  // get sortedItems() {
+  //   return this.items_kom_approve.sort((a, b) => a.LVL - b.LVL);
+  // }
 
   private swapOrder(index1: number, index2: number) {
     const tempOrder = this.items_kom_approve[index1].LVL;
@@ -210,20 +206,10 @@ export class HItemPengajuanComponent {
   }
 
 
-
-
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.items_kom_approve, event.previousIndex, event.currentIndex);
   }
 
-
-
-  get_kom_detail(val: any) {
-    const empl_code = val;
-
-    let kom = this.arr_komite_appr.find(item => item.empl_code == val)
-    return kom;
-  }
 
 
 
@@ -234,14 +220,14 @@ export class HItemPengajuanComponent {
   // ===============================================================
   
   async initLoad(){
-    console.log('initLoad')
+    // console.log('initLoad')
     await this.get_rekening();
     await this.get_request_type();
     this.setInit();
   }
 
   async get_rekening(){
-    console.log('get_rekening');
+    // console.log('get_rekening');
 
     let queryParams = {
       data:'test',
@@ -249,12 +235,12 @@ export class HItemPengajuanComponent {
 
     var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + '/api/get_rekening',{params:queryParams}));
     this.arr_rek_data = xRes.data;    
-    console.log(this.arr_rek_data);
+    // console.log(this.arr_rek_data);
 
   }
 
   async get_request_type(){
-    console.log('get_request_type');
+    // console.log('get_request_type');
 
     let queryParams = {
       data:'test',
@@ -263,7 +249,7 @@ export class HItemPengajuanComponent {
     var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + '/api/get_request_type',{params:queryParams}));
     this.arr_request_type = xRes.data; 
 
-    console.log(xRes);
+    // console.log(xRes);
 
     // if (this.arr_request_type.length > 0) {
     //   this.act_pengajuan = this.arr_request_type[0]['NAME_TYPE'];
@@ -284,10 +270,18 @@ export class HItemPengajuanComponent {
         BANK_NAME: this.arr_rek_data[0].BANK_NAME,
         NAMA_REK: this.arr_rek_data[0].REK_NAME,
         JENIS_PEMBIAYAAN: this.arr_request_type[0].NAME_TYPE,
+        bind_calc:false,
         FILE_NAME: null,
         FILE_: null,
       },
     ];
+
+    this.act_divisi = {
+      EMPL_JOB : get_user_detail()['EMPL_JOB'],
+      EMPL_JOB_NAME : get_user_detail()['JOB_DESCRIPTION'],
+    }
+
+    this.user_cabang = get_user_detail()['NAME_FULL']
   }
 
 
@@ -301,7 +295,6 @@ export class HItemPengajuanComponent {
     const val = (event.target as HTMLSelectElement).value;
     const act_rek = this.arr_rek_data[parseInt(val)];
 
-    
     this.items[index]['NO_REK'] = act_rek['REK_NUM'];
     this.items[index]['NAMA_REK'] = act_rek['REK_NAME'];
     this.items[index]['BANK_NAME'] = act_rek['BANK_NAME'];
@@ -320,6 +313,20 @@ export class HItemPengajuanComponent {
     this.getTotalHarga(i)
   }
 
+  remove_appr_person(v:any){
+    this.items_kom_approve.splice(v,1);
+  }
+
+  lockThis(i:any){
+    console.log(i);
+    this.items[i]['bind_calc'] = !this.items[i]['bind_calc'];
+
+    if(this.items[i]['bind_calc']){
+      this.getTotalHarga(i)
+    }else{
+      this.items[i]['TOTAL_HARGA'] = 0
+    }
+  }
 
   // ===============================================================
   // ========================== FILE UPLOADING ===========================
@@ -413,21 +420,22 @@ export class HItemPengajuanComponent {
   // ===============================================================
 
 
-
   filter_kom_approve() {
-    let arr_send: { empl_name: string; EMPL_CODE: string; office_code: string; office_name: string; function_name: string; POSISION: string; LVL: number; }[] = [];
+    // let arr_send: { empl_name: string; EMPL_CODE: string; office_code: string; office_name: string; function_name: string; POSISION: string; LVL: number; }[] = [];
+    let arr_send = [ ...this.items_kom_approve ];
 
+    console.log(arr_send);
 
     let i = 1;
-    this.items_kom_approve.forEach(el => {
+    arr_send.forEach(el => {
       el['LVL'] = i;
       i++;
+      console.log(el)
     });
-
-    console.log(this.items_kom_approve);
 
     return arr_send;
   }
+
 
   allow_send_pengajuan() {
     // console.log('allow_send_pengajuan');
@@ -453,12 +461,7 @@ export class HItemPengajuanComponent {
 
 
   async savePengajuan() {
-    // console.log(this.items);
-    // console.log(this.items_kom_approve);
-    console.log(get_user_code())
-
     this.is_fetching = true;
-
     let xRes: any;
     
     if (!this.allow_send_pengajuan()) {
@@ -466,29 +469,34 @@ export class HItemPengajuanComponent {
       return false;
     }
 
+    var ordered_array = this.filter_kom_approve();
 
+    try {      
+      let queryParams = {
+        user_data: {
+          empl_code: get_user_code(),
+          office_code: this.act_office,
+          pengajuan_type: this.act_pengajuan,
+          selected_file : this.act_file
+        },
+        data: { pengajuan: this.items, komite_approve: ordered_array },
+        file_data: this.act_file
+      }
+  
+      // console.log(queryParams.data.komite_approve);
 
-    let queryParams = {
-      user_data: {
-        empl_code: get_user_code(),
-        office_code: this.act_office,
-        pengajuan_type: this.act_pengajuan,
-        selected_file : this.act_file
-      },
-      data: { pengajuan: this.items, komite_approve: this.items_kom_approve },
-      file_data: this.act_file
+      xRes = await lastValueFrom(this.http.post(config.env_dev.host + '/api/new_pengajuan', queryParams));
+      // console.log(xRes);
+
+    } catch (error) {
+      console.log(error)
     }
 
-    console.log(queryParams);
 
-    // xRes = await lastValueFrom(this.http.post(config.env_dev.host + '/api/new_pengajuan', queryParams));
-    // console.log(xRes);
 
 
     this.is_fetching=false;
-    
-    return this.filter_kom_approve();
-
+    return true;
   }
 
 
@@ -511,21 +519,18 @@ export class HItemPengajuanComponent {
 
 
   getTotalHarga(i: any) {
-    // console.log(i);
-    let act_item = this.items[i];
-    let qty = act_item.QTY;
-    let hrg_satuan = act_item.HARGA_SATUAN;
-
-    if(act_item['PAJAK_AMOUNT'] != null){
-      act_item.TOTAL_HARGA = (qty * hrg_satuan) + ((qty * hrg_satuan) * (Number(act_item['PAJAK_AMOUNT'])/100));
-    }else{
-      act_item.TOTAL_HARGA = (qty * hrg_satuan);
+    if(this.items[i]['bind_calc']){
+      let act_item = this.items[i];
+      let qty = act_item.QTY;
+      let hrg_satuan = act_item.HARGA_SATUAN;
+  
+      if(act_item['PAJAK_AMOUNT'] != null){
+        act_item.TOTAL_HARGA = (qty * hrg_satuan) + ((qty * hrg_satuan) * (Number(act_item['PAJAK_AMOUNT'])/100));
+      }else{
+        act_item.TOTAL_HARGA = (qty * hrg_satuan);
+      }
     }
-
-
-    
     // act_item.TOTAL_HARGA = qty * hrg_satuan;
-
   }
 
 

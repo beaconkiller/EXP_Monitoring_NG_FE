@@ -1,29 +1,23 @@
 <div class="">
 
-    <div class="">
-        <p class="text-xl mb-2">Pilih Pengajuan</p>
-        <select 
-            (change)="on_type_pengajuan_changed($event)"
-            class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 ">
-            >
-            <option *ngFor="let item of arr_request_type" [value]="item.NAME_TYPE">{{item.NAME_TYPE}}
-            </option>
-        </select>
+    <div class="flex flex-row items-center">
+        <div class="">
+            <p class="text-xl mb-2 text-[#282828]">Divisi</p>
+            <p class="text-xl mb-2 font-medium tracking-wider border-2 border-[#c1c1c1] rounded-md p-1 w-fit px-2 ">{{act_divisi.EMPL_JOB_NAME}}</p>
+        </div>
+        
+        <div class="mx-8 w-[2px] h-20 bg-[#c1c1c1]"></div>
+    
+        <div class="">
+            <p class="text-xl mb-2 text-[#282828]">Cabang / Outlet</p>
+            <p class="text-xl mb-2 font-medium tracking-wider border-2 border-[#c1c1c1] rounded-md p-1 w-fit px-2 ">{{user_cabang}}</p>
+        </div>
     </div>
 
-
-    <div class="mb-6 py-4">
-        <p class="text-xl mb-2">Cabang / Outlet</p>
-        <select [(ngModel)]="act_office"
-            class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 ">
-            >
-            <option *ngFor="let item of arr_office" [value]="item.office_code">{{item.office_name}}
-            </option>
-        </select>
-    </div>
+    <div class="pb-8"></div>
 
 
-    <div class="border border-gray-300 rounded-md">
+    <div class="border border-gray-300 rounded-md overflow-hidden">
 
         <div class="bg-gray-100">
             <p class="text-xl py-2 pl-3 tracking-wide">Pengajuan</p>
@@ -131,14 +125,33 @@
 
 
                         <td class="border-separate px-2 border-slate-500">
-                            <input disabled [(ngModel)]="item.TOTAL_HARGA" [value]="item.TOTAL_HARGA" (change)="getTotal()"
+                            <input 
+                                [disabled]="item.bind_calc == true" 
+                                [(ngModel)]="item.TOTAL_HARGA" 
+                                [value]="item.TOTAL_HARGA" 
+                                (change)="getTotal()"
                                 class="p-2 w-full tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"
-                                type="text">
+                                type="number">
                         </td>
 
 
 
                         
+
+
+
+                        <td class="border-separate border-slate-500">
+                            <button 
+                                class="flex justify-center items-center"
+                                [ngClass]="{'fill-[#159d42]':item.bind_calc == true, 'fill-[#989898]': item.bind_calc == false}"
+                            >
+                                <svg (click)="lockThis(i)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256">
+                                    <path d="M208,80H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM96,56a32,32,0,0,1,64,0V80H96ZM208,208H48V96H208V208Zm-68-56a12,12,0,1,1-12-12A12,12,0,0,1,140,152Z"></path>
+                                </svg>
+                                <!-- <div class="px-1"></div>
+                                <input type="checkbox"> -->
+                            </button>
+                        </td>
 
 
 
@@ -189,6 +202,7 @@
                 <p class="ml-1 mr-1 text-nowrap">Upload file</p>
             </div>
             <div class="px-2"></div>
+
             <div *ngIf="act_file.file_name != null" 
             class="border-[#b8b8b8] border-2 text-[#848484]  p-1 px-2 w-fit rounded-md text-center flex justify-center items-center">
                 <p>{{act_file.file_name}}</p>
@@ -196,60 +210,12 @@
                 <div class="px-1"></div>
                 <svg
                  (click)="clear_file()"
-                 xmlns="http://www.w3.org/2000/svg" width="30" height="30" class="fill-[#d34b4b] cursor-pointer" viewBox="0 0 256 256">
+                 xmlns="http://www.w3.org/2000/svg" width="30" height="30" class="fill-[#d34b4b] cursor-pointer hover:fill-[#fff] hover:bg-[#d34b4b] rounded-full transition-all" viewBox="0 0 256 256">
                     <path d="M165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"></path>
                 </svg>
-                
             </div>
         </div>
     </div>
-
-
-    <!-- <div class="py-8"></div> -->
-
-
-    <!-- <div class="w-full rounded-md">
-        <div class="">
-            <p class="text-2xl py-2 tracking-wide">Jenis Pembayaran</p>
-        </div>
-
-        <div class="">
-
-            <div class="flex flex-row my-4">
-                <label for="bank_radio0"
-                    class="text-lg h-full border border-gray-300 p-2 rounded-md has-[:checked]:bg-[#84d8ff38] flex flex-row transition-all">
-                    <input type="radio" id="bank_radio0" value="0" name="bank_radio"
-                        class="border border-gray-300 rounded-md ">
-                    <div class="px-1"></div>
-                    <p>Kas Kecil</p>
-                </label>
-            </div>
-
-
-            <div class="flex flex-row my-4">
-                <label for="bank_radio1"
-                    class="text-lg h-full border border-gray-300 p-2 rounded-md has-[:checked]:bg-[#84d8ff38] flex flex-row transition-all">
-                    <input type="radio" id="bank_radio1" value="1" name="bank_radio"
-                        class="border border-gray-300 rounded-md ">
-                    <div class="px-1"></div>
-                    <p>Internet Banking</p>
-                </label>
-            </div>
-
-
-            <div class="flex flex-row my-4">
-                <label for="bank_radio2"
-                    class="text-lg h-full border border-gray-300 p-2 rounded-md has-[:checked]:bg-[#84d8ff38] flex flex-row transition-all">
-                    <input type="radio" id="bank_radio2" value="2" name="bank_radio"
-                        class="border border-gray-300 rounded-md ">
-                    <div class="px-1"></div>
-                    <p>Transfer Ke Bank</p>
-                </label>
-            </div>
-
-
-        </div>
-    </div> -->
 
 
     <div class="py-8"></div>
@@ -262,38 +228,17 @@
 
 
         <div cdkDropList (cdkDropListDropped)="drop($event)"
-            class="w-full h-[300px] overflow-y-scroll border rounded-md p-2 ">
-            <div *ngFor="let item_appr of items_kom_approve; let i = index" cdkDrag
-                class="py-2 mb-2 flex flex-row items-center p-2 border w-fit cursor-move rounded-md border-[#0003]">
-
-                <p class="p-2 mr-2">{{i+1}}</p>
-
-                <select [(ngModel)]="item_appr.EMPL_CODE"
-                    class="w-[240px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 ">
-                    >
-                    <option *ngFor="let kom_appr of arr_komite_appr; let i1 = index" [value]="kom_appr.empl_code">
-                        {{kom_appr.empl_name}}
-                    </option>
-                </select>
-
-                <select [(ngModel)]="item_appr.POSISION"
-                    class="w-[140px] ml-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 ">
-                    <option *ngFor="let item_kom_type of arr_kom_type" [value]="item_kom_type.POSISION">
-                        {{item_kom_type.POSISION}}
-                    </option>
-                </select>
-
-                <p class="w-40 ml-4">{{get_kom_detail(item_appr.EMPL_CODE)?.office_name}}</p>
-                <p class="w-40 ml-4">{{get_kom_detail(item_appr.EMPL_CODE)?.function_name}}</p>
-
-                <div class="ml-4 flex flex-row items-center font-semibold">
-                    <p>Level : </p>
-                    <p class="ml-2">{{i+1}}</p>
-                </div>
-
-
-                <p (click)="removeKomite(i)" class="text-red-700 ml-4 cursor-pointer p-2">Remove</p>
-            </div>
+            class="w-full h-[300px] overflow-y-scroll border rounded-md p-2 "
+            
+        >
+            <app-c-approval-item 
+                class="flex flex-row items-center m-1 mb-2 border w-fit cursor-move rounded-md border-[#0003]"
+                *ngFor="let item_appr of items_kom_approve; let i = index" 
+                [(itemData)]="items_kom_approve[i]"
+                [itemIndex]="i"
+                (deleteThis)="remove_appr_person($event)"
+                cdkDrag
+            ></app-c-approval-item>
         </div>
 
         <div class="">
