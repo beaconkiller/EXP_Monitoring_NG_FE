@@ -30,19 +30,11 @@ export class CNavtopComponent {
 
     console.log(data_json);
 
-    await new Promise<void>((resolve) => {
-      setTimeout(() => {
+    this.empl_name = data_json['EMPL_NAME'];
+    this.empl_jobcode = data_json['JOB_DESCRIPTION'];
+    this.office_name = data_json['NAME_SHORT'];
 
-        this.empl_name = data_json['EMPL_NAME'];
-        this.empl_jobcode = data_json['JOB_DESCRIPTION'];
-        this.office_name = data_json['NAME_SHORT'];
-
-        this.fetching = true;
-
-        resolve();
-      }, 2000);
-
-    })
+    this.fetching = true;
   }
 
 

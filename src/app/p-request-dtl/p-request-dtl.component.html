@@ -1,0 +1,123 @@
+<div>
+    <div>
+        <div class="">
+            <p class="text-xl mb-2 text-[#282828] tracking-wide">Detail Pengajuan</p>
+            <p 
+                class="text-2xl mb-2 font-medium tracking-wider border-2 border-[#c1c1c1] rounded-sm p-1 w-fit px-2 "
+            >{{req_id}}</p>
+        </div>
+    </div>
+
+    <div class="my-8"></div>
+
+
+    <div class="border border-gray-300 rounded-md overflow-hidden">
+    
+        <div class="bg-gray-100">
+            <p class="text-xl py-2 pl-3 tracking-wide">Pengajuan</p>
+        </div>
+    
+        <div class="overflow-y-auto h-fit pb-2 border-b-2">
+            <table class=" w-full table-fixed divide-y divide-gray-200 rounded-t-md">
+                <thead class="">
+                    <tr>
+                        <th class="w-[60px] border-slate-500 font-medium pl-2 py-4">No</th>
+                        <th class="flex-grow border-slate-500 font-medium">Keterangan</th>
+                        <th class="flex-grow border-slate-500 font-medium">Bank</th>
+                        <th class="flex-grow border-slate-500 font-medium">Jenis Pembiayaan</th>
+                        <th class="w-40 border-slate-500 font-medium">Harga Satuan</th>
+                        <th class="w-20 border-slate-500 font-medium">Quantity</th>
+                        <th class="w-40 border-slate-500 font-medium">Total Harga</th>
+                        <!-- <th class="w-40 border-slate-500 font-medium">Jumlah Pajak</th>
+                        <th class="w-40 border-slate-500 font-medium">Total Harga</th>
+                        <th class="w-[50px] border-slate-500 font-medium"></th>
+                        <th class="w-[50px] border-slate-500 font-medium"></th> -->
+                    </tr>
+                </thead>
+    
+    
+                <tbody class="border-separate pt-10 ">
+                    <tr *ngFor="let item of arr_item_pengajuan; let i = index" class="">
+    
+                        <td class=" ">
+                            <div class="flex py-4 justify-center">{{ i + 1 }}</div>
+                        </td>
+    
+                        <td class=" ">
+                            <div class="flex py-4 justify-center">{{ item['KETERANGAN'] }}</div>
+                        </td>
+    
+                        <td class=" ">
+                            <div class="flex py-4 justify-center text-center flex-col">
+                                <div>{{item['BANK_NAME']}}</div>
+                                <div>{{item['NO_REK']}}</div>
+                                <div>{{item['NAMA_REK']}}</div>
+                            </div>
+                        </td>
+    
+                        <td class=" ">
+                            <div class="flex py-4 justify-center">{{ item['JENIS_PEMBIAYAAN'] }}</div>
+                        </td>
+    
+                        <td class=" ">
+                            <div class="flex py-4 justify-center">{{ format_rp(item['HARGA_SATUAN']) }}</div>
+                        </td>
+    
+                        <td class=" ">
+                            <div class="flex py-4 justify-center">{{ item['QTY'] }}</div>
+                        </td>
+    
+                        <td class=" ">
+                            <div class="flex py-4 justify-center">{{ item['TOTAL_HARGA'] }}</div>
+                        </td>
+    
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!-- =============== FILE COMP ============== -->
+
+    <div *ngIf="file_data['file_name'] != null" class="flex flex-col justify-start">
+
+        <div class="mt-8"></div>
+
+        <div class="text-2xl mb-4 font-medium tracking-wide rounded-md w-fit">Uploaded file</div>
+
+        <div class="flex flex-row">
+            <div class="flex flex-row p-2 bg-[#585858] w-fit rounded-md text-white fill-white items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256">
+                    <path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"></path>
+                </svg>
+                <div class="mx-2">{{file_data['file_name']}}</div>
+            </div>
+
+            <div class="mx-1"></div>
+
+            <button (click)="file_download()" class="flex flex-row p-2 bg-[#585858] w-fit rounded-md text-white fill-white items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256">
+                    <path d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,124.69V32a8,8,0,0,0-16,0v92.69L93.66,98.34a8,8,0,0,0-11.32,11.32Z"></path>
+                </svg>
+            </button>
+
+            <div class="mx-1"></div>
+
+            <button
+                (click)="file_view()" 
+                class="flex flex-row p-2 bg-[#585858] w-fit rounded-md text-white fill-white items-center"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256">
+                    <path d="M247.31,124.76c-.35-.79-8.82-19.58-27.65-38.41C194.57,61.26,162.88,48,128,48S61.43,61.26,36.34,86.35C17.51,105.18,9,124,8.69,124.76a8,8,0,0,0,0,6.5c.35.79,8.82,19.57,27.65,38.4C61.43,194.74,93.12,208,128,208s66.57-13.26,91.66-38.34c18.83-18.83,27.3-37.61,27.65-38.4A8,8,0,0,0,247.31,124.76ZM128,192c-30.78,0-57.67-11.19-79.93-33.25A133.47,133.47,0,0,1,25,128,133.33,133.33,0,0,1,48.07,97.25C70.33,75.19,97.22,64,128,64s57.67,11.19,79.93,33.25A133.46,133.46,0,0,1,231.05,128C223.84,141.46,192.43,192,128,192Zm0-112a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Z"></path>
+                </svg>
+            </button>
+        </div>
+
+        
+    </div>
+
+
+    <div class="my-[40vh]"></div>
+
+</div>

@@ -78,7 +78,8 @@ export class PLoginComponent {
 
     
     localStorage.setItem('user_dtl', JSON.stringify(data));
-    localStorage.setItem('q_paging', '0');
+    localStorage.setItem('q_paging', '1');
+    localStorage.setItem('act_request_id', '');
   }
 
 

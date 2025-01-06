@@ -86,8 +86,25 @@ export class CApprovalItemComponent {
     this.act_person = null;
     this.act_sub_area = selected_cabang['personal_subarea']
 
+
+
     // ------ RESET LOWER LEVEL LOV ------
     this.act_checker = null;
+    this.act_person = null;
+    this.act_person_obj = null;
+
+
+
+    // // --------------- DEBUG ----------------
+    // console.log([
+    //   this.act_cabang,
+    //   this.act_sub_area,
+    //   this.act_job,
+    //   this.act_person,
+    //   this.act_person_obj,
+    //   this.act_checker,
+    // ])
+
 
     await this.get_appr_subarea();
   }
@@ -104,6 +121,7 @@ export class CApprovalItemComponent {
 
     // ------ RESET LOWER LEVEL LOV ------
     this.act_checker = null;
+    this.act_person = null;
 
 
     await this.get_appr_person();
@@ -142,7 +160,7 @@ export class CApprovalItemComponent {
 
     this.itemDataChange.emit(this.itemData);
 
-    console.log(this.itemData);
+    // console.log(this.itemData);
   }
 
   removeThis(event: Event): void {
@@ -161,7 +179,8 @@ export class CApprovalItemComponent {
     this.fetching_cabang = true;
 
     let queryParams = {
-      data: get_user_detail()['EMPL_BRANCH']
+      personal_subarea: get_user_detail()['personal_subarea'],
+      EMPL_BRANCH: get_user_detail()['EMPL_BRANCH']
     }
 
     var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api/get_user_cabang',{params:queryParams}))

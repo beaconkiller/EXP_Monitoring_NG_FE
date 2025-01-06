@@ -47,14 +47,13 @@ export class HItemPengajuanComponent {
     }
   ];
   act_pengajuan = this.arr_request_type[0]['NAME_TYPE'];
-  
+
 
   arr_pajak = [
       { pajak_type: '-', pajak_code: '0' },
       { pajak_type: 'PPH', pajak_code: '1' },
       { pajak_type: 'PPN', pajak_code: '2' },
   ];
-  
 
   act_divisi = {
     EMPL_JOB : null as String | null,
@@ -68,7 +67,6 @@ export class HItemPengajuanComponent {
     file_base64 : null as String | null,
   };
 
-
   arr_tipe_pajak = [
     { pajak_type: '-', pajak_code: '0' },
     { pajak_type: 'PPH', pajak_code: '1' },
@@ -76,16 +74,7 @@ export class HItemPengajuanComponent {
   ]
 
 
-  arr_komite_appr = [
-    { empl_name: 'Abdul Gofur', empl_code: '71002937', office_code: '903', office_name: 'Grogol', function_name: 'Dept Head' },
-    { empl_name: 'Aldi Andre', empl_code: '71008462', office_code: '904', office_name: 'Depok', function_name: 'Div Head' },
-    { empl_name: 'Saturnus', empl_code: '71005837', office_code: '911', office_name: 'Jakpus', function_name: 'Supervisor' },
-    { empl_name: 'Thiago Silva', empl_code: '71005837', office_code: '903', office_name: 'Cikupa', function_name: 'Dept Head' },
-  ]
 
-  arr_pembiayaan = [
-    { jenis_pembiayaan: 'RUTIN BULANAN' },
-  ]
 
   arr_files = [];
 
@@ -128,6 +117,7 @@ export class HItemPengajuanComponent {
     { office_name: 'Cikupa', office_code: '929' },
   ]
 
+  str_info_pengajuan = '';
   act_office = this.arr_office[0]['office_code'];
   is_fetching = false;
 
@@ -487,8 +477,9 @@ export class HItemPengajuanComponent {
 
 
   async savePengajuan() {
-    this.is_fetching = true;
+    // this.is_fetching = true;
     let xRes: any;
+
     
     if (!this.allow_send_pengajuan()) {
       this.is_fetching = false;
@@ -502,7 +493,7 @@ export class HItemPengajuanComponent {
         user_data: {
           empl_code: get_user_code(),
           office_code: this.act_office,
-          pengajuan_type: this.act_pengajuan,
+          pengajuan_type: this.str_info_pengajuan,
           selected_file : this.act_file
         },
         data: { pengajuan: this.items, komite_approve: ordered_array },
@@ -523,12 +514,12 @@ export class HItemPengajuanComponent {
     }
 
 
-    await new Promise<void>((resolve, reject) => {      
-      setTimeout(() => {
-        this.router.navigate(['/home']);
-        resolve()
-      }, 5000);
-    }) 
+    // await new Promise<void>((resolve, reject) => {      
+    //   setTimeout(() => {
+    //     this.router.navigate(['/home']);
+    //     resolve()
+    //   }, 5000);
+    // }) 
 
 
     this.is_fetching=false;
