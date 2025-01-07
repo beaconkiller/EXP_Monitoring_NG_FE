@@ -1,0 +1,23 @@
+<h4 class="mb-2">Please Add your signature here</h4>
+    <canvas
+    class="rounded-md border-2 border-[#b5b5b5]"
+    #canvas
+    (pointerup)="stopDrawing($event)"
+    width="400"
+    height="160"
+    ></canvas>
+<p class="error-message" *ngIf="signatureNeeded">Signature is required</p>
+
+<div class="buttons flex justify-end mt-2">
+    <button (click)="clearPad()"
+        class="p-1 px-2 bg-[#666] text-white rounded-md" 
+    >
+        Reset
+    </button>
+
+</div>
+
+<!-- <div *ngIf="signatureNeeded === false">
+  <p>Signature in Base64Encoded Format</p>
+  <img src="{{ signatureImg }}" alt="" srcset="" />
+</div> -->

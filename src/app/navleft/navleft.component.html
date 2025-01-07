@@ -1,4 +1,4 @@
-<div class="h-screen w-[275px] bg-white border-r-2  drop-shadow-lg ">
+<div class="h-screen w-[220px] bg-white border-r-2  drop-shadow-lg ">
     <ul class="p-4 flex flex-col">
         <div class="">
             <div class="w-full flex justify-center">
@@ -21,7 +21,7 @@
 
         <div class="flex flex-col">
             <a *ngFor="let item of menuItems" [routerLink]="item.route" href={{item.route}}
-                routerLinkActive="active-link" class="menu_c_con my-2 p-4 text-lg rounded-md transition-all">
+                routerLinkActive="active-link" class="menu_c_con my-2 p-2 pb-[10px] text-sm rounded-md transition-all">
                 {{item.name}}
             </a>
         </div>

@@ -1,14 +1,12 @@
-<div class="flex flex-row justify-between w-full p-4 py-2 border-[#b8aa5f] border-b-2 drop-shadow-md">
+<div class="flex flex-row justify-between w-full p-4 py-2 border-[#b8aa5f] border-b-2 drop-shadow-md text-xs">
     <p></p>
     <div class="flex flex-row items-center py-1  ml-4">
 
         <div>
-
-
-
             <button (click)="go_to_profile()" id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName"
                 class="flex flex-row items-center">
-                <div class=" w-11 h-11 rounded-full bg-black mr-4">
+                <div class=" w-10 h-10 border-2 border-[#bbb] rounded-full mr-4 overflow-hidden">
+                    <img  src='assets/img/profile_default.png'>
                 </div>
                 <div class="flex flex-col w-fit pr-4 transition-all">
                     <p class="text-start">{{empl_name}}</p>
@@ -19,10 +17,6 @@
                     </div>
                 </div>
             </button>
-
-
-
-
         </div>
     </div>
 </div>

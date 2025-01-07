@@ -14,7 +14,7 @@ export class NavleftComponent {
     [
       // { name: 'Home', route: 'home' },
       { name: 'Request Pengajuan', route: 'new-approval' },
-      { name: 'Cek Pengajuan', route: 'cek-pengajuan' },
+      { name: 'Status Pengajuan', route: 'cek-pengajuan' },
       { name: 'Approve Pengajuan', route: 'approve-pengajuan' },
       { name: 'Info Pengajuan', route: 'info-pengajuan' },
       { name: 'Revisi Pengajuan', route: 'revisi-pengajuan' },

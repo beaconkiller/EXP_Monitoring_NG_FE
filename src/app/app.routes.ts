@@ -11,6 +11,7 @@ import { PInfoPengajuanComponent } from './p-info-pengajuan/p-info-pengajuan.com
 import { PRevisiPengajuanComponent } from './p-revisi-pengajuan/p-revisi-pengajuan.component';
 import { PUserProfileComponent } from './p-user-profile/p-user-profile.component';
 import { PRequestDtlComponent } from './p-request-dtl/p-request-dtl.component';
+import { CSignaturePadComponent } from './p-request-dtl/c-signature-pad/c-signature-pad.component';
 
 export const routes: Routes = [
     {
@@ -32,7 +33,8 @@ export const routes: Routes = [
             { path: 'revisi-pengajuan', component: PRevisiPengajuanComponent },
             { path: 'user-settings', component: PNewApprovalComponent },
             { path: 'profile', component: PUserProfileComponent },
-            {path:'request-dtl', component: PRequestDtlComponent}
+            { path:'request-dtl', component: PRequestDtlComponent },
+            { path:'d-sig', component: CSignaturePadComponent},
         ]
     },
     {

@@ -24,6 +24,7 @@
               "src/favicon.ico",
               "src/assets",
               "src/assets/img/",
+              "src/assets/img/*",
               "src/assets/img/w_nav_logo_small.png"
             ],
             "styles": [

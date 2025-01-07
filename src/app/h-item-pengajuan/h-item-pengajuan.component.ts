@@ -477,7 +477,7 @@ export class HItemPengajuanComponent {
 
 
   async savePengajuan() {
-    // this.is_fetching = true;
+    this.is_fetching = true;
     let xRes: any;
 
     
@@ -514,12 +514,12 @@ export class HItemPengajuanComponent {
     }
 
 
-    // await new Promise<void>((resolve, reject) => {      
-    //   setTimeout(() => {
-    //     this.router.navigate(['/home']);
-    //     resolve()
-    //   }, 5000);
-    // }) 
+    await new Promise<void>((resolve, reject) => {      
+      setTimeout(() => {
+        this.router.navigate(['/cek-pengajuan']);
+        resolve()
+      }, 3000);
+    }) 
 
 
     this.is_fetching=false;

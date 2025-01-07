@@ -7,7 +7,7 @@
     <select 
         *ngIf="!fetching_cabang"    
         (change)="on_lov_cabang_change($event)" [(ngModel)]="act_cabang"
-        class="w-[240px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 ">
+        class="w-[240px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-1.5 ">
         <option  
             *ngFor="let item_lov_cabang of lov_cabang"
             [value]="item_lov_cabang['empl_branch']"
@@ -20,7 +20,7 @@
         (change)="on_lov0_change($event)"
         [(ngModel)]="act_sub_area"
         *ngIf="act_cabang != null && !fetching_cabang "
-        class="w-[240px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 ">
+        class="w-[240px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-1.5 ">
         <option  
             *ngFor="let item_lov0 of lov0"
             [value]="item_lov0['personal_subarea']"
@@ -33,7 +33,7 @@
         (change)="on_lov1_change($event)"
         *ngIf="act_job != null && !fetching_person" 
         [(ngModel)]="act_person"
-        class="w-[240px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 ">
+        class="w-[240px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-1.5 ">
         <option  *ngFor="let item_lov1 of lov1">{{item_lov1['empl_name']}}</option>
     </select>
 
@@ -43,7 +43,7 @@
         *ngIf="act_person_obj != null && act_cabang != null && act_person_obj != null" 
         (change)="on_checker_change($event)"
         [(ngModel)]="act_checker"
-        class="w-[240px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 ">
+        class="w-[240px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-1.5 ">
         <option  *ngFor="let item_check of arr_checker">{{item_check}}</option>
     </select>
 
