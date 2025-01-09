@@ -4,6 +4,75 @@
 @tailwind components;
 @tailwind utilities;
 
+/* @import "~@ng-select/ng-select/themes/default.theme.css"; */
+/* @import "../node_modules/@ng-select/ng-select/themes/material.theme.css";
+@import "../node_modules/@ng-select/ng-select/themes/default.theme.css"; */
+
+/* =================================== */
+
+.ng-dropdown-panel {
+  transition: all;
+  top: 42px;
+  left: -1px;
+  background-color: white;
+  border-radius: 6px;
+  border: 1.4px solid #4a9df0;
+  padding: 8px;
+  overflow: visible;
+  display: block;
+  width: fit-content !important;
+}
+
+.ng-select-opened {
+  background-color: red;
+}
+
+.ng-input {
+  padding: 2px;
+  z-index: 0;
+}
+
+.ng-select-container {
+  overflow: visible !important;
+}
+
+.ng-option {
+  border-radius: 2px;
+  width: fit-content;
+  margin-top: 2px;
+  padding: 3px;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+.ng-option:hover {
+  background-color: #ddd;
+}
+
+.ng-option-selected {
+  border-radius: 2px;
+  background-color: #307fca;
+  color: white;
+  padding: 3px;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+.ng-dropdown-panel-items {
+  width: fit-content;
+}
+
+.ng-value-container {
+  overflow: visible;
+}
+
+.ng-select {
+  background-color: white;
+  border-radius: 6px;
+  border: 2px solid #bbb;
+  padding: 8px;
+  overflow: visible;
+}
 
 /* =================================== */
 
@@ -15,12 +84,9 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
-
-
-
 
 /* =================================== */
 

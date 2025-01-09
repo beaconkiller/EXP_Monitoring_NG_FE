@@ -1,6 +1,6 @@
 import { Component, ComponentRef, ViewChild, viewChild, ViewContainerRef } from '@angular/core';
 import { CItemPengajuanComponent } from '../c-item-pengajuan/c-item-pengajuan.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgSelectOption } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CdkDrag, CdkDragDrop, CdkDropList, DragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -10,6 +10,9 @@ import { get_user_code, get_user_detail } from '../shared/utils_general';
 import { CApprovalItemComponent } from "./c-approval-item/c-approval-item.component";
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { NgSelectModule } from '@ng-select/ng-select'
+import { NgLabelTemplateDirective, NgOptionTemplateDirective, NgSelectComponent } from '@ng-select/ng-select';
+import { CSignaturePadComponent } from '../p-request-dtl/c-signature-pad/c-signature-pad.component';
 
 
 
@@ -24,6 +27,11 @@ import { Router } from '@angular/router';
     CdkDrag, 
     HttpClientModule, 
     CApprovalItemComponent,
+    NgSelectModule,
+    NgLabelTemplateDirective,
+    NgOptionTemplateDirective,
+    NgSelectComponent,
+    CSignaturePadComponent,
   ],
   standalone: true,
   templateUrl: './h-item-pengajuan.component.html',
@@ -32,13 +40,7 @@ import { Router } from '@angular/router';
 export class HItemPengajuanComponent {
   constructor(private http: HttpClient, private snackbar:MatSnackBar, private router:Router) { };
 
-  arr_rek_data = [
-    {
-      REK_NAME : '',
-      BANK_NAME : '',
-      REK_NUM : '',
-    }
-  ];
+  arr_rek_data = [];
   
 
   arr_request_type = [
@@ -86,10 +88,11 @@ export class HItemPengajuanComponent {
       PAJAK_TYPE: '-',
       PAJAK_AMOUNT: null as String | number | null,
       TOTAL_HARGA: 0,
-      NO_REK: null as String | null,
-      NAMA_REK: null as String | null,
-      BANK_NAME: null as String  | null,
       JENIS_PEMBIAYAAN: null as String | null,
+      NO_REK : null as String | null,
+      NAMA_REK : null as String | null,
+      BANK_NAME : null as String | null,
+      unf_rek: null as String | null,
       FILE_NAME: null as String | null,
       FILE_: null as File | String | null,
       bind_calc: false,
@@ -117,9 +120,10 @@ export class HItemPengajuanComponent {
     { office_name: 'Cikupa', office_code: '929' },
   ]
 
-  str_info_pengajuan = '';
-  act_office = this.arr_office[0]['office_code'];
-  is_fetching = false;
+  str_info_pengajuan:any = '';
+  act_office:any = this.arr_office[0]['office_code'];
+  is_fetching:boolean = false;
+  base64_sig_data:any = null;
 
 
   ngOnInit() {
@@ -140,9 +144,10 @@ export class HItemPengajuanComponent {
       PAJAK_TYPE: '-',
       PAJAK_AMOUNT: null,
       TOTAL_HARGA: 0,
-      NO_REK: this.arr_rek_data[0].REK_NUM,
-      BANK_NAME: this.arr_rek_data[0].BANK_NAME,
-      NAMA_REK: this.arr_rek_data[0].REK_NAME,
+      unf_rek: null,
+      NO_REK : null as String | null,
+      NAMA_REK : null as String | null,
+      BANK_NAME : null as String | null,
       JENIS_PEMBIAYAAN: this.arr_request_type[0].NAME_TYPE,
       FILE_NAME: null,
       FILE_: null,
@@ -267,9 +272,10 @@ export class HItemPengajuanComponent {
         PAJAK_TYPE: '-',
         PAJAK_AMOUNT: null,
         TOTAL_HARGA: 0,
-        NO_REK: this.arr_rek_data[0].REK_NUM,
-        BANK_NAME: this.arr_rek_data[0].BANK_NAME,
-        NAMA_REK: this.arr_rek_data[0].REK_NAME,
+        unf_rek: "",
+        NO_REK : null as String | null,
+        NAMA_REK : null as String | null,
+        BANK_NAME : null as String | null,  
         JENIS_PEMBIAYAAN: this.arr_request_type[0].NAME_TYPE,
         bind_calc:false,
         FILE_NAME: null,
@@ -292,20 +298,24 @@ export class HItemPengajuanComponent {
   // ===============================================================
 
 
-  on_rek_changed(event:any, index:any){
-    const val = (event.target as HTMLSelectElement).value;
-    const act_rek = this.arr_rek_data[parseInt(val)];
+  on_rek_changed(event:Event, index:any){
+    const val = event;
+    let cur_item = this.items[index]
 
-    this.items[index]['NO_REK'] = act_rek['REK_NUM'];
-    this.items[index]['NAMA_REK'] = act_rek['REK_NAME'];
-    this.items[index]['BANK_NAME'] = act_rek['BANK_NAME'];
+    if(val){
+      cur_item['unf_rek'] = val.toString(); 
+    }else{
+      cur_item['unf_rek'] = null;
+    }
 
     console.log(this.items);
   }
 
+
   on_type_pengajuan_changed(event:Event){
     console.log()
   }
+
 
   on_pajak_changed(event:Event, i:any){
     var val = (event.target as HTMLInputElement).value    
@@ -314,9 +324,11 @@ export class HItemPengajuanComponent {
     this.getTotalHarga(i)
   }
 
+
   remove_appr_person(v:any){
     this.items_kom_approve.splice(v,1);
   }
+
 
   lockThis(i:any){
     console.log(i);
@@ -327,6 +339,10 @@ export class HItemPengajuanComponent {
     }else{
       this.items[i]['TOTAL_HARGA'] = 0
     }
+  }
+
+  change_sig_data(e:Event){
+    this.base64_sig_data = e
   }
 
   // ===============================================================
@@ -395,6 +411,7 @@ export class HItemPengajuanComponent {
     }
   }
 
+
   clear_file(){
     this.act_file.file_base64 = null;
     this.act_file.file_name = null;
@@ -441,8 +458,10 @@ export class HItemPengajuanComponent {
     // console.log('allow_send_pengajuan');
     // this.notif_str = '';
 
+    // ------------ ITEMS DETECT ------------
+
     for (let el of this.items) {
-      if (el.KETERANGAN == '' || el.NO_REK == '' || el.HARGA_SATUAN == 0 || el.QTY == 0) {
+      if (el.KETERANGAN == '' || el.HARGA_SATUAN == 0 || el.QTY == 0) {
         let notif_str = 'Data pengajuan belum lengkap.';
         this.snackbar.open(notif_str, undefined, {
           duration: 5000,
@@ -451,6 +470,8 @@ export class HItemPengajuanComponent {
         return false;
       }
     };
+
+    // ------------ KOM APPROVE DETECT ------------
 
     for(let el of this.items_kom_approve){
       if(el['EMPL_CODE'] == null){
@@ -463,10 +484,34 @@ export class HItemPengajuanComponent {
       }    
     }
 
+    // ------------ KOM APPROVE DETECT ------------
+
+    if(this.base64_sig_data == null){
+      let notif_str = 'Silahkan cek kembali tanda tangan pembuat.';
+      this.snackbar.open(notif_str, undefined, {
+        duration: 5000,
+        panelClass: ['notif_failed']
+      })
+      return false;
+    }
 
     return true;
   }
 
+
+  filter_rek(){
+    // (3) ['BCA', 'Aldi', '1231231010']
+
+    this.items.forEach(el => {
+      let str_rek = el['unf_rek'] 
+      let arr_rek = str_rek?.split(' - ')
+
+      el['NO_REK'] =  arr_rek![2].toString()
+      el['BANK_NAME'] =  arr_rek![0].toString()
+      el['NAMA_REK'] =  arr_rek![1].toString()
+
+    })
+  }
 
 
 
@@ -487,6 +532,7 @@ export class HItemPengajuanComponent {
     }
 
     var ordered_array = this.filter_kom_approve();
+    this.filter_rek();
 
     try {      
       let queryParams = {
@@ -561,5 +607,7 @@ export class HItemPengajuanComponent {
     // act_item.TOTAL_HARGA = qty * hrg_satuan;
   }
 
-
+  debug_(){
+    console.log()
+  }
 }

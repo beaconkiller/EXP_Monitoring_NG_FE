@@ -6,6 +6,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { config } from '../../../config/config';
 import { lastValueFrom } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-c-approve-box',
@@ -14,7 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './c-approve-box.component.css'
 })
 export class CApproveBoxComponent {
-  constructor(private http:HttpClient, private snackbar:MatSnackBar){}
+  constructor(private http:HttpClient, private snackbar:MatSnackBar, private route:Router){}
 
   @Output() dialog_exit = new EventEmitter<any>();
   @Input() req_data:any;
@@ -91,31 +92,44 @@ export class CApproveBoxComponent {
         FILE_DATA : this.get_file_data()
       }
   
-      var xRes:any = await lastValueFrom(this.http.post(config.env_dev.host + '/api/approval_approve',{queryParams}));
-      let msg = xRes.data;
+      var xRes:any = await lastValueFrom(this.http.post(config.env_dev.host + '/api/approval_approve',{queryParams}));      
+      const msg = xRes.data;  
 
-  
-      this.snackbar.open(xRes.data, undefined, {
-        duration: 5000,
-        panelClass: ['notif_neutral']
-      })
+      if(msg.toString().toLowerCase().includes('berhasil')){
+
+        // --------------------------------------------------------
+        // ----------------------- SUCCESS --------------------------
+        // --------------------------------------------------------
+
+        // ------------------------- NOTIF -------------------------
+        this.snackbar.open(msg, undefined, {
+          duration: 5000,
+          panelClass: ['notif_success']
+        })
 
 
-      if(msg.includes('berhasil')){
+        // ------------- REDIRECT TO LIST APPROVAL PAGE -------------
         
         setTimeout(() => {
-          this.onExit();
-        }, 3000);
-        
-      }else{
-        console.log('not succeed')
-      }
-      
-        
-      this.isFetching = false;
-    }
+          this.route.navigate(['approve-pengajuan'])
+        }, 2000);        
+          
 
-    this.isFetching = false;
+      }else{
+
+        // --------------------------------------------------------
+        // ----------------------- FAILED --------------------------
+        // --------------------------------------------------------
+
+        // ----- NOTIF -----
+        this.snackbar.open(msg, undefined, {
+          duration: 5000,
+          panelClass: ['notif_neutral']
+        })
+
+        this.isFetching = false;
+      }
+    }
   }
 
 
@@ -133,7 +147,7 @@ export class CApproveBoxComponent {
       this.canSend = false
     }
 
-    console.log(this.canSend);
+    // console.log(this.canSend);
   }
 
 
@@ -143,7 +157,7 @@ export class CApproveBoxComponent {
 
   get_file_name(){
     let file_ext = this.base64_sig_data.split(';')[0].split('/')[1] ;
-    console.log(file_ext)
+    // console.log(file_ext)
 
 
     let final_str = `${this.req_data['req_id']}_${this.req_data['empl_code']}.${file_ext}`
@@ -154,7 +168,7 @@ export class CApproveBoxComponent {
   get_file_data(){
     let file_data = this.base64_sig_data.split(',')[1];
     
-    console.log(file_data)
+    // console.log(file_data)
     return file_data;
   }
 

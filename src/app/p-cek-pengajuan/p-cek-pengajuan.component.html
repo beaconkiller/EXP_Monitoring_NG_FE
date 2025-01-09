@@ -57,8 +57,8 @@
                 <tr *ngFor="let item of tableData; let i = index" class="h-8 flex-grow-0 odd:bg-gray-100 ">
                     <td class="px-2 text-center">{{i+1}}</td>
                     <td class="px-2 text-center">{{item.REQUEST_ID}}</td>
-                    <td class="px-2 text-center py-4">{{item.cabang}}</td>
-                    <td class="px-2 text-center">{{item.KATEGORI_REQUEST}}</td>
+                    <td class="px-2 text-start py-4">{{item.cabang}}</td>
+                    <td class="px-2 text-start">{{item.KATEGORI_REQUEST}}</td>
                     <td class="px-2 text-center">{{item.STATUS}}</td>
                     <td class="px-2 text-center py-2">{{give_date(item.CREATED_DATE)}}</td>
                     <td class="px-2 text-center py-2">

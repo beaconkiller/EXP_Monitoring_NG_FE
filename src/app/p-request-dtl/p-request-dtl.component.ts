@@ -34,9 +34,10 @@ export class PRequestDtlComponent {
   arr_item_pengajuan:any = [];
   arr_approval_data:any = [];
   pengajuan_header:any = {};
+  arr_img_data:any = [];
   spawn_box_approve:boolean = false;
-
   send_to_dialog:any = {};
+  base64_sig_data:any = null;
 
   file_data = {
     file_name : null as any,
@@ -54,6 +55,7 @@ export class PRequestDtlComponent {
     this.get_item_pengajuan();
     this.get_file_data();
     this.get_approval_data();
+    // this.get_image_file();
 
 
     this.send_to_dialog = {
@@ -81,12 +83,15 @@ export class PRequestDtlComponent {
 
 
   async get_file_data(){
+    // console.log('get_file_data')
+
     let queryParams = {
       req_id : this.req_id,
     }
 
     var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + '/api/get_file_data',{params:queryParams}));
-    // this.arr_item_pengajuan = xRes.data; 
+
+    console.log(xRes);
     this.file_data = xRes.data;
   }
 
@@ -100,6 +105,21 @@ export class PRequestDtlComponent {
     console.log(xRes.data);
 
     this.arr_approval_data = xRes.data;
+  }
+
+
+  async get_image_file(){
+    console.log('get_image_file')
+    let queryParams = {
+      req_id : this.req_id
+    }
+
+    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + '/api/get_sig_img_data',{params:queryParams}));
+
+    console.log(xRes)
+
+    // let filePath = `assets/img/w_nav_logo_small.png`
+    // return filePath;
   }
 
 

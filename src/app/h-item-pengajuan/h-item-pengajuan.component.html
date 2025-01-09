@@ -41,14 +41,14 @@
             <table class=" w-full table-fixed divide-y divide-gray-200 rounded-t-md">
                 <thead class="">
                     <tr>
-                        <th class="w-[60px] border-slate-500 font-medium pl-2 py-4">No</th>
+                        <th class="w-[40px] border-slate-500 font-medium pl-2 py-4">No</th>
                         <th class="flex-grow border-slate-500 font-medium">Keterangan</th>
-                        <th class="flex-grow border-slate-500 font-medium">Bank</th>
-                        <th class="flex-grow border-slate-500 font-medium">Jenis Pembiayaan</th>
-                        <th class="w-40 border-slate-500 font-medium">Harga Satuan</th>
-                        <th class="w-40 border-slate-500 font-medium">Quantity</th>
+                        <th class="w-[10%] border-slate-500 font-medium">Bank</th>
+                        <th class="w-[10%] border-slate-500 font-medium">Jenis Pembiayaan</th>
+                        <th class="w-32 border-slate-500 font-medium">Harga Satuan</th>
+                        <th class="w-32 border-slate-500 font-medium">Quantity</th>
                         <th class="w-20 border-slate-500 font-medium">Tipe Pajak</th>
-                        <th class="w-40 border-slate-500 font-medium">Jumlah Pajak</th>
+                        <th class="w-32 border-slate-500 font-medium">Jumlah Pajak</th>
                         <th class="w-40 border-slate-500 font-medium">Total Harga</th>
                         <th class="w-[50px] border-slate-500 font-medium"></th>
                         <th class="w-[50px] border-slate-500 font-medium"></th>
@@ -64,7 +64,7 @@
                         </td>
 
 
-                        <td class="border-separate px-2 border-slate-500">
+                        <td class="border-separate border-slate-500">
                             <input [(ngModel)]="item.KETERANGAN" placeholder="Keterangan"
                                 class="p-2 w-full tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"
                                 type="text">
@@ -72,13 +72,10 @@
 
 
                         <td class="border-separate px-2 border-slate-500 ">
-                            <select 
-                                (change)="on_rek_changed($event, i)"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                                <option *ngFor="let rek of arr_rek_data; let i_rek = index" [value]="i_rek">
-                                    {{rek.BANK_NAME + ' - ' + rek.REK_NAME + ' - ' + rek.REK_NUM}}
-                                </option>
-                            </select>
+                            <ng-select 
+                                [items]="arr_rek_data" 
+                                (change)="on_rek_changed($event,i)">
+                            </ng-select>
                         </td>
 
 
@@ -176,12 +173,6 @@
                                 </svg>
                             </button>
                         </td>
-
-
-
-
-
-
                     </tr>
                 </tbody>
             </table>
@@ -197,6 +188,9 @@
     </div>
 
 
+    <!-- ====================================================== -->
+    <!-- ================ ATTACHMENT UPLOAD COMP ================ -->
+    <!-- ====================================================== -->
 
 
     <div class="py-8">
@@ -229,6 +223,10 @@
     </div>
 
 
+    <!-- ====================================================== -->
+    <!-- ================ KOMITE APPROVAL COMP ================ -->
+    <!-- ====================================================== -->
+
 
     <div>
         <div class="">
@@ -257,6 +255,23 @@
 
 
 
+    <!-- ====================================================== -->
+    <!-- =================== SIGNATURE COMP =================== -->
+    <!-- ====================================================== -->
+
+    <div class="my-8"></div>
+
+    <div class="w-fit flex flex-col">
+        <p class="text-2xl mb-4 tracking-wide">Tanda Tangan Pembuat Pengajuan</p>
+        <app-c-signature-pad (base64_sig_data)="change_sig_data($event)"></app-c-signature-pad>
+    </div>
+
+
+
+    <!-- ====================================================== -->
+    <!-- ==================== SEND REQUEST  ===================== -->
+    <!-- ====================================================== -->
+
     <div class="flex flex-row my-4 items-center">
         <button (click)="savePengajuan()" class="w-32 p-2 bg-blue-500 text-white rounded-md transition-all"
             [ngClass]="{'bg-gray-300' : is_fetching === true}">
@@ -266,6 +281,10 @@
         <p class="ml-4 h-6 text-lg text-[#d42929]">{{notif_str}}</p>
     </div>
 
+
+
+    <!-- =========================================== -->
+     <!-- <div (click)="debug_()" class="">Debug</div> -->
 
 
 
