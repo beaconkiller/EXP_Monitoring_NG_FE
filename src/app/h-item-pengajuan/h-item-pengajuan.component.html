@@ -49,7 +49,7 @@
                         <th class="w-32 border-slate-500 font-medium">Quantity</th>
                         <th class="w-20 border-slate-500 font-medium">Tipe Pajak</th>
                         <th class="w-32 border-slate-500 font-medium">Jumlah Pajak</th>
-                        <th class="w-40 border-slate-500 font-medium">Total Harga</th>
+                        <th class="w-32 border-slate-500 font-medium">Total Harga</th>
                         <th class="w-[50px] border-slate-500 font-medium"></th>
                         <th class="w-[50px] border-slate-500 font-medium"></th>
                     </tr>
@@ -73,7 +73,8 @@
 
                         <td class="border-separate px-2 border-slate-500 ">
                             <ng-select 
-                                [items]="arr_rek_data" 
+                                [items]="arr_rek_data"
+                                [bindValue]="item['NO_REK']!.toString()"
                                 (change)="on_rek_changed($event,i)">
                             </ng-select>
                         </td>
@@ -229,24 +230,44 @@
 
 
     <div>
+
         <div class="">
             <p class="text-2xl mb-4 tracking-wide">Pilih Committee Approve</p>
         </div>
 
 
-        <div cdkDropList (cdkDropListDropped)="drop($event)"
-            class="w-full h-[400px] overflow-y-scroll border rounded-md p-2 text-sm"
-            
-        >
-            <app-c-approval-item 
-                class="flex flex-row items-center m-1 mb-2 border w-fit cursor-move rounded-md border-[#0003]"
-                *ngFor="let item_appr of items_kom_approve; let i = index" 
-                [(itemData)]="items_kom_approve[i]"
-                [itemIndex]="i"
-                (deleteThis)="remove_appr_person($event)"
-                cdkDrag
-            ></app-c-approval-item>
+        <div class="w-full border rounded-md text-sm">
+            <div cdkDropList (cdkDropListDropped)="drop($event)"
+                class="w-full h-[400px] overflow-y-scroll p-2 text-sm"                
+            >
+                <div
+                    *ngFor="let item_appr of items_kom_approve; let i = index"
+                    class=" w-fit border border-[#0003] rounded-md m-1 mb-2 relative overflow-hidden flex flex-row items-center"
+                    cdkDrag
+                >
+                    <div 
+                        class="w-4 h-10 rounded-tr-md rounded-br-md"
+                        [ngClass]="{'bg-[#46b946]' : i+1 == items_kom_approve.length}"
+                    >
+                    </div>
+                    
+                    <app-c-approval-item 
+                        class="flex items-center w-fit cursor-move rounded-md"
+                        [(itemData)]="items_kom_approve[i]"
+                        [itemIndex]="i"
+                        [total_i]="items_kom_approve.length"
+                        (deleteThis)="remove_appr_person($event)"
+                    ></app-c-approval-item>
+
+                </div>
+            </div>
+
+            <div class="border-t-2 p-2 flex flex-row items-center">
+                <div class="bg-[#46b946] w-4 h-4 border rounded-full"></div>
+                <p class="ml-2"> : Final Approve</p>
+            </div>
         </div>
+
 
         <div class="">
             <button (click)="addKomite()" class="p-2 my-4 bg-blue-500 text-white rounded-md">Add Komite</button>

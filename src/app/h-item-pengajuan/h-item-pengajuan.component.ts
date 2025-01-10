@@ -229,6 +229,7 @@ export class HItemPengajuanComponent {
     // console.log('initLoad')
     await this.get_rekening();
     await this.get_request_type();
+
     this.setInit();
   }
 
@@ -343,6 +344,7 @@ export class HItemPengajuanComponent {
 
   change_sig_data(e:Event){
     this.base64_sig_data = e
+    this.allow_send_pengajuan()
   }
 
   // ===============================================================
@@ -484,7 +486,7 @@ export class HItemPengajuanComponent {
       }    
     }
 
-    // ------------ KOM APPROVE DETECT ------------
+    // ------------ SIGNATURE / TANDA TANGAN / TTD APPROVE DETECT ------------
 
     if(this.base64_sig_data == null){
       let notif_str = 'Silahkan cek kembali tanda tangan pembuat.';
@@ -552,23 +554,18 @@ export class HItemPengajuanComponent {
       // ----- NOTIF -----
       this.snackbar.open(xRes.message, undefined, {
         duration: 5000,
-        panelClass: ['notif_neutral']
+        panelClass: ['notif_success']
       })
 
     } catch (error) {
       console.log(error)
     }
 
-
-    await new Promise<void>((resolve, reject) => {      
-      setTimeout(() => {
-        this.router.navigate(['/cek-pengajuan']);
-        resolve()
-      }, 3000);
-    }) 
+    // ============== REDIRECT TO LATEST PENGAJUAN ==============
+    this.redirect_to_latest_pengajuan();
 
 
-    this.is_fetching=false;
+    // this.is_fetching=false;
     return true;
   }
 
@@ -606,6 +603,26 @@ export class HItemPengajuanComponent {
     }
     // act_item.TOTAL_HARGA = qty * hrg_satuan;
   }
+
+
+  async redirect_to_latest_pengajuan(){
+
+    let queryParams = {
+      EMPL_CODE : get_user_detail()['EMPL_CODE']
+    }
+
+    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + '/api/get_newest_pengajuan',{params:queryParams}));      
+    let latest_request_id = xRes.data[0]['REQUEST_ID'];  
+
+    console.log(latest_request_id);
+
+    localStorage.setItem('act_request_id', latest_request_id);
+
+    setTimeout(() => {
+      this.router.navigate(['request-dtl'])
+    }, 2000);        
+  }
+
 
   debug_(){
     console.log()

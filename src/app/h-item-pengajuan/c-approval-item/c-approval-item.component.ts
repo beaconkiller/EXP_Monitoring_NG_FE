@@ -18,6 +18,7 @@ export class CApprovalItemComponent {
 
   @Input() itemData!: any;
   @Input() itemIndex!: any;
+  @Input() total_i! : any;
   @Output() itemDataChange = new EventEmitter<any>();
   @Output() deleteThis = new EventEmitter<any>();
 
@@ -28,6 +29,7 @@ export class CApprovalItemComponent {
   act_person:any | null;
   act_person_obj:any | null;
   act_checker: any | null;
+  last_item:any = false;
 
   lov_cabang:any;
   lov0:any;
@@ -64,6 +66,12 @@ export class CApprovalItemComponent {
     this.act_cabang = '-';
     this.act_person = null;
     this.act_person_obj = null;
+
+    this.last_item = (this.itemIndex + 1) == this.total_i ? true : false;
+
+    console.log(this.itemIndex+1)
+    console.log(this.total_i)
+
     // console.log(this.act_sub_area)
   }
 
@@ -96,6 +104,7 @@ export class CApprovalItemComponent {
 
 
     // // --------------- DEBUG ----------------
+
     // console.log([
     //   this.act_cabang,
     //   this.act_sub_area,

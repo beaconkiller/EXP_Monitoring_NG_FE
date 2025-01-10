@@ -30,6 +30,7 @@
                         <th class="w-40 border-slate-500 font-medium">Harga Satuan</th>
                         <th class="w-20 border-slate-500 font-medium">Quantity</th>
                         <th class="w-40 border-slate-500 font-medium">Total Harga</th>
+                        
                         <!-- <th class="w-40 border-slate-500 font-medium">Jumlah Pajak</th>
                         <th class="w-40 border-slate-500 font-medium">Total Harga</th>
                         <th class="w-[50px] border-slate-500 font-medium"></th>
@@ -90,7 +91,7 @@
         <div class="text-2xl mb-2 font-medium tracking-wide rounded-md w-fit">Uploaded file</div>
 
         <div
-            *ngIf="file_data['file_name'] != ''"
+            *ngIf="file_data['file_name'] != null"
         >
             <div class="flex flex-row">
                 <div class="flex flex-row p-2 bg-[#fff] border-2 border-[#aaa] w-fit rounded-md text-[#000] fill-[#000] items-center">

@@ -7,47 +7,40 @@
     <select 
         *ngIf="!fetching_cabang"    
         (change)="on_lov_cabang_change($event)" [(ngModel)]="act_cabang"
-        class="w-[240px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-1.5 ">
+        class="w-[240px] mr-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-1.5 ">
         <option  
             *ngFor="let item_lov_cabang of lov_cabang"
             [value]="item_lov_cabang['empl_branch']"
         >{{item_lov_cabang['cabang']}}</option>
     </select>
 
-    <div class="px-2"></div>
 
     <select 
         (change)="on_lov0_change($event)"
         [(ngModel)]="act_sub_area"
         *ngIf="act_cabang != null && !fetching_cabang "
-        class="w-[240px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-1.5 ">
+        class="w-[240px] mr-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-1.5 ">
         <option  
             *ngFor="let item_lov0 of lov0"
             [value]="item_lov0['personal_subarea']"
         >{{item_lov0['job_name']}}</option>
     </select>
 
-    <div class="px-2"></div>
-
     <select
         (change)="on_lov1_change($event)"
         *ngIf="act_job != null && !fetching_person" 
         [(ngModel)]="act_person"
-        class="w-[240px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-1.5 ">
+        class="w-[240px] mr-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-1.5 ">
         <option  *ngFor="let item_lov1 of lov1">{{item_lov1['empl_name']}}</option>
     </select>
-
-    <div class="px-2"></div>
 
     <select
         *ngIf="act_person_obj != null && act_cabang != null && act_person_obj != null" 
         (change)="on_checker_change($event)"
         [(ngModel)]="act_checker"
-        class="w-[240px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-1.5 ">
+        class="w-[240px] mr-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-1.5 ">
         <option  *ngFor="let item_check of arr_checker">{{item_check}}</option>
     </select>
-
-    <div class="px-2"></div>
 
     <button (click)="removeThis($event)" class="p-2  text-[#c92f2f] rounded-md fill-[#c92f2f]">
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 256 256">
@@ -56,6 +49,10 @@
             </path>
         </svg>
     </button>
+
+    <!-- <p *ngIf="last_item == true">
+        Final Approve
+    </p> -->
 
 
 </div>
