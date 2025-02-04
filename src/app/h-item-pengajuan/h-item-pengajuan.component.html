@@ -74,7 +74,6 @@
                         <td class="border-separate px-2 border-slate-500 ">
                             <ng-select 
                                 [items]="arr_rek_data"
-                                [bindValue]="item['NO_REK']!.toString()"
                                 (change)="on_rek_changed($event,i)">
                             </ng-select>
                         </td>
@@ -209,7 +208,7 @@
             </div>
             <div class="px-2"></div>
 
-            <div *ngIf="act_file.file_name != null" 
+            <div *ngIf="act_file.file_name != ''" 
             class="border-[#b8b8b8] border-2 text-[#848484]  p-1 px-2 w-fit rounded-md text-center flex justify-center items-center">
                 <p>{{act_file.file_name}}</p>
                 <div class="px-[1px]"></div>

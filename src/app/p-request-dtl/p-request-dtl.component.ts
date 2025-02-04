@@ -39,6 +39,7 @@ export class PRequestDtlComponent {
   send_to_dialog:any = {};
   base64_sig_data:any = null;
 
+
   file_data = {
     file_name : null as any,
     data: null as any,
@@ -53,9 +54,12 @@ export class PRequestDtlComponent {
     this.req_id = localStorage.getItem('act_request_id');
 
     this.get_item_pengajuan();
-    this.get_file_data();
+    await this.get_file_data();
     this.get_approval_data();
     // this.get_image_file();
+
+    console.log(this.file_data);
+    console.log(this.file_data['file_name']);
 
 
     this.send_to_dialog = {

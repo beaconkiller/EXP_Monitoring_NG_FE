@@ -65,8 +65,8 @@ export class HItemPengajuanComponent {
   user_cabang:any
 
   act_file = {
-    file_name : null as String | null,
-    file_base64 : null as String | null,
+    file_name : '',
+    file_base64 : '',
   };
 
   arr_tipe_pajak = [
@@ -93,8 +93,8 @@ export class HItemPengajuanComponent {
       NAMA_REK : null as String | null,
       BANK_NAME : null as String | null,
       unf_rek: null as String | null,
-      FILE_NAME: null as String | null,
-      FILE_: null as File | String | null,
+      FILE_NAME: '',
+      FILE_: '',
       bind_calc: false,
     },
   ];
@@ -149,8 +149,8 @@ export class HItemPengajuanComponent {
       NAMA_REK : null as String | null,
       BANK_NAME : null as String | null,
       JENIS_PEMBIAYAAN: this.arr_request_type[0].NAME_TYPE,
-      FILE_NAME: null,
-      FILE_: null,
+      FILE_NAME: '',
+      FILE_: '',
       bind_calc:false,
     });
   }
@@ -279,8 +279,8 @@ export class HItemPengajuanComponent {
         BANK_NAME : null as String | null,  
         JENIS_PEMBIAYAAN: this.arr_request_type[0].NAME_TYPE,
         bind_calc:false,
-        FILE_NAME: null,
-        FILE_: null,
+        FILE_NAME: '',
+        FILE_: '',
       },
     ];
 
@@ -415,14 +415,14 @@ export class HItemPengajuanComponent {
 
 
   clear_file(){
-    this.act_file.file_base64 = null;
-    this.act_file.file_name = null;
+    this.act_file.file_base64 = '';
+    this.act_file.file_name = '';
   }
 
 
   rm_file(i: any) {
-    this.items[i]["FILE_"] = null;
-    this.items[i]["FILE_NAME"] = null;
+    this.items[i]["FILE_"] = '';
+    this.items[i]["FILE_NAME"] = '';
   }
 
 
@@ -449,11 +449,12 @@ export class HItemPengajuanComponent {
     for(let el of arr_send){
       el['LVL'] = i;
       i++;
-      console.log(el)
+      // console.log(el)
     };
 
     return arr_send;
   }
+
 
 
   allow_send_pengajuan() {
@@ -463,7 +464,7 @@ export class HItemPengajuanComponent {
     // ------------ ITEMS DETECT ------------
 
     for (let el of this.items) {
-      if (el.KETERANGAN == '' || el.HARGA_SATUAN == 0 || el.QTY == 0) {
+      if (el.KETERANGAN == '' || el.HARGA_SATUAN == 0 || el.QTY == 0 || el.unf_rek == '') {
         let notif_str = 'Data pengajuan belum lengkap.';
         this.snackbar.open(notif_str, undefined, {
           duration: 5000,
@@ -501,6 +502,7 @@ export class HItemPengajuanComponent {
   }
 
 
+
   filter_rek(){
     // (3) ['BCA', 'Aldi', '1231231010']
 
@@ -514,6 +516,22 @@ export class HItemPengajuanComponent {
 
     })
   }
+
+
+    
+  filter_file(){
+    if(this.act_file.file_name == ''){
+      this.act_file = {
+        file_name : '',
+        file_base64: '',
+      }
+
+      this.items.forEach(el=>{
+        el['FILE_NAME'] = '';
+      })
+    }
+  }
+
 
 
 
@@ -535,6 +553,9 @@ export class HItemPengajuanComponent {
 
     var ordered_array = this.filter_kom_approve();
     this.filter_rek();
+    this.filter_file();
+
+    console.log(this.items)
 
     try {      
       let queryParams = {
@@ -547,6 +568,8 @@ export class HItemPengajuanComponent {
         data: { pengajuan: this.items, komite_approve: ordered_array },
         file_data: this.act_file
       }
+
+      console.log(queryParams);
   
       xRes = await lastValueFrom(this.http.post(config.env_dev.host + '/api/new_pengajuan', queryParams));
       console.log(xRes);
@@ -562,10 +585,10 @@ export class HItemPengajuanComponent {
     }
 
     // ============== REDIRECT TO LATEST PENGAJUAN ==============
-    this.redirect_to_latest_pengajuan();
+    await this.redirect_to_latest_pengajuan();
 
 
-    // this.is_fetching=false;
+    this.is_fetching=false;
     return true;
   }
 
@@ -606,21 +629,25 @@ export class HItemPengajuanComponent {
 
 
   async redirect_to_latest_pengajuan(){
+    console.log("\n ======= redirect_to_latest_pengajuan() ======= \n")
 
     let queryParams = {
       EMPL_CODE : get_user_detail()['EMPL_CODE']
     }
 
     var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + '/api/get_newest_pengajuan',{params:queryParams}));      
+    console.log(xRes);
+
     let latest_request_id = xRes.data[0]['REQUEST_ID'];  
 
     console.log(latest_request_id);
 
     localStorage.setItem('act_request_id', latest_request_id);
 
-    setTimeout(() => {
-      this.router.navigate(['request-dtl'])
-    }, 2000);        
+    this.router.navigate(['request-dtl'])
+    // setTimeout(() => {
+    //   this.router.navigate(['request-dtl'])
+    // }, 2000);        
   }
 
 
