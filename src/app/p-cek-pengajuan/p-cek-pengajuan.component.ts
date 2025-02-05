@@ -43,6 +43,7 @@ export class PCekPengajuanComponent {
 
         let queryParams = {
             q_page:this.act_page,
+            q_search:this.q_search,
             user_dtl: JSON.stringify(get_user_detail())
         }
 

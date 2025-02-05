@@ -27,9 +27,9 @@ export const routes: Routes = [
         children: [
             { path: 'home', component: PHomeComponent },
             { path: 'new-approval', component: PNewApprovalComponent },
-            { path: 'cek-pengajuan', component: PCekPengajuanComponent },
+            { path: 'info-pengajuan', component: PCekPengajuanComponent },
             { path: 'approve-pengajuan', component: PApprovePengajuanComponent },
-            { path: 'info-pengajuan', component: PInfoPengajuanComponent },
+            { path: 'cek-pengajuan', component: PInfoPengajuanComponent },
             { path: 'revisi-pengajuan', component: PRevisiPengajuanComponent },
             { path: 'user-settings', component: PNewApprovalComponent },
             { path: 'profile', component: PUserProfileComponent },
