@@ -563,7 +563,8 @@ export class HItemPengajuanComponent {
           empl_code: get_user_code(),
           office_code: this.act_office,
           pengajuan_type: this.str_info_pengajuan,
-          selected_file : this.act_file
+          selected_file : this.act_file,
+          base64_sig_data : this.base64_sig_data,
         },
         data: { pengajuan: this.items, komite_approve: ordered_array },
         file_data: this.act_file
@@ -584,7 +585,10 @@ export class HItemPengajuanComponent {
       console.log(error)
     }
 
+    // =========================================================
     // ============== REDIRECT TO LATEST PENGAJUAN ==============
+    // =========================================================
+
     await this.redirect_to_latest_pengajuan();
 
 
@@ -645,6 +649,7 @@ export class HItemPengajuanComponent {
     localStorage.setItem('act_request_id', latest_request_id);
 
     this.router.navigate(['request-dtl'])
+
     // setTimeout(() => {
     //   this.router.navigate(['request-dtl'])
     // }, 2000);        
