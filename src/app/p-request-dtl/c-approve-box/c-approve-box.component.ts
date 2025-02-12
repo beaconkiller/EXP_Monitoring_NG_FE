@@ -92,7 +92,7 @@ export class CApproveBoxComponent {
         FILE_DATA : this.get_file_data()
       }
   
-      var xRes:any = await lastValueFrom(this.http.post(config.env_dev.host + '/api/approval_approve',{queryParams}));      
+      var xRes:any = await lastValueFrom(this.http.post(config.env_dev.host + ':'+config.env_dev.port+'/api-eappr/approval_approve',{queryParams}));      
       const msg = xRes.data;  
 
       if(msg.toString().toLowerCase().includes('berhasil')){
@@ -110,10 +110,11 @@ export class CApproveBoxComponent {
 
         // ------------- REDIRECT TO LIST APPROVAL PAGE -------------
         
-        setTimeout(() => {
-          this.route.navigate(['approve-pengajuan'])
-        }, 2000);        
-          
+        this.route.navigate(['approve-pengajuan'])
+        
+        // setTimeout(() => {
+        //   this.route.navigate(['approve-pengajuan'])
+        // }, 2000);        
 
       }else{
 

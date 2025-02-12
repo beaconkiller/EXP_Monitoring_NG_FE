@@ -1,1 +1,67 @@
-<button (click)="signOut()" class="p-2 bg-[#df6363] rounded-md text-white font-semibold">Log out</button>
+<div class="flex flex-col px-4">
+
+    <div>
+        <p class="text-3xl">User Info</p>
+    </div>
+
+    <div class="my-6"></div>
+
+    <div class="flex flex-row items-center">
+        <p class="text-sm w-20">Nama : </p>
+        <div class="mx-2"></div>
+        <input 
+            [value]="empl_name"
+            disabled
+            class="p-1 px-2 w-[26vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"            
+        >
+    </div>
+
+    <div class="my-1"></div>
+
+    <div class="flex flex-row items-center">
+        <p class="text-sm w-20">NIK : </p>
+        <div class="mx-2"></div>
+        <input 
+            [value]="empl_code"
+            disabled
+            class="p-1 px-2 w-[26vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"            
+        >
+    </div>
+
+    <div class="my-1"></div>
+
+    <div class="flex flex-row items-center">
+        <p class="text-sm w-20">Branch : </p>
+        <div class="mx-2"></div>
+        <input 
+            [value]="empl_branch"
+            disabled
+            class="p-1 px-2 w-[26vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"            
+        >
+    </div>
+
+
+    <div class="my-1"></div>
+
+    <div class="flex flex-row items-center">
+        <p class="text-sm w-20">Email :</p>
+        <div class="mx-2"></div>
+        <input 
+            (keyup)="listen_canSave_email($event)"
+            [(value)]="empl_mail"
+            class="p-1 px-2 w-[26vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"            
+        >
+
+        <button
+            [ngClass]="{'bg-green-600 opacity-100' : canSave_email , 'opacity-40' : !canSave_email, 'opacity-50' : isFetching_save_email}"
+            (click)="save_email()"
+            class="ml-2 text-sm p-[6px] pb-[7px] tracking-wide text-white bg-[#888] rounded-md transition-all"
+        >
+            Change email 
+        </button>
+    </div>
+
+    <div class="my-4"></div>
+
+    <button (click)="signOut()" class="p-2 bg-[#df6363] rounded-md text-white font-semibold w-fit transition-all pb-[10px]">Log out</button>
+</div>

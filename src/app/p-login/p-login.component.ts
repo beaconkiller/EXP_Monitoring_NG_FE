@@ -45,7 +45,7 @@ export class PLoginComponent {
       }
   
   
-      var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + '/api/login_main', {params: queryParams}));
+      var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + ':'+config.env_dev.port+'/api-eappr/login_main', {params: queryParams}));
   
       console.log(xRes);
       if(xRes['isSuccess'] != true){

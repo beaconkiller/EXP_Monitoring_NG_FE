@@ -46,7 +46,7 @@ export class PApprovePengajuanComponent {
             user_dtl: JSON.stringify(get_user_detail())
         }
 
-        var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api/get_table_data_approval',{params:queryParams}))
+        var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + ':'+config.env_dev.port+'/api-eappr/get_table_data_approval',{params:queryParams}))
 
         console.log(xRes['data']);
         this.tableData = xRes['data'];

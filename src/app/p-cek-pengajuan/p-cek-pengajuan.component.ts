@@ -21,6 +21,20 @@ export class PCekPengajuanComponent {
     tableData : any = [];
     act_page = localStorage.getItem('q_paging') != null || undefined ? parseInt(localStorage.getItem('q_paging')!) : 0;  
     
+    arr_lov_filter = [
+      {
+        "string":"On Process",
+        "code":"OP",
+      },
+      {
+        "string":"Finished",
+        "code":"AP",
+      },
+      {
+        "string":"Rejected",
+        "code":"RJ",
+      },
+    ]
 
     // ===========================================================
     // ======================== INITLOAD ===========================
@@ -47,7 +61,7 @@ export class PCekPengajuanComponent {
             user_dtl: JSON.stringify(get_user_detail())
         }
 
-        var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api/get_table_data',{params:queryParams}))
+        var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + ':'+config.env_dev.port+'/api-eappr/get_table_data',{params:queryParams}))
 
         console.log(xRes['data']);
         this.tableData = xRes['data'];
@@ -91,6 +105,10 @@ export class PCekPengajuanComponent {
         console.log(req_id);
       }
 
+
+      on_filter_change(val:String){
+        console.log(val);
+      }
 
 
     // =========================================================

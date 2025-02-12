@@ -240,7 +240,7 @@ export class HItemPengajuanComponent {
       data:'test',
     }
 
-    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + '/api/get_rekening',{params:queryParams}));
+    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + ':'+config.env_dev.port+'/api-eappr/get_rekening',{params:queryParams}));
     this.arr_rek_data = xRes.data;    
     // console.log(this.arr_rek_data);
 
@@ -253,7 +253,7 @@ export class HItemPengajuanComponent {
       data:'test',
     }
 
-    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + '/api/get_request_type',{params:queryParams}));
+    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + ':'+config.env_dev.port+'/api-eappr/get_request_type',{params:queryParams}));
     this.arr_request_type = xRes.data; 
 
     // console.log(xRes);
@@ -347,9 +347,9 @@ export class HItemPengajuanComponent {
     this.allow_send_pengajuan()
   }
 
-  // ===============================================================
+  // ====================================================================
   // ========================== FILE UPLOADING ===========================
-  // ===============================================================
+  // ====================================================================
 
 
   chooseFile(e: any, i: any) {
@@ -570,9 +570,8 @@ export class HItemPengajuanComponent {
         file_data: this.act_file
       }
 
-      console.log(queryParams);
   
-      xRes = await lastValueFrom(this.http.post(config.env_dev.host + '/api/new_pengajuan', queryParams));
+      xRes = await lastValueFrom(this.http.post(config.env_dev.host + ':'+config.env_dev.port+'/api-eappr/new_pengajuan', queryParams));
       console.log(xRes);
 
       // ----- NOTIF -----
@@ -589,7 +588,7 @@ export class HItemPengajuanComponent {
     // ============== REDIRECT TO LATEST PENGAJUAN ==============
     // =========================================================
 
-    await this.redirect_to_latest_pengajuan();
+    // await this.redirect_to_latest_pengajuan();
 
 
     this.is_fetching=false;
@@ -639,7 +638,7 @@ export class HItemPengajuanComponent {
       EMPL_CODE : get_user_detail()['EMPL_CODE']
     }
 
-    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + '/api/get_newest_pengajuan',{params:queryParams}));      
+    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + ':'+config.env_dev.port+'/api-eappr/get_newest_pengajuan',{params:queryParams}));      
     console.log(xRes);
 
     let latest_request_id = xRes.data[0]['REQUEST_ID'];  

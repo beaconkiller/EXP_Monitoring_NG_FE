@@ -7,8 +7,13 @@ export function get_user_code() {
 }
 
 export function get_user_detail() {
-    let userDtl =  localStorage.getItem('user_dtl');
+    console.log('\n ============== GET USER DETAIL ================ \n')
+    let userDtl_str =  localStorage.getItem('user_dtl')!;
+    let userDtl = JSON.parse(userDtl_str)['data'][0];
+
+    // console.log(userDtl);
+
     if(userDtl){
-        return JSON.parse(userDtl)['data'][0];
+        return userDtl;
     }
 }
