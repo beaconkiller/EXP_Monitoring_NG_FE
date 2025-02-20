@@ -88,6 +88,17 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
+/* ================= MAT-TOOLTIP ================== */
+
+.mat-tooltip  {
+  white-space: pre;
+  /* white-space: pre-line; */
+}
+
+.multiline-tooltip{
+  white-space: pre-line;
+}
+
 /* =================================== */
 
 .mdc-snackbar__surface {
@@ -144,3 +155,6 @@ input[type="number"] {
 
   background-color: rgb(149, 62, 77);
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

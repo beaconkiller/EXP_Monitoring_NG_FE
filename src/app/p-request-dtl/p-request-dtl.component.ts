@@ -81,7 +81,7 @@ export class PRequestDtlComponent {
       req_id : this.req_id,
     }
 
-    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + ':'+config.env_dev.port+'/api-eappr/get_detail_pengajuan_item',{params:queryParams}));
+    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_detail_pengajuan_item',{params:queryParams}));
     this.arr_item_pengajuan = xRes.data; 
   }
 
@@ -93,7 +93,7 @@ export class PRequestDtlComponent {
       req_id : this.req_id,
     }
 
-    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + ':'+config.env_dev.port+'/api-eappr/get_file_data',{params:queryParams}));
+    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_file_data',{params:queryParams}));
 
     console.log(xRes);
     this.file_data = xRes.data;
@@ -105,7 +105,7 @@ export class PRequestDtlComponent {
       req_id : this.req_id,
     }
 
-    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + ':'+config.env_dev.port+'/api-eappr/get_approval_data',{params:queryParams}));
+    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_approval_data',{params:queryParams}));
     console.log(xRes.data);
 
     this.arr_approval_data = xRes.data;
@@ -118,7 +118,7 @@ export class PRequestDtlComponent {
       req_id : this.req_id
     }
 
-    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + ':'+config.env_dev.port+'/api-eappr/get_sig_img_data',{params:queryParams}));
+    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_sig_img_data',{params:queryParams}));
 
     console.log(xRes)
 

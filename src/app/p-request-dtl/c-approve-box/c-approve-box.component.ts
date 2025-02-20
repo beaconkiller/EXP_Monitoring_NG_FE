@@ -92,7 +92,7 @@ export class CApproveBoxComponent {
         FILE_DATA : this.get_file_data()
       }
   
-      var xRes:any = await lastValueFrom(this.http.post(config.env_dev.host + ':'+config.env_dev.port+'/api-eappr/approval_approve',{queryParams}));      
+      var xRes:any = await lastValueFrom(this.http.post(config.env_dev.host+'/api-eappr/approval_approve',{queryParams}));      
       const msg = xRes.data;  
 
       if(msg.toString().toLowerCase().includes('berhasil')){

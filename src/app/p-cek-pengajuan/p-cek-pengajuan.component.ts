@@ -61,7 +61,7 @@ export class PCekPengajuanComponent {
             user_dtl: JSON.stringify(get_user_detail())
         }
 
-        var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + ':'+config.env_dev.port+'/api-eappr/get_table_data',{params:queryParams}))
+        var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_table_data',{params:queryParams}))
 
         console.log(xRes['data']);
         this.tableData = xRes['data'];

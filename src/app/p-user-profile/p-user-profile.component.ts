@@ -115,7 +115,7 @@ export class PUserProfileComponent {
         }
   
     
-        var xRes:any = await lastValueFrom(this.http.post(config.env_dev.host + ':'+config.env_dev.port+'/api-eappr/user_change_email', queryParams));
+        var xRes:any = await lastValueFrom(this.http.post(config.env_dev.host+'/api-eappr/user_change_email', queryParams));
         
         // ----- NOTIF -----
         this.snackbar.open(xRes.message, undefined, {

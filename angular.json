@@ -28,6 +28,7 @@
               "src/assets/img/w_nav_logo_small.png"
             ],
             "styles": [
+              "src/custom-theme.scss",
               "src/styles.css"
             ],
             "scripts": []

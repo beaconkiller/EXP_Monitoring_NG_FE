@@ -192,7 +192,7 @@ export class CApprovalItemComponent {
       EMPL_BRANCH: get_user_detail()['EMPL_BRANCH']
     }
 
-    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + ':'+config.env_dev.port+'/api-eappr/get_user_cabang',{params:queryParams}))
+    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_user_cabang',{params:queryParams}))
     this.lov_cabang = xRes.data;  
     
 
@@ -213,7 +213,7 @@ export class CApprovalItemComponent {
       empl_subarea : this.act_sub_area,
     }
 
-    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + ':'+config.env_dev.port+'/api-eappr/get_appr_subarea',{params:queryParams}))
+    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_appr_subarea',{params:queryParams}))
     this.act_sub_area = null; // ---- NEED TO RESET SO THE LOV DEFAULT WOULD BE NULL
     this.lov0 = xRes.data;  
     
@@ -235,7 +235,7 @@ export class CApprovalItemComponent {
       ACT_JOB : this.act_job,
     }
 
-    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + ':'+config.env_dev.port+'/api-eappr/get_appr_person',{params:queryParams}))
+    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_appr_person',{params:queryParams}))
     this.lov1 = xRes.data;  
 
     // ------ RESET LOWER LEVEL LOV ------

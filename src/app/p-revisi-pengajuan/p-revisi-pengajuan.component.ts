@@ -218,7 +218,7 @@ export class PRevisiPengajuanComponent {
       data:'test',
     }
 
-    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + ':'+config.env_dev.port+'/api-eappr/get_rekening',{params:queryParams}));
+    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_rekening',{params:queryParams}));
     this.arr_rek_data = xRes.data;    
     // console.log(this.arr_rek_data);
 
@@ -231,7 +231,7 @@ export class PRevisiPengajuanComponent {
       data:'test',
     }
 
-    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + ':'+config.env_dev.port+'/api-eappr/get_request_type',{params:queryParams}));
+    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_request_type',{params:queryParams}));
     this.arr_request_type = xRes.data; 
 
     // console.log(xRes);
@@ -253,7 +253,7 @@ export class PRevisiPengajuanComponent {
       data:'RF20250100000016',
     }
 
-    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + ':'+config.env_dev.port+'/api-eappr/get_detail_pengajuan_item_revisi',{params:queryParams}));    
+    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_detail_pengajuan_item_revisi',{params:queryParams}));    
     let res_items:Array<any> = xRes.data
     this.arr_items_before = [...res_items]
     
@@ -575,7 +575,7 @@ export class PRevisiPengajuanComponent {
         file_data: this.act_file
       }
   
-      xRes = await lastValueFrom(this.http.post(config.env_dev.host + ':'+config.env_dev.port+'/api-eappr/new_pengajuan', queryParams));
+      xRes = await lastValueFrom(this.http.post(config.env_dev.host+'/api-eappr/new_pengajuan', queryParams));
       console.log(xRes);
 
       // ----- NOTIF -----
@@ -638,7 +638,7 @@ export class PRevisiPengajuanComponent {
       EMPL_CODE : get_user_detail()['EMPL_CODE']
     }
 
-    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + ':'+config.env_dev.port+'/api-eappr/get_newest_pengajuan',{params:queryParams}));      
+    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_newest_pengajuan',{params:queryParams}));      
     let latest_request_id = xRes.data[0]['REQUEST_ID'];  
 
     console.log(latest_request_id);
