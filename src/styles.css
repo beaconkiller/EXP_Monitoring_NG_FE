@@ -64,6 +64,9 @@
 
 .ng-value-container {
   overflow: visible;
+  display: flex;
+  align-items: center;
+  padding: 0;
 }
 
 .ng-select {

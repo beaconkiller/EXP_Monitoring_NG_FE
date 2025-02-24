@@ -6,7 +6,7 @@
             <input 
                 (input)="listen_inps()"
                 [(ngModel)]="suppl_name"
-                class="p-1 w-[20vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"
+                class="p-2 w-[30vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"
             >
         </div>
 
@@ -17,7 +17,7 @@
             <input 
                 (input)="listen_inps()"
                 [(ngModel)]="suppl_rek_name"
-                class="p-1 w-[20vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"
+                class="p-2 w-[30vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"
             >
         </div>
 
@@ -28,7 +28,7 @@
             <input 
                 (input)="listen_inps()"
                 [(ngModel)]="suppl_rek_no"
-                class="p-1 w-[20vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"
+                class="p-2 w-[30vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"
             >
         </div>
         
@@ -36,14 +36,23 @@
 
         <div class="flex flex-col justify-center">
             <label class="mb-2">Bank :</label>
-            <input 
-                (input)="listen_inps()"
-                [(ngModel)]="suppl_bank_name"
-                class="p-1 w-[20vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"
-            >
+
+            <div class="w-[30vw]">
+                <ng-select  
+                    (remove)="clear_act_bank()"
+                    (clear)="clear_act_bank()"
+                    [items]="arr_banks"
+                    (change)="on_banks_changed($event)">
+                </ng-select>
+            </div>
+
         </div>
 
         <div class="my-6"></div>
+
+        <!-- ======================= CONFIRMATION BUTTON ====================== -->
+        <!-- ======================= CONFIRMATION BUTTON ====================== -->
+        <!-- ======================= CONFIRMATION BUTTON ====================== -->
 
         <div class="flex flex-row">
             <button 
