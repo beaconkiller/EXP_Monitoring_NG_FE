@@ -32,7 +32,8 @@
         <div class="mx-1"></div>
 
         <select
-            class="bg-gray-50 text-sm border border-gray-300 text-gray-900 rounded-md focus:ring-blue-500 focus:border-blue-500 block w-fit p-2 tracking-wider"            
+            class="bg-gray-50 text-sm border border-gray-300 text-gray-900 rounded-md focus:ring-blue-500 focus:border-blue-500 block w-fit p-2 tracking-wider"
+            (change)="on_filter_change($event)"
         >
             <option *ngFor="let item_filter of arr_lov_filter">{{item_filter.string}}</option>
         </select>

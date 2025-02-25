@@ -18,10 +18,15 @@ export class PCekPengajuanComponent {
 
     fetching_tableData = true;
     q_search:any = '';
+    q_filter:any = 'All';
     tableData : any = [];
     act_page = localStorage.getItem('q_paging') != null || undefined ? parseInt(localStorage.getItem('q_paging')!) : 0;  
     
     arr_lov_filter = [
+      {
+        "string":"All",
+        "code":"All",
+      },
       {
         "string":"On Process",
         "code":"OP",
@@ -48,6 +53,7 @@ export class PCekPengajuanComponent {
     async initLoad(){
         // this.get_tableData();
         this.fetching_tableData = false;
+        this.q_filter = this.arr_lov_filter[0]['code'];
     }
 
 
@@ -58,6 +64,7 @@ export class PCekPengajuanComponent {
         let queryParams = {
             q_page:this.act_page,
             q_search:this.q_search,
+            q_filter:this.q_filter,
             user_dtl: JSON.stringify(get_user_detail())
         }
 
@@ -106,8 +113,21 @@ export class PCekPengajuanComponent {
       }
 
 
-      on_filter_change(val:String){
+      on_filter_change(e:Event){
+        let val = (e.target as HTMLSelectElement).value;
         console.log(val);
+        
+        let pos:number = 0;
+        for(let i = 0 ; i<this.arr_lov_filter.length ; i++){
+          let curr_filter_name = this.arr_lov_filter[i]['string'];
+          if(val == curr_filter_name){
+            pos = i;
+            break;
+          }  
+        }
+
+        this.q_filter = this.arr_lov_filter[pos]['code'];
+        this.get_tableData();
       }
 
 
