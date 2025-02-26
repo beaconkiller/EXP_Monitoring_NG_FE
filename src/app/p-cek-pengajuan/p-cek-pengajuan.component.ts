@@ -17,6 +17,7 @@ export class PCekPengajuanComponent {
     constructor (private http:HttpClient, private route:Router){}
 
     fetching_tableData = true;
+    first_load:number = 0;
     q_search:any = '';
     q_filter:any = 'All';
     tableData : any = [];
@@ -73,6 +74,7 @@ export class PCekPengajuanComponent {
         console.log(xRes['data']);
         this.tableData = xRes['data'];
 
+        this.first_load = 1;
         this.fetching_tableData = false;
     }
     

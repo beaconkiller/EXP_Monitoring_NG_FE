@@ -37,6 +37,7 @@ export class PRequestDtlComponent {
   arr_img_data:any = [];
   spawn_box_approve:boolean = false;
   send_to_dialog:any = {};
+  order_create_date:String = '';
   base64_sig_data:any = null;
 
 
@@ -75,13 +76,16 @@ export class PRequestDtlComponent {
 
 
   async get_item_pengajuan(){
-    // console.log('get_item_pengajuan');
+    console.log('\n get_item_pengajuan \n');
 
     let queryParams = {
       req_id : this.req_id,
     }
 
     var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_detail_pengajuan_item',{params:queryParams}));
+
+
+    this.order_create_date = xRes.data[0]['TGL_PENGAJUAN'].split(' ')[0];
     this.arr_item_pengajuan = xRes.data; 
   }
 
@@ -106,8 +110,8 @@ export class PRequestDtlComponent {
     }
 
     var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_approval_data',{params:queryParams}));
-    console.log(xRes.data);
 
+    // this.order_create_date = xRes.data[0]['CREATED_DATE'];
     this.arr_approval_data = xRes.data;
   }
 

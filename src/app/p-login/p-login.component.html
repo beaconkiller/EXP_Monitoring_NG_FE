@@ -14,6 +14,7 @@
         <div class="flex flex-col w-full">
             <p class="mb-2">Username</p>
             <input [(ngModel)]="usn"
+                (keydown.enter)="login()"
                 class="p-2 w-full tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"
                 type="text">
         </div>
@@ -23,6 +24,7 @@
         <div class="flex flex-col w-full">
             <p class="mb-2">Password</p>
             <input [(ngModel)]="pwd"
+                (keydown.enter)="login()"
                 class="p-2 w-full tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"
                 type="password">
         </div>

@@ -17,7 +17,7 @@
             class="p-1 h-fit bg-[#252525] fill-white rounded-full text-white w-fit flex items-center"
             (click)="get_tableData()"
         >
-            <p class="ml-2 tracking-wide text-sm mb-[2px]">Search</p>
+            <p class="ml-2 tracking-wide text-sm mb-[0.6px]">Search</p>
             <div class="mx-[2px]"></div>
             <svg class="p-[3px]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256">
                 <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
@@ -42,11 +42,11 @@
         <div class="mx-1"></div>
 
         <Button 
-            class="p-1 h-fit bg-[#252525] fill-white rounded-md text-white w-fit flex items-center" (click)="get_tableData()"
+            class="p-1 h-fit bg-[#252525] hover:bg-[#333] fill-white rounded-md text-white w-fit flex items-center" (click)="get_tableData()"
         >
-            <p class="ml-1 tracking-wide text-sm mb-[1px]">Refresh</p>
-            <div class="mx-1"></div>
-            <svg class="p-[2px]" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 256 256">
+            <p class="ml-1 tracking-wide text-sm mb-[0.6px]">Refresh</p>
+            <div class="mx-[0.6px]"></div>
+            <svg class="p-[2px]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256">
                 <path d="M224,48V96a8,8,0,0,1-8,8H168a8,8,0,0,1,0-16h28.69L182.06,73.37a79.56,79.56,0,0,0-56.13-23.43h-.45A79.52,79.52,0,0,0,69.59,72.71,8,8,0,0,1,58.41,61.27a96,96,0,0,1,135,.79L208,76.69V48a8,8,0,0,1,16,0ZM186.41,183.29a80,80,0,0,1-112.47-.66L59.31,168H88a8,8,0,0,0,0-16H40a8,8,0,0,0-8,8v48a8,8,0,0,0,16,0V179.31l14.63,14.63A95.43,95.43,0,0,0,130,222.06h.53a95.36,95.36,0,0,0,67.07-27.33,8,8,0,0,0-11.18-11.44Z"></path>
             </svg>
         </Button>    
@@ -77,20 +77,29 @@
                 </tr>
             </thead>
 
-            <tbody class="border-separate pt-10 ">
+            <tbody class="border-separate pt-10 text-sm">
                 <tr *ngFor="let item of tableData; let i = index" class="h-8 flex-grow-0 odd:bg-gray-100 ">
                     <td class="px-2 text-center">{{i+1}}</td>
                     <td class="px-2 text-center">{{item.REQUEST_ID}}</td>
                     <td class="px-2 text-start py-4">{{item.cabang}}</td>
                     <td class="px-2 text-start">{{item.KATEGORI_REQUEST}}</td>
-                    <td class="px-2 text-center">{{item.STATUS}}</td>
+                    <td class="px-2 text-center">
+                        <div [ngClass]="{'text-green-600':item.STATUS == 'AP'}">
+                            {{item.STATUS}}
+                        </div>
+                    </td>
                     <td class="px-2 text-center py-2">{{give_date(item.CREATED_DATE)}}</td>
                     <td class="px-2 text-center py-2">
                         <button
                             (click)="go_to_detail(item.REQUEST_ID)" 
-                            class="mx-2 rounded-full px-4 py-1 bg-[#242424] text-white"
+                            class="mx-2 rounded-md px-2 py-1 pb-[5px] bg-[#303030] fill-white text-white flex flex-row"
                         >
-                            Detail
+                            <svg  xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256">
+                                <path d="M88,96a8,8,0,0,1,8-8h64a8,8,0,0,1,0,16H96A8,8,0,0,1,88,96Zm8,40h64a8,8,0,0,0,0-16H96a8,8,0,0,0,0,16Zm32,16H96a8,8,0,0,0,0,16h32a8,8,0,0,0,0-16ZM224,48V156.69A15.86,15.86,0,0,1,219.31,168L168,219.31A15.86,15.86,0,0,1,156.69,224H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32H208A16,16,0,0,1,224,48ZM48,208H152V160a8,8,0,0,1,8-8h48V48H48Zm120-40v28.7L196.69,168Z"></path>
+                            </svg>
+                            <p class="ml-1">
+                                Detail
+                            </p>
                         </button>
                     </td>
                 </tr>
@@ -98,8 +107,23 @@
         </table>
 
         <div 
-            *ngIf="tableData.length == 0"
-            class="w-full flex items-center justify-center h-[420px]"
+            *ngIf="first_load == 0 && first_load == 0"
+            class="w-full flex items-center justify-center h-[360px]"
+        >
+            <Button 
+                class="p-5 h-fit bg-[#888] hover:bg-[#333] fill-white rounded-md text-white w-fit flex items-center" (click)="get_tableData()"
+            >
+                <p class="ml-1 tracking-wide text-sm mb-[0.6px]">Refresh</p>
+                <div class="mx-[0.6px]"></div>
+                <svg class="p-[2px]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256">
+                    <path d="M224,48V96a8,8,0,0,1-8,8H168a8,8,0,0,1,0-16h28.69L182.06,73.37a79.56,79.56,0,0,0-56.13-23.43h-.45A79.52,79.52,0,0,0,69.59,72.71,8,8,0,0,1,58.41,61.27a96,96,0,0,1,135,.79L208,76.69V48a8,8,0,0,1,16,0ZM186.41,183.29a80,80,0,0,1-112.47-.66L59.31,168H88a8,8,0,0,0,0-16H40a8,8,0,0,0-8,8v48a8,8,0,0,0,16,0V179.31l14.63,14.63A95.43,95.43,0,0,0,130,222.06h.53a95.36,95.36,0,0,0,67.07-27.33,8,8,0,0,0-11.18-11.44Z"></path>
+                </svg>
+            </Button>    
+        </div>
+
+        <div 
+            *ngIf="tableData.length == 0 && first_load != 0"
+            class="w-full flex items-center justify-center h-[360px]"
         >
             No Data
         </div>
