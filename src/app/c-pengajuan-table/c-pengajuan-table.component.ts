@@ -1,26 +1,27 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { config } from '../../config/config';
-import { lastValueFrom } from 'rxjs';
+import { Router } from '@angular/router';
 import { get_user_detail } from '../shared/utils_general';
-import { Route, Router } from '@angular/router';
-import { CPengajuanTableComponent } from '../c-pengajuan-table/c-pengajuan-table.component';
+import { lastValueFrom } from 'rxjs';
+import { config } from '../../config/config';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'app-p-cek-pengajuan',
-    imports: [FormsModule, CommonModule, HttpClientModule, CPengajuanTableComponent],
-    templateUrl: './p-cek-pengajuan.component.html',
-    styleUrl: './p-cek-pengajuan.component.css'
+  selector: 'app-c-pengajuan-table',
+  imports: [HttpClientModule, CommonModule, FormsModule],
+  templateUrl: './c-pengajuan-table.component.html',
+  styleUrl: './c-pengajuan-table.component.css'
 })
-export class PCekPengajuanComponent {
+
+export class CPengajuanTableComponent {
     constructor (private http:HttpClient, private route:Router){}
 
     fetching_tableData = true;
     first_load:number = 0;
     q_search:any = '';
     q_filter:any = 'All';
+    q_page_code:number = 0;
     tableData : any = [];
     act_page = localStorage.getItem('q_paging') != null || undefined ? parseInt(localStorage.getItem('q_paging')!) : 0;  
     
@@ -54,8 +55,26 @@ export class PCekPengajuanComponent {
 
     async initLoad(){
         // this.get_tableData();
-        this.q_filter = this.arr_lov_filter[0]['code'];
         this.fetching_tableData = false;
+        this.q_filter = this.arr_lov_filter[0]['code'];
+
+        this.pageDetect();
+    }
+
+    pageDetect(){
+      console.log('\n =========== pageDetect() ========== \n');
+      let url = this.route.url;
+
+      if(url == '/cek-pengajuan'){
+        this.q_page_code = 2;
+      }else if(url == '/approve-pengajuan'){
+        this.q_page_code = 1;
+      }else if(url == '/info-pengajuan'){
+        this.q_page_code = 0;
+        
+      }
+
+      console.log(url);
     }
 
 
@@ -63,23 +82,43 @@ export class PCekPengajuanComponent {
         // console.log(' ========== get_tabledata ========== ')
         this.fetching_tableData = true;
 
-        let queryParams = {
-            q_page:this.act_page,
-            q_search:this.q_search,
-            q_filter:this.q_filter,
-            user_dtl: JSON.stringify(get_user_detail())
+        try {
+          let queryParams = {
+              q_page:this.act_page,
+              q_search:this.q_search,
+              q_filter:this.q_filter,
+              user_dtl: JSON.stringify(get_user_detail())
+          }
+
+          if(this.q_page_code == 0){
+            var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_table_data',{params:queryParams}))
+    
+            console.log(xRes['data']);
+            
+            this.tableData = xRes['data'];
+          }else if(this.q_page_code == 1){
+            var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_table_data_approval',{params:queryParams}))
+            
+            console.log(xRes['data']);
+
+            this.tableData = xRes['data'];
+          }else if(this.q_page_code == 2){
+            var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_table_data_histori',{params:queryParams}))
+          
+            console.log(xRes['data']);
+          
+            this.tableData = xRes['data'];
+          }          
+        } catch (error) {
+          console.log(error);
         }
 
-        var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_table_data',{params:queryParams}))
 
-        console.log(xRes['data']);
-        this.tableData = xRes['data'];
 
         this.first_load = 1;
         this.fetching_tableData = false;
     }
     
-
 
     // =========================================================
     // ======================== INPUTS ===========================
@@ -143,6 +182,7 @@ export class PCekPengajuanComponent {
         let str_v = v.replace(' ','\n');
         return v
     }
+
 
 
 

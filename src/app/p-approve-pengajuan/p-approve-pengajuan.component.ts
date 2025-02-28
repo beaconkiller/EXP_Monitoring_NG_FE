@@ -6,10 +6,11 @@ import { lastValueFrom } from 'rxjs';
 import { config } from '../../config/config';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CPengajuanTableComponent } from '../c-pengajuan-table/c-pengajuan-table.component';
 
 @Component({
     selector: 'app-p-approve-pengajuan',
-    imports: [CommonModule, FormsModule,HttpClientModule],
+    imports: [CommonModule, FormsModule, HttpClientModule, CPengajuanTableComponent],
     templateUrl: './p-approve-pengajuan.component.html',
     styleUrl: './p-approve-pengajuan.component.css'
 })

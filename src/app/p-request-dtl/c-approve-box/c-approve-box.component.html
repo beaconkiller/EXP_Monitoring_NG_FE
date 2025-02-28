@@ -13,13 +13,20 @@
 
         <!-- =================== APPROVE STATUS =================== -->
 
-        <div class="flex flex-col items-start justify-start">
-            <p class="text-xl mb-1">Approve / Reject :</p>
+        <div 
+            class="flex flex-col items-start justify-start p-2 border-2 rounded-md"
+            [ngClass]="{
+                    'border-[#3ba62b] bg-[#e4ffdf]' : act_appr == 'AP',
+                    'border-[#a62b2b] bg-[#ffdfdf]' : act_appr == 'RJ',
+                    'border-[#cfc038] bg-[#fff9c7]' : act_appr == 'RC'
+            }"
+        >
+            <p class="text-xl mb-1">Approval Status :</p>
     
             <div class="my-1"></div>
     
             <select [(value)]="act_appr" (change)="on_appr_change($event)"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-[6px] pb-[8px]">
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-[6px] pb-[8px] text-md tracking-wide">
                 <option 
                     *ngFor="let item_appr of arr_approval" [value]="item_appr['appr']"
                 >
@@ -55,22 +62,23 @@
         <div class="my-8"></div>
     
 
-        <!-- =================== APPROVE BUTTON =================== -->
+    </div>
 
-        <div class="flex flex-row">
-            <button
-                (click)="send_approve()"
-                [ngClass]="{
-                    'bg-green-700 text-white': canSend == true,
-                    'bg-[#888] opacity-50': canSend == false
-                }"
-                class="p-2 text-white rounded-md transition-all"
-            >Simpan</button>
-    
-            <div class="mx-2"></div>
-    
-            <button (click)="onExit()" class="p-2 bg-[#888] text-white rounded-md">Cancel</button>
-        </div>
+    <!-- =================== APPROVE BUTTON =================== -->
+
+    <div class="flex flex-row">
+        <button
+            (click)="send_approve()"
+            [ngClass]="{
+                'bg-[#333] text-white': canSend == true,
+                'bg-[#888] opacity-50 cursor-default': canSend == false
+            }"
+            class="p-2 px-4 text-white rounded-md transition-all"
+        >Proses</button>
+
+        <div class="mx-2"></div>
+
+        <button (click)="onExit()" class="p-2 px-4 bg-[#888] text-white rounded-md">Cancel</button>
     </div>
 
     

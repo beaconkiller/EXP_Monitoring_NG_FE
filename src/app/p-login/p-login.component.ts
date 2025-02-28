@@ -38,17 +38,18 @@ export class PLoginComponent {
     if(!this.fetching){
       this.fetching = true;
       this.resp_login = '';
-  
+    
       let queryParams = {
         pwd : this.pwd.toString(),
         usn : this.usn.toString(),
-      }
-  
-  
-      // var xRes:any = await lastValueFrom(this.http.get('/api-eappr/login_main', {params: queryParams}));
+      } 
+
       var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/login_main', {params: queryParams}));
-      // var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + ':'+config.env_dev.port+'/api-eappr/login_main', {params: queryParams}));
-  
+      
+      // var xRes:any = await lastValueFrom(this.http.post(config.env_dev.host+'/api-eappr/mobile/v1/login_mobile', queryParams)); // DEBUG TEST PAKE API MOBILE  
+      // // var xRes:any = await lastValueFrom(this.http.get('/api-eappr/login_main', {params: queryParams}));
+      // // var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + ':'+config.env_dev.port+'/api-eappr/login_main', {params: queryParams}));
+      
       console.log(xRes);
       if(xRes['isSuccess'] != true){
         this.resp_login = xRes['message'];

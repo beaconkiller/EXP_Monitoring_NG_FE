@@ -36,7 +36,7 @@ export class CApproveBoxComponent {
   ]
 
   canSend:boolean = false;
-  isFetching = false;
+  isFetching:boolean = false;
   act_appr:any;
   act_reason:any = '';
   base64_sig_data:any;
