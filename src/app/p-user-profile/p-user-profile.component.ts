@@ -56,7 +56,7 @@ export class PUserProfileComponent {
   detect_save_mail(){
     let str = this.new_empl_mail;
 
-    if(!str.includes('@') || !str.includes('.com')){
+    if(!str.includes('@') || !str.includes('.')){
       let notif_str = 'Format email tidak sesuai'; 
 
       // ----- NOTIF -----

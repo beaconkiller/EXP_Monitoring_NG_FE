@@ -158,7 +158,7 @@ export class PRequestDtlComponent {
   file_download(){
     let base64Data = this.file_data.data;
     const fileName = "download.pdf"; // Desired file name
-    const dataUrl = `data:application/pdf;base64,${base64Data}`;
+    const dataUrl = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${base64Data}`;
 
 
     const link = document.createElement('a');
