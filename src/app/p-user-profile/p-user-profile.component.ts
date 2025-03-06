@@ -122,6 +122,24 @@ export class PUserProfileComponent {
           duration: 5000,
           panelClass: ['notif_success']
         })
+
+
+        if(xRes.status == 200){
+          let userDtl_str =  localStorage.getItem('user_dtl')!;
+          let userDtl = JSON.parse(userDtl_str)['data'][0];
+
+          console.log(userDtl);
+
+          userDtl['email'] = this.new_empl_mail;
+
+          localStorage.setItem('user_dtl', JSON.stringify({
+            "isSuccess" : true,
+            "message":"success",
+            "data": [userDtl]
+          }));
+
+          this.canSave_email = false;
+        }
         
         
       } catch (error) {

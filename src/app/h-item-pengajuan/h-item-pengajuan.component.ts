@@ -387,7 +387,7 @@ export class HItemPengajuanComponent {
 
     var inpFile = document.createElement("input");
     inpFile.setAttribute('type', 'file');
-    inpFile.setAttribute("accept", ".pdf, .jpeg, .jpeg, .png");
+    inpFile.setAttribute("accept", ".pdf");
     inpFile.click();
 
     inpFile.onchange = (event) => {
