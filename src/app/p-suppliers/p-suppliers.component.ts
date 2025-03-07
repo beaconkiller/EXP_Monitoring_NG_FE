@@ -7,10 +7,11 @@ import { config } from '../../config/config';
 import { get_user_detail } from '../shared/utils_general';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { CSuppliersActionBoxComponent } from "./c-suppliers-action-box/c-suppliers-action-box.component";
 
 @Component({
   selector: 'app-p-suppliers',
-  imports: [CommonModule,FormsModule,HttpClientModule, NgSelectModule],
+  imports: [CommonModule, FormsModule, HttpClientModule, NgSelectModule, CSuppliersActionBoxComponent],
   templateUrl: './p-suppliers.component.html',
   styleUrl: './p-suppliers.component.css'
 })
@@ -19,16 +20,20 @@ export class PSuppliersComponent {
 
   is_fetching = true;
   can_add_suppl= false;
-  fetching_tableData = true;
+  is_fetching_data = true;
+  show_suppl_action_box = false;
   isFetching_add_suppl = false;
   act_bank:any = null;
-  tableData = [];
+  act_suppl:any = null;
+  act_page = 1;
+  tableData:any = [];
   arr_banks = [];
   arr_banks_base = [];
   suppl_name = '';
   suppl_rek_name = '';
   suppl_rek_no = '';
   suppl_bank_name = '';
+  q_search = '';
 
 
   ngOnInit(){
@@ -38,8 +43,28 @@ export class PSuppliersComponent {
 
   async initLoad(){
     await this.get_banks();
+    this.get_suppliers();
   }
 
+
+  jobCheck_it(){
+    // G00123 -- STAFF IT
+
+    let usr_dtl = get_user_detail()
+
+    if(usr_dtl['EMPL_JOB'] == 'G00123'){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+
+
+
+  // ================================================
+  // ==================== GETTER ====================
+  // ================================================
 
   async get_banks(){
     let queryParams = {
@@ -61,14 +86,22 @@ export class PSuppliersComponent {
 
 
   async get_suppliers(){
+    this.is_fetching_data = true;
+    
     let queryParams = {
-      "data":"data"
+      "q_page":this.act_page,
+      "q_search":this.q_search.toLowerCase(),
     };
 
-    var xRes = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_suppliers',{params:queryParams}));
-
+    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_suppliers',{params:queryParams}));
+    
     console.log(xRes);
+    this.tableData = xRes.data;
+    this.is_fetching_data = false;
   }
+
+
+
 
   // ================================================
   // ==================== INPUTS ====================
@@ -79,8 +112,6 @@ export class PSuppliersComponent {
     this.act_bank = null;
     this.listen_inps();
   }
-
-
 
 
   on_banks_changed(e:Event){
@@ -170,4 +201,28 @@ export class PSuppliersComponent {
     this.listen_inps();
   }
 
+
+  pgUp() {
+    this.act_page++
+    localStorage.setItem('q_paging', this.act_page.toString())
+    this.get_suppliers();
+  }
+
+
+  pgDown() {
+    if (this.act_page > 1) {
+      this.act_page--
+      localStorage.setItem('q_paging', this.act_page.toString());
+      this.get_suppliers();
+    }
+  }
+
+
+  f_show_suppl_action_box(i:any){
+    let _act_suppl = this.tableData[i];
+    this.act_suppl = _act_suppl;
+    this.show_suppl_action_box = true;
+  }
+
+  
 }

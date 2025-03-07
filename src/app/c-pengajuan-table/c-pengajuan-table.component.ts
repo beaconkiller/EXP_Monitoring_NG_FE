@@ -131,57 +131,57 @@ export class CPengajuanTableComponent {
         this.get_tableData();
       }
     
-      pgDown() {
-        if (this.act_page > 1) {
-          this.act_page--
-          localStorage.setItem('q_paging', this.act_page.toString());
-          this.get_tableData();
-        }
-      }
-    
-      onPageChangeEnter(e:Event){
-        let val = (e.target as HTMLInputElement).value;
-
-        if(parseInt(val) > 0){
-            this.act_page = parseInt(val);
-            localStorage.setItem('q_paging', this.act_page.toString())
-            this.get_tableData()
-        }
-      }
-
-      go_to_detail(req_id:string){
-        localStorage.setItem('act_request_id', req_id);
-        this.route.navigate(['request-dtl']);
-        console.log(req_id);
-      }
-
-
-      on_filter_change(e:Event){
-        let val = (e.target as HTMLSelectElement).value;
-        console.log(val);
-        
-        let pos:number = 0;
-        for(let i = 0 ; i<this.arr_lov_filter.length ; i++){
-          let curr_filter_name = this.arr_lov_filter[i]['string'];
-          if(val == curr_filter_name){
-            pos = i;
-            break;
-          }  
-        }
-
-        this.q_filter = this.arr_lov_filter[pos]['code'];
+    pgDown() {
+      if (this.act_page > 1) {
+        this.act_page--
+        localStorage.setItem('q_paging', this.act_page.toString());
         this.get_tableData();
       }
-
-
-    // =========================================================
-    // ======================== FORMATTER ===========================
-    // =========================================================
-    
-    give_date(v:String){
-        let str_v = v.replace(' ','\n');
-        return v
     }
+    
+    onPageChangeEnter(e:Event){
+      let val = (e.target as HTMLInputElement).value;
+
+      if(parseInt(val) > 0){
+          this.act_page = parseInt(val);
+          localStorage.setItem('q_paging', this.act_page.toString())
+          this.get_tableData()
+      }
+    }
+
+    go_to_detail(req_id:string){
+      localStorage.setItem('act_request_id', req_id);
+      this.route.navigate(['request-dtl']);
+      console.log(req_id);
+    }
+
+
+    on_filter_change(e:Event){
+      let val = (e.target as HTMLSelectElement).value;
+      console.log(val);
+      
+      let pos:number = 0;
+      for(let i = 0 ; i<this.arr_lov_filter.length ; i++){
+        let curr_filter_name = this.arr_lov_filter[i]['string'];
+        if(val == curr_filter_name){
+          pos = i;
+          break;
+        }  
+      }
+
+      this.q_filter = this.arr_lov_filter[pos]['code'];
+      this.get_tableData();
+    }
+
+
+  // =========================================================
+  // ======================== FORMATTER ===========================
+  // =========================================================
+  
+  give_date(v:String){
+      let str_v = v.replace(' ','\n');
+      return v
+  }
 
 
 

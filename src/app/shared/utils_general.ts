@@ -7,7 +7,7 @@ export function get_user_code() {
 }
 
 export function get_user_detail() {
-    console.log('\n ============== GET USER DETAIL ================ \n')
+    // console.log('\n ============== GET USER DETAIL ================ \n')
     let userDtl_str =  localStorage.getItem('user_dtl')!;
     let userDtl = JSON.parse(userDtl_str)['data'][0];
 
