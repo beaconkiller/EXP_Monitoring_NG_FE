@@ -171,8 +171,8 @@
                     *ngFor="let item_approval of arr_approval_data"
                     class="w-80 h-fit border-2 border-[#ddd] rounded-md flex flex-col p-3 mr-6 relative"
                     [ngClass]="{
-                        'border-green-700' : item_approval['STATUS'] == 'AP',
-                        'border-red-700' : item_approval['STATUS'] == 'RJ',
+                        'border-green-700 bg-[#fbfffa]' : item_approval['STATUS'] == 'AP',
+                        'border-red-700 bg-[#fffcfc]' : item_approval['STATUS'] == 'RJ',
                         'border-yellow-500' : item_approval['STATUS'] == 'RC',
                     }"
                 >   
@@ -201,9 +201,11 @@
 
                     <div class="flex justify-between flex-row flex-grow-0 items-center">
                         <div 
-                            class="flex flex-col flex-grow-0 mt-2 px-2 p-2 rounded-md w-fit text-white"       
+                            class="flex flex-col justify-center items-center w-20 flex-grow-0 mt-2 px-2 p-2 rounded-md text-white"       
                             [ngClass]="{
                                 'bg-green-700' : item_approval['STATUS'] == 'AP',
+                                'bg-red-700' : item_approval['STATUS'] == 'RJ',
+                                'bg-yellow-500' : item_approval['STATUS'] == 'RC',
                             }"             
                         > 
                             {{format_status_str(item_approval['STATUS'])}}

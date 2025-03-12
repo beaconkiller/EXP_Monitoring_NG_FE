@@ -50,8 +50,8 @@ export class HItemPengajuanComponent {
       NAME_TYPE : ''
     }
   ];
-  act_pengajuan = this.arr_request_type[0]['NAME_TYPE'];
 
+  act_pengajuan = this.arr_request_type[0]['NAME_TYPE'];
 
   arr_pajak = [
       { pajak_type: '-', pajak_code: '0' },
@@ -64,24 +64,23 @@ export class HItemPengajuanComponent {
     EMPL_JOB_NAME : null as String | null,
   }
 
-  user_cabang:any
-
+  
   act_file = {
     file_name : '',
     file_base64 : '',
   };
-
+  
   arr_tipe_pajak = [
     { pajak_type: '-', pajak_code: '0' },
     { pajak_type: 'PPH', pajak_code: '1' },
     { pajak_type: 'PPN', pajak_code: '2' },
   ]
-
-
-
+  
+  
+  
 
   arr_files = [];
-
+  
   items = [
     {
       KETERANGAN: "",
@@ -100,12 +99,12 @@ export class HItemPengajuanComponent {
       bind_calc: false,
     },
   ];
-
+  
   arr_kom_type = [
     { POSISION: 'APPROVE' },
     { POSISION: 'CEK' },
   ]
-
+  
   items_kom_approve = [
     {
       EMPL_NAME: null as String | null,
@@ -114,7 +113,7 @@ export class HItemPengajuanComponent {
       LVL: null as number | String | null,
     },
   ];
-
+  
   arr_office = [
     { office_name: 'Grogol', office_code: '903' },
     { office_name: 'Depok', office_code: '904' },
@@ -122,11 +121,18 @@ export class HItemPengajuanComponent {
     { office_name: 'Cikupa', office_code: '929' },
   ]
 
+  arr_tipe_pengajuan = [
+    'FPPU',
+    'MI',
+  ]
+
   str_info_pengajuan:any = '';
   act_office:any = this.arr_office[0]['office_code'];
   is_fetching:boolean = false;
   base64_sig_data:any = null;
-
+  user_cabang:any
+  act_tipe_pengajuan = '';
+  
 
   ngOnInit() {
     this.initLoad();
@@ -228,9 +234,10 @@ export class HItemPengajuanComponent {
   // ===============================================================
   
   async initLoad(){
-    // console.log('initLoad')
-    await this.get_rekening();
-    await this.get_request_type();
+    this.get_rekening();
+    this.get_request_type();
+
+    this.act_tipe_pengajuan = this.arr_tipe_pengajuan[0];
 
     this.setInit();
   }
@@ -298,7 +305,7 @@ export class HItemPengajuanComponent {
 
 
   // ===============================================================
-  // ========================== INPUTS ===========================
+  // =========================== INPUTS ============================
   // ===============================================================
 
 
@@ -466,16 +473,30 @@ export class HItemPengajuanComponent {
 
     // ------------ ITEMS DETECT ------------
 
-    for (let el of this.items) {
-      if (el.KETERANGAN == '' || el.HARGA_SATUAN == 0 || el.QTY == 0 || el.unf_rek == '') {
-        let notif_str = 'Data pengajuan belum lengkap.';
-        this.snackbar.open(notif_str, undefined, {
-          duration: 5000,
-          panelClass: ['notif_failed']
-        })
-        return false;
+    if(this.act_tipe_pengajuan == 'FPPU'){
+      for (let el of this.items) {
+        if (el.KETERANGAN == '' || el.HARGA_SATUAN == 0 || el.QTY == 0 || el.unf_rek == '') {
+          let notif_str = 'Data pengajuan belum lengkap.';
+          this.snackbar.open(notif_str, undefined, {
+            duration: 5000,
+            panelClass: ['notif_failed']
+          })
+          return false;
+        }
       }
-    };
+    }else{
+      for (let el of this.items) {
+        if (el.KETERANGAN == '' || el.HARGA_SATUAN == 0 || el.QTY == 0 ) {
+          let notif_str = 'Data pengajuan belum lengkap.';
+          this.snackbar.open(notif_str, undefined, {
+            duration: 5000,
+            panelClass: ['notif_failed']
+          })
+          return false;
+        }
+      }
+    }
+
 
     // ------------ KOM APPROVE DETECT ------------
 
@@ -509,15 +530,16 @@ export class HItemPengajuanComponent {
   filter_rek(){
     // (3) ['BCA', 'Aldi', '1231231010']
 
-    this.items.forEach(el => {
-      let str_rek = el['unf_rek'] 
-      let arr_rek = str_rek?.split(' - ')
-
-      el['NO_REK'] =  arr_rek![2].toString()
-      el['BANK_NAME'] =  arr_rek![0].toString()
-      el['NAMA_REK'] =  arr_rek![1].toString()
-
-    })
+    if(this.act_tipe_pengajuan == 'FPPU'){
+      this.items.forEach(el => {
+        let str_rek = el['unf_rek'] 
+        let arr_rek = str_rek?.split(' - ')
+  
+        el['NO_REK'] =  arr_rek![2].toString()
+        el['BANK_NAME'] =  arr_rek![0].toString()
+        el['NAMA_REK'] =  arr_rek![1].toString()
+      })
+    }
   }
 
 

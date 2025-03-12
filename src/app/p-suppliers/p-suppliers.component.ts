@@ -185,6 +185,7 @@ export class PSuppliersComponent {
     }
   }
 
+  
   listen_inps(){
     console.log(this.act_bank);
     if(
@@ -199,6 +200,7 @@ export class PSuppliersComponent {
 
     console.log(this.can_add_suppl);
   }
+
 
   reset_add_suppl(){
     this.suppl_bank_name = ''; 

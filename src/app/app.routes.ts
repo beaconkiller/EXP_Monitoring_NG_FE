@@ -13,6 +13,7 @@ import { PUserProfileComponent } from './p-user-profile/p-user-profile.component
 import { PRequestDtlComponent } from './p-request-dtl/p-request-dtl.component';
 import { CSignaturePadComponent } from './p-request-dtl/c-signature-pad/c-signature-pad.component';
 import { PSuppliersComponent } from './p-suppliers/p-suppliers.component';
+import { PJenisPembayaranComponent } from './p-jenis-pembayaran/p-jenis-pembayaran.component';
 
 export const routes: Routes = [
     {
@@ -36,6 +37,7 @@ export const routes: Routes = [
             { path: 'profile', component: PUserProfileComponent },
             { path: 'request-dtl', component: PRequestDtlComponent },
             { path: 'suppliers', component: PSuppliersComponent},
+            { path: 'jenis_pembayaran', component: PJenisPembayaranComponent},
             { path: 'd-sig', component: CSignaturePadComponent},
         ]
     },

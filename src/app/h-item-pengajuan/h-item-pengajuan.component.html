@@ -26,15 +26,39 @@
 
     <div class="pb-8"></div>
 
-    <div class="flex items-center">
-        <p class="text-[#282828]">Info Pengajuan : </p>
-        <div class="mx-2"></div>
-        <input [(ngModel)]="str_info_pengajuan"
-        placeholder="Info Pengajuan"
-        class="p-2 w-[40vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"
-        type="text">
+    <div class="p-4 rounded-md border-[1px] border-[#ccc] w-fit">
 
+        <!-- ====================================================== -->
+        <!-- ================ JUDUL INFO PENGAJUAN ================ -->
+        <!-- ====================================================== -->
+    
+        <div class="flex items-center">
+            <p class="text-[#282828] w-40">Judul Info Pengajuan : </p>
+            <div class="mx-2"></div>
+            <input [(ngModel)]="str_info_pengajuan"
+            placeholder="Judul Info Pengajuan"
+            class="p-1.5 w-[40vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"
+            type="text">
+        </div>
+    
+        <div class="py-1"></div>
+    
+        <!-- ====================================================== -->
+        <!-- =================== TIPE PENGAJUAN =================== -->
+        <!-- ====================================================== -->
+    
+        <div class="flex items-center">
+            <p class="text-[#282828] w-40">Tipe Pengajuan : </p>
+            <div class="mx-2"></div>
+            <select 
+                [(ngModel)]="act_tipe_pengajuan"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-fit p-1.5 tracking-wider"
+            >
+                <option *ngFor="let item of arr_tipe_pengajuan">{{item}}</option>
+            </select>
+        </div>  
     </div>
+
 
     <div class="pb-8"></div>
 
@@ -92,8 +116,8 @@
                         <td>
                             <select [value]="item.JENIS_PEMBIAYAAN"
                                 (change)="on_type_pengajuan_changed($event)"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 tracking-wider">
-                                >
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 tracking-wider"
+                            >
                                 <option *ngFor="let i_jenis_pembiayaan of arr_request_type"
                                     [value]="i_jenis_pembiayaan.NAME_TYPE"
                                     class="tracking-wider"

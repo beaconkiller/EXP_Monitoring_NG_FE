@@ -1,53 +1,32 @@
-<div class="">
-
-    <p class="text-2xl mb-4 font-medium tracking-wide rounded-md w-fit">Set Up Supplier</p>
+<div>
+    <p class="text-2xl mb-4 font-medium tracking-wide rounded-md w-fit">Set Up Jenis Pembayaran</p>
 
     <div class="text-sm">
         <div class="flex flex-col justify-center">
-            <label class="mb-2">Supplier name :</label>
+            <label class="">Nama Jenis Pembayaran : </label>
+            <p class="text-sm text-[#888] tracking-wide rounded-md w-fit mb-2">
+                Pastikan jenis pembayaran belum ada / belum dibuat.
+            </p>
             <input 
                 (input)="listen_inps()"
-                [(ngModel)]="suppl_name"
+                [(ngModel)]="act_jenis_pemb"
                 class="p-2 w-[30vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"
             >
         </div>
 
-        <div class="my-4"></div>
+        <div class="py-2"></div>
 
         <div class="flex flex-col justify-center">
-            <label class="mb-2">Nama Rekening Supplier :</label>
-            <input 
-                (input)="listen_inps()"
-                [(ngModel)]="suppl_rek_name"
+            <label class="mb-2">Group Jenis Pembayaran : </label>
+            <select 
+                [(ngModel)]="act_jenis_pemb_group"
                 class="p-2 w-[30vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"
             >
-        </div>
-
-        <div class="my-4"></div>
-
-        <div class="flex flex-col justify-center">
-            <label class="mb-2">Nomor Rekening Supplier :</label>
-            <input 
-                (input)="listen_inps()"
-                [(ngModel)]="suppl_rek_no"
-                class="p-2 w-[30vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"
-            >
-        </div>
-        
-        <div class="my-4"></div>
-
-        <div class="flex flex-col justify-center">
-            <label class="mb-2">Bank :</label>
-
-            <div class="w-[30vw]">
-                <ng-select  
-                    (remove)="clear_act_bank()"
-                    (clear)="clear_act_bank()"
-                    [items]="arr_banks"
-                    (change)="on_banks_changed($event)">
-                </ng-select>
-            </div>
-
+                <option *ngFor="let item of arr_jenis_pemb_group">
+                    {{item}}
+                </option>
+            </select>
+            
         </div>
 
         <div class="my-6"></div>
@@ -58,7 +37,7 @@
 
         <div class="flex flex-row">
             <button 
-                (click)="reset_add_suppl()" 
+                (click)="clear_act_pemb_group()" 
                 class="w-24 p-2 bg-red-700 border-2 opacity-100 border-red-600 text-white rounded-md transition-all"
             >
                 <p [ngClass]="{'placeholder-opacity-100' : is_fetching === true}">Reset</p>
@@ -67,38 +46,37 @@
             <div class="mx-1"></div>
 
             <button 
-                (click)="add_supplier()" class="w-44 p-2 bg-green-700 border-2 opacity-100 border-green-600 text-white rounded-md transition-all"
-                [ngClass]="{'bg-gray-300' : is_fetching === true, 'opacity-50' : !can_add_suppl}"
+                (click)="add_jenis_pemb()" class="w-52 p-2 bg-green-700 border-2 opacity-100 border-green-600 text-white rounded-md transition-all"
+                [ngClass]="{'bg-gray-300' : is_fetching === true, 'opacity-50' : !allow_add_jenis_pemb}"
             >
-                <p [ngClass]="{'placeholder-opacity-100' : is_fetching === true}">Tambah Supplier</p>
+                <p [ngClass]="{'placeholder-opacity-100' : is_fetching === true}">Tambah Jenis Pembayaran</p>
             </button>
         </div>
 
     </div>
 
 
-
     <!-- ============================================================================= -->
-    <!-- ============================== SUPPLIERS TABLE ============================== -->
+    <!-- =========================== JENIS PEMBAYARAN TABLE ========================== -->
     <!-- ============================================================================= -->
 
-    <div *ngIf="jobCheck_it()" 
+    <div 
         class="flex flex-col"
     >
         <div class="py-8"></div>
     
-        <p class="text-2xl mb-4 font-medium tracking-wide rounded-md w-fit">Edit Supplier</p>
+        <p class="text-2xl mb-4 font-medium tracking-wide rounded-md w-fit">Jenis Pembayaran</p>
 
         <!-- =================== SPAWN THIS LATER ================= -->
         <!-- =================== SPAWN THIS LATER ================= -->
         <!-- =================== SPAWN THIS LATER ================= -->
 
-        <div *ngIf="show_suppl_action_box">
+        <!-- <div *ngIf="show_suppl_action_box">
             <app-c-suppliers-action-box 
                 (closePopupEvent)="this.show_suppl_action_box = false"
                 [supplData]="act_suppl"
             ></app-c-suppliers-action-box>
-        </div>
+        </div> -->
 
         <!-- =================== FILTER / SEARCH DIV ================= -->
         <!-- =================== FILTER / SEARCH DIV ================= -->
@@ -106,14 +84,14 @@
 
         <div class="mb-4">
             <div class="rounded-full border border-gray-400 p-1 flex flex-row items-center w-fit">
-                <input [(ngModel)]="q_search" (keyup.enter)="get_suppliers()" placeholder="Search" 
+                <input [(ngModel)]="q_search" (keyup.enter)="get_tableData()" placeholder="Search" 
                 class="p-2 ml-2 bg-none rounded-full outline-none text-sm w-[200px]">
                 
                 <div class="mx-1"></div>
     
                 <Button 
                     class="p-1 h-fit bg-[#252525] fill-white rounded-full text-white w-fit flex items-center"
-                    (click)="get_suppliers()"
+                    (click)="get_tableData()"
                 >
                     <p class="ml-2 tracking-wide text-sm mb-[0.6px]">Search</p>
                     <div class="mx-[2px]"></div>
@@ -137,28 +115,26 @@
                 <thead class="w-full  divide-y">
                     <tr class="">
                         <th class="w-[30px] border-slate-500 font-medium pl-2 py-4">NO</th>
-                        <th class="w-[130px] border-slate-500 font-medium pl-2 py-4">Nama Supplier</th>
-                        <th class="w-[130px] border-slate-500 font-medium pl-2 py-4">Nama Rekening</th>
-                        <th class="w-[60px] border-slate-500 font-medium pl-2 py-4">No. Rekening</th>
-                        <th class="w-[40px]  border-slate-500 font-medium pl-2 py-4">Nama Bank</th>
-                        <th class="w-[80px]  border-slate-500 font-medium pl-2 py-4">Created by</th>
-                        <th class="w-[60px]  border-slate-500 font-medium pl-2 py-4">Created Date</th>
-                        <th class="w-[60px] border-slate-500 font-medium pl-2 py-4">ACTION</th>                    
+                        <th class="w-[200px] border-slate-500 font-medium pl-2 py-4">Name Type</th>
+                        <th class="w-[100px] border-slate-500 font-medium pl-2 py-4">Group Type</th>
+                        <th class="w-[40px] border-slate-500 font-medium pl-2 py-4">Is Active</th>
+                        <th class="w-[80px] border-slate-500 font-medium pl-2 py-4">Created By</th>
+                        <th class="w-[100px] border-slate-500 font-medium pl-2 py-4">Created Date</th>
+                        <th *ngIf="jobCheck_it()" class="w-[130px] border-slate-500 font-medium pl-2 py-4">Action</th>
                     </tr>
                 </thead>
     
                 <tbody class="border-separate pt-10 ">
                     <tr *ngFor="let item of tableData; let i = index" class="h-8 flex-grow-0 odd:bg-gray-100 ">
                         <td class="px-2 text-center">{{i+1}}</td>
-                        <td class="px-2 text-left">{{item.SUPPLIER_NAME}}</td>
-                        <td class="px-2 text-start">{{item.REK_NAME}}</td>
-                        <td class="px-2 text-center py-4">{{item.REK_NO}}</td>
-                        <td class="px-2 text-center">{{item.BANK_NAME}}</td>
-                        <td class="px-2 text-center py-2">{{item.CREATED_BY}}</td>
-                        <td class="px-2 text-center py-2">{{item.CREATED_DATE}}</td>
-                        <td class="px-2 text-center py-2">
+                        <td class="px-2 text-left">{{item.NAME_TYPE}}</td>
+                        <td class="px-2 text-center">{{item.group_type}}</td>
+                        <td class="px-2 text-center py-2">{{item.is_active}}</td>
+                        <td class="px-2 text-center py-2">{{item.created_by}}</td>
+                        <td class="px-2 text-center py-2">{{item.created_date}}</td>
+                        <td *ngIf="jobCheck_it()" class="px-2 text-center py-2">
                             <button
-                                (click)="f_show_suppl_action_box(i)" 
+                                (click)="f_show_jenis_pemb_action_box(i)" 
                                 class="mx-2 rounded-full px-4 py-1 bg-[#242424] text-white"
                             >
                                 Action
@@ -208,7 +184,7 @@
 
         <div class="py-8"></div>
     </div>
+
+
     
-
-
 </div>
