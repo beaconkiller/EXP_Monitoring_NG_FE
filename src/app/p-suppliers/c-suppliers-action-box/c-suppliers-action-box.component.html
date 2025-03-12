@@ -47,7 +47,7 @@
             <p class="text-sm w-32">Bank Name: </p>
             <div class="mx-2"></div>
             <input 
-                [ngModel]="supplData_new.BANK_NAME"
+                [(ngModel)]="supplData_new.BANK_NAME"
                 disabled
                 class="p-1 px-2 w-[26vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"            
             >
@@ -58,10 +58,17 @@
         <div class="flex flex-row items-center">
             <p class="text-sm w-32">Is Active: </p>
             <div class="mx-2"></div>
-            <input 
+            <select 
+                class="p-1 px-2 w-[26vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"
+                [(ngModel)]="supplData_new.IS_ACTIVE" 
+            >
+                <option>Y</option>
+                <option>N</option>
+            </select>
+            <!-- <input 
                 [(ngModel)]="supplData_new.IS_ACTIVE"
                 class="p-1 px-2 w-[26vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"            
-            >
+            > -->
         </div>
 
         <div class="my-1"></div>

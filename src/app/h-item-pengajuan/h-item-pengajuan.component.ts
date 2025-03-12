@@ -13,26 +13,28 @@ import { Router } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select'
 import { NgLabelTemplateDirective, NgOptionTemplateDirective, NgSelectComponent } from '@ng-select/ng-select';
 import { CSignaturePadComponent } from '../p-request-dtl/c-signature-pad/c-signature-pad.component';
+import { CLoadingWidgetComponent } from "../c-loading-widget/c-loading-widget.component";
 
 
 
 @Component({
   selector: 'app-h-item-pengajuan',
   imports: [
-    CItemPengajuanComponent, 
+    CItemPengajuanComponent,
     CApprovalItemComponent,
-    FormsModule, 
-    CommonModule, 
-    CdkDropList, 
-    CdkDrag, 
-    HttpClientModule, 
+    FormsModule,
+    CommonModule,
+    CdkDropList,
+    CdkDrag,
+    HttpClientModule,
     CApprovalItemComponent,
     NgSelectModule,
     NgLabelTemplateDirective,
     NgOptionTemplateDirective,
     NgSelectComponent,
     CSignaturePadComponent,
-  ],
+    CLoadingWidgetComponent
+],
   standalone: true,
   templateUrl: './h-item-pengajuan.component.html',
   styleUrl: './h-item-pengajuan.component.css'
