@@ -1,11 +1,11 @@
 <div>
-    <p class="text-2xl mb-4 font-medium tracking-wide rounded-md w-fit">Set Up Jenis Pembayaran</p>
+    <p class="text-2xl mb-4 font-medium tracking-wide rounded-md w-fit">Set Up Jenis Pembiayaan</p>
 
     <div class="text-sm">
         <div class="flex flex-col justify-center">
-            <label class="">Nama Jenis Pembayaran : </label>
+            <label class="">Nama Jenis Pembiayaan : </label>
             <p class="text-sm text-[#888] tracking-wide rounded-md w-fit mb-2">
-                Pastikan jenis pembayaran belum ada / belum dibuat.
+                Pastikan jenis Pembiayaan belum ada / belum dibuat.
             </p>
             <input 
                 (input)="listen_inps()"
@@ -17,7 +17,7 @@
         <div class="py-2"></div>
 
         <div class="flex flex-col justify-center">
-            <label class="mb-2">Group Jenis Pembayaran : </label>
+            <label class="mb-2">Group Jenis Pembiayaan : </label>
             <select 
                 [(ngModel)]="act_jenis_pemb_group"
                 class="p-2 w-[30vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"
@@ -49,7 +49,7 @@
                 (click)="add_jenis_pemb()" class="w-52 p-2 bg-green-700 border-2 opacity-100 border-green-600 text-white rounded-md transition-all"
                 [ngClass]="{'bg-gray-300' : is_fetching === true, 'opacity-50' : !allow_add_jenis_pemb}"
             >
-                <p [ngClass]="{'placeholder-opacity-100' : is_fetching === true}">Tambah Jenis Pembayaran</p>
+                <p [ngClass]="{'placeholder-opacity-100' : is_fetching === true}">Tambah Jenis Pembiayaan</p>
             </button>
         </div>
 
@@ -57,7 +57,7 @@
 
 
     <!-- ============================================================================= -->
-    <!-- =========================== JENIS PEMBAYARAN TABLE ========================== -->
+    <!-- =========================== JENIS Pembiayaan TABLE ========================== -->
     <!-- ============================================================================= -->
 
     <div 
@@ -65,7 +65,7 @@
     >
         <div class="py-8"></div>
     
-        <p class="text-2xl mb-4 font-medium tracking-wide rounded-md w-fit">Jenis Pembayaran</p>
+        <p class="text-2xl mb-4 font-medium tracking-wide rounded-md w-fit">Jenis Pembiayaan</p>
 
         <!-- =================== SPAWN THIS LATER ================= -->
         <!-- =================== SPAWN THIS LATER ================= -->

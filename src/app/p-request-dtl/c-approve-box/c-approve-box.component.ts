@@ -29,10 +29,10 @@ export class CApproveBoxComponent {
       appr:'RJ',
       appr_name:'Reject'
     },
-    {
-      appr:'RC',
-      appr_name:'Re-Check'
-    },
+    // {
+    //   appr:'RC',
+    //   appr_name:'Re-Check'
+    // },
   ]
 
   canSend:boolean = false;

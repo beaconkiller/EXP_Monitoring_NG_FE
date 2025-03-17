@@ -19,6 +19,6 @@ export class NavleftComponent {
       { name: 'Histori Pengajuan', route: 'cek-pengajuan' },
       // { name: 'Revisi Pengajuan', route: 'revisi-pengajuan' },
       { name: 'Suppliers', route: 'suppliers' },
-      { name: 'Jenis Pembayaran', route: 'jenis_pembayaran' },
+      { name: 'Jenis Pembiayaan', route: 'jenis_pembayaran' },
     ]
 }

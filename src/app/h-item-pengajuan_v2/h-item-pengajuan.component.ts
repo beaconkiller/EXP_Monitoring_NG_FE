@@ -128,7 +128,7 @@ export class HItemPengajuanComponent {
 
   arr_tipe_pengajuan = [
     'FPPU',
-    'MI',
+    // 'MI',
   ]
 
   str_info_pengajuan:any = '';
