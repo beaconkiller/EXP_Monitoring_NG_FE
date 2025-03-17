@@ -78,7 +78,7 @@
                         </td>
     
                         <td class=" ">
-                            <div class="flex py-2 justify-end mr-8">{{ format_rp(item['HARGA_SATUAN']) }}</div>
+                            <div class="flex py-2 justify-end mr-8">{{ format_rp(item['HARGA_SATUAN']) | number: '2.'}}</div>
                         </td>
     
                         <td class=" ">
@@ -86,7 +86,7 @@
                         </td>
     
                         <td class=" ">
-                            <div class="flex py-2 justify-end mr-8">{{ item['TOTAL_HARGA'] }}</div>
+                            <div class="flex py-2 justify-end mr-8">{{ item['TOTAL_HARGA'] | number: '2.'}}</div>
                         </td>
     
                     </tr>
@@ -173,7 +173,7 @@
                     [ngClass]="{
                         'border-green-700 bg-[#fbfffa]' : item_approval['STATUS'] == 'AP',
                         'border-red-700 bg-[#fffcfc]' : item_approval['STATUS'] == 'RJ',
-                        'border-yellow-500' : item_approval['STATUS'] == 'RC',
+                        'border-yellow-500 bg-[#fffbef]' : item_approval['STATUS'] == 'RC',
                     }"
                 >   
                              
@@ -201,7 +201,7 @@
 
                     <div class="flex justify-between flex-row flex-grow-0 items-center">
                         <div 
-                            class="flex flex-col justify-center items-center w-20 flex-grow-0 mt-2 px-2 p-2 rounded-md text-white"       
+                            class="flex flex-col justify-center items-center w-32 flex-grow-0 mt-2 px-2 p-2 rounded-md text-white"       
                             [ngClass]="{
                                 'bg-green-700' : item_approval['STATUS'] == 'AP',
                                 'bg-red-700' : item_approval['STATUS'] == 'RJ',
