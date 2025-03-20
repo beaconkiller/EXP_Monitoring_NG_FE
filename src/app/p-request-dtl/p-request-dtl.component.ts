@@ -4,18 +4,15 @@ import { lastValueFrom } from 'rxjs';
 import { config } from '../../config/config';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogRef,
-  MatDialogTitle,
-  
-} from '@angular/material/dialog';
 import { CApproveBoxComponent } from './c-approve-box/c-approve-box.component';
 import { get_user_detail } from '../shared/utils_general';
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+pdfMake.vfs = pdfFonts.vfs;
+
+import jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
+
 
 
 @Component({
@@ -28,6 +25,7 @@ import { get_user_detail } from '../shared/utils_general';
 export class PRequestDtlComponent {
   constructor(private http:HttpClient){}
   @ViewChild('spawnApprove') spawnApprove!: ElementRef<HTMLDialogElement>;
+  @ViewChild('captureDiv', { static: false }) captureDiv!: ElementRef;
 
 
   req_id:any;
@@ -157,7 +155,7 @@ export class PRequestDtlComponent {
 
   file_download(){
     let base64Data = this.file_data.data;
-    const fileName = "download.pdf"; // Desired file name
+    const fileName = "download.pdf";
     const dataUrl = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${base64Data}`;
 
 
@@ -181,6 +179,84 @@ export class PRequestDtlComponent {
     this.spawn_box_approve = true;
   }
 
+
+  // export_pdf(){
+  //   // var now = new Date();
+
+  //   pdfMake.createPdf({
+  //       content: [
+  //         { text: "PT TRANSPACIFIC FINANCE", style: "header" },
+  //         {text:"Cabang / Outlet \n\n\n", style:'normalText',},
+  //         {
+  //           text: 'FORMULIR PERMINTAAN PENGELUARAN UANG \n\n\n',
+  //           alignment: 'center',
+  //           style:'normalText',
+  //         },
+  //         {text:"Tanggal :", style:'normalText',},
+  //         {text:"Mohon dapat dikeluarkan uang untuk pembayaran sebagai berikut :", style:'normalText',},
+  //         {
+  //           style: "tableExample",
+  //           table: {
+  //             widths:[20,'*',100,100],
+  //             body: [
+  //               ["No", "Keterangan", "Nama/No Rekening", "Jumlah"],
+  //               ["1", "Another one here", "OK?", "adsad"]
+  //             ]
+  //           }
+  //         },      
+  //       ],
+
+  //       styles: {
+  //         header: {
+  //           fontSize: 18,
+  //           bold: true,
+  //           margin: [0, 0, 0, 10]
+  //         },
+  //         subheader: {
+  //           fontSize: 16,
+  //           bold: true,
+  //           margin: [0, 10, 0, 5]
+  //         },
+  //         normalText: {
+  //           fontSize: 10 // Change this to the desired size
+  //         },
+  //         tableExample: {
+  //           margin: [0, 5, 0, 15]
+  //         }
+  //       }
+  //     }).download("test.pdf")
+  // }
+
+  async export_pdf() {
+    let data:any = document.getElementById('printArea');  
+
+    const canvas = await html2canvas(data, {
+      scale: 2,
+      useCORS: true,
+      onclone: (clonedDocument) => {
+        const clonedElement = clonedDocument.body.querySelector('printArea') as HTMLElement;
+      }
+    });
+
+    const imageData = canvas.toDataURL('image/png');
+    
+    
+    // const link = document.createElement('a');
+    // link.href = imageData;
+    // link.download = 'captured-image.png';
+    // link.click();
+
+    let pdf = new jspdf('p', 'mm', 'a4'); 
+
+    const pdfWidth = 210; // A4 width in mm
+    const imgWidth = pdfWidth;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width; // Maintain aspect ratio
+  
+    pdf.addImage(imageData, 'PNG', 0, 0, imgWidth, imgHeight);
+  
+    pdf.save('Filename.pdf');
+  
+  }
 
   
 

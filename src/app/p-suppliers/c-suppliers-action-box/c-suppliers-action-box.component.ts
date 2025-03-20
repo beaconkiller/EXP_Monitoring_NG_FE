@@ -78,7 +78,7 @@ export class CSuppliersActionBoxComponent {
       this.is_fetching_update = true;
       
       let queryParams = {
-        'data':this.supplData
+        'data':this.supplData_new
       } 
   
       let xRes:any = await lastValueFrom(this.http.post(config.env_dev.host+'/api-eappr/update_suppl', queryParams));  
@@ -88,7 +88,8 @@ export class CSuppliersActionBoxComponent {
         this.snackbar.open(notif_str, undefined, {
           duration: 5000,
           panelClass: ['notif_success']
-        })  
+        })
+        this.getApproval.emit();
       }else{
         let notif_str = 'Update supplier gagal.'
         this.snackbar.open(notif_str, undefined, {

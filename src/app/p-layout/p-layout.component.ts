@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { PNewApprovalComponent } from "../.p-new-approval/p-new-approval.component";
-import { NavleftComponent } from "../navleft/navleft.component";
+import { NavleftComponent } from "../c_/navleft/navleft.component";
 import { RouterModule, RouterOutlet } from '@angular/router';
-import { CNavtopComponent } from "../c-navtop/c-navtop.component";
+import { CNavtopComponent } from "../c_/c-navtop/c-navtop.component";
 import { CommonModule } from '@angular/common';
+import { NavleftV2Component } from "../c_/navleft-v2/navleft-v2.component";
 
 @Component({
   selector: 'app-p-layout',
-  imports: [CommonModule, NavleftComponent, RouterModule, CNavtopComponent, CNavtopComponent],
+  imports: [CommonModule, NavleftComponent, RouterModule, CNavtopComponent, CNavtopComponent, NavleftV2Component],
   templateUrl: './p-layout.component.html',
   styleUrl: './p-layout.component.css'
 })

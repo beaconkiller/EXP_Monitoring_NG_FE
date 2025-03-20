@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { config } from '../../config/config';
 import { HttpClient, HttpClientModule, HttpHeaders, provideHttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
+import { get_user_detail } from '../shared/utils_general';
 
 @Component({
   selector: 'app-p-login',
@@ -14,6 +15,7 @@ import { lastValueFrom } from 'rxjs';
   standalone: true,
 })
 export class PLoginComponent {
+  snackbar: any;
   constructor(private router: Router, private http: HttpClient) { };
 
   fetching = false;
@@ -23,15 +25,8 @@ export class PLoginComponent {
   pwd = '';
   resp_login = '';
 
-  // user_dtl: any = {
-  //   empl_name: 'Muhammad Ramzy',
-  //   empl_code: '71005122',
-  //   empl_jobcode: 'IT',
-  //   office_name: 'Depok',
-  // }
 
   user_dtl = {};
-
 
   async login() {
 
@@ -45,11 +40,7 @@ export class PLoginComponent {
       } 
 
       var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/login_main', {params: queryParams}));
-      
-      // var xRes:any = await lastValueFrom(this.http.post(config.env_dev.host+'/api-eappr/mobile/v1/login_mobile', queryParams)); // DEBUG TEST PAKE API MOBILE  
-      // // var xRes:any = await lastValueFrom(this.http.get('/api-eappr/login_main', {params: queryParams}));
-      // // var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host + ':'+config.env_dev.port+'/api-eappr/login_main', {params: queryParams}));
-      
+            
       console.log(xRes);
       if(xRes['isSuccess'] != true){
         this.resp_login = xRes['message'];
@@ -60,7 +51,7 @@ export class PLoginComponent {
         // ----------------- SUCCESS ----------------- 
         // ------------------------------------------ 
 
-        this.account_setup(xRes)
+        await this.account_setup(xRes)
         this.router.navigate(['/home']);
         this.fetching = false;
       }  
@@ -72,18 +63,36 @@ export class PLoginComponent {
 
   
 
-  account_setup(data: any) {
+  async account_setup(data: any) {
     console.log(data);
-
-    let act_acc = this.user_dtl;
-    let currTime: any = Date.now();
-    let gen_token: any = this.usn + '|' + currTime;
 
     
     localStorage.setItem('user_dtl', JSON.stringify(data));
     localStorage.setItem('q_paging', '1');
     localStorage.setItem('act_request_id', '');
+    
+    
+    let menuData:any = await this.getMenu();
+    console.log(menuData);
+    localStorage.setItem('menuData', JSON.stringify(menuData['data']));
   }
+
+
+  async getMenu(){
+    try {
+      let queryParams = {
+        user_dtl: get_user_detail(),
+      }
+  
+      let xRes:any = await lastValueFrom(this.http.post(config.env_dev.host+'/api-eappr/get_menu', queryParams));
+      return xRes;
+
+    } catch (error) {
+      console.log(error);
+    }
+    
+  }
+
 
 
 }

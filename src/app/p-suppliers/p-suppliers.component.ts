@@ -8,7 +8,7 @@ import { get_user_detail } from '../shared/utils_general';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CSuppliersActionBoxComponent } from "./c-suppliers-action-box/c-suppliers-action-box.component";
-import { CLoadingWidgetComponent } from '../c-loading-widget/c-loading-widget.component';
+import { CLoadingWidgetComponent } from '../c_/c-loading-widget/c-loading-widget.component';
 
 @Component({
   selector: 'app-p-suppliers',

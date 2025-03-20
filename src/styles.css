@@ -8,6 +8,12 @@
 /* @import "../node_modules/@ng-select/ng-select/themes/material.theme.css";
 @import "../node_modules/@ng-select/ng-select/themes/default.theme.css"; */
 
+
+body > div:last-child > span + img {
+  display: inline !important;
+}
+
+
 /* =================================== */
 
 .ng-dropdown-panel {

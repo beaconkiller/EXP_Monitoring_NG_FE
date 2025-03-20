@@ -1,5 +1,5 @@
 import { Component, ComponentRef, ViewChild, viewChild, ViewContainerRef } from '@angular/core';
-import { CItemPengajuanComponent } from '../c-item-pengajuan/c-item-pengajuan.component';
+import { CItemPengajuanComponent } from '../c_/c-item-pengajuan/c-item-pengajuan.component';
 import { FormsModule, NgSelectOption } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CdkDrag, CdkDragDrop, CdkDropList, DragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select'
 import { NgLabelTemplateDirective, NgOptionTemplateDirective, NgSelectComponent } from '@ng-select/ng-select';
 import { CSignaturePadComponent } from '../p-request-dtl/c-signature-pad/c-signature-pad.component';
-import { CLoadingWidgetComponent } from "../c-loading-widget/c-loading-widget.component";
+import { CLoadingWidgetComponent } from "../c_/c-loading-widget/c-loading-widget.component";
 
 
 

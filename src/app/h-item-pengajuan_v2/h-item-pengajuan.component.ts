@@ -1,5 +1,5 @@
 import { Component, ComponentRef, ViewChild, viewChild, ViewContainerRef } from '@angular/core';
-import { CItemPengajuanComponent } from '../c-item-pengajuan/c-item-pengajuan.component';
+import { CItemPengajuanComponent } from '../c_/c-item-pengajuan/c-item-pengajuan.component';
 import { FormsModule, NgSelectOption } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CdkDrag, CdkDragDrop, CdkDropList, DragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select'
 import { NgLabelTemplateDirective, NgOptionTemplateDirective, NgSelectComponent } from '@ng-select/ng-select';
 import { CSignaturePadComponent } from '../p-request-dtl/c-signature-pad/c-signature-pad.component';
-import { CLoadingWidgetComponent } from "../c-loading-widget/c-loading-widget.component";
+import { CLoadingWidgetComponent } from "../c_/c-loading-widget/c-loading-widget.component";
 
 
 
@@ -89,9 +89,9 @@ export class HItemPengajuanComponent {
       QTY: 0,
       PAJAK_TYPE: '-',
       PAJAK_AMOUNT: null as String | number | null,
-      IS_PPN: 'N',
+      FLAG_PPN: 'N',
       PPN: null as String | number | null,
-      IS_PPH: 'N',
+      FLAG_PPH: 'N',
       PPH: null as String | number | null,
       TOTAL_HARGA: 0,
       JENIS_PEMBIAYAAN: null as String | null,
@@ -156,9 +156,9 @@ export class HItemPengajuanComponent {
       QTY: 0,
       PAJAK_TYPE: '-',
       PAJAK_AMOUNT: null,
-      IS_PPN: 'N',
+      FLAG_PPN: 'N',
       PPN: null as String | number | null,
-      IS_PPH: 'N',
+      FLAG_PPH: 'N',
       PPH: null as String | number | null,
       TOTAL_HARGA: 0,
       unf_rek: null,
@@ -293,9 +293,9 @@ export class HItemPengajuanComponent {
         QTY: 0,
         PAJAK_TYPE: '-',
         PAJAK_AMOUNT: null,
-        IS_PPN: 'N',
+        FLAG_PPN: 'N',
         PPN: null as String | number | null,
-        IS_PPH: 'N',
+        FLAG_PPH: 'N',
         PPH: null as String | number | null,  
         TOTAL_HARGA: 0,
         unf_rek: "",
@@ -345,10 +345,10 @@ export class HItemPengajuanComponent {
     console.log(val);
 
     if(val){
-      act_item.IS_PPN = 'Y';
+      act_item.FLAG_PPN = 'Y';
       act_item.PPN = 0;
     }else{
-      act_item.IS_PPN = 'N';
+      act_item.FLAG_PPN = 'N';
       act_item.PPN = null;
     }
 
@@ -363,10 +363,10 @@ export class HItemPengajuanComponent {
     let val = event.target.checked;
 
     if(val){
-      act_item.IS_PPH = 'Y';
+      act_item.FLAG_PPH = 'Y';
       act_item.PPH = 0;
     }else{
-      act_item.IS_PPH = 'N';
+      act_item.FLAG_PPH = 'N';
       act_item.PPH = null;
     }
 
@@ -534,7 +534,7 @@ export class HItemPengajuanComponent {
             panelClass: ['notif_failed']
           })
           return false;
-        }else if(el.IS_PPN == 'Y' && (Number(el.PPN) <= 0) || el.IS_PPH == 'Y' && (Number(el.PPH) <= 0)){
+        }else if(el.FLAG_PPN == 'Y' && (Number(el.PPN) <= 0) || el.FLAG_PPH == 'Y' && (Number(el.PPH) <= 0)){
 
           // ------------ PAJAK DETECT ------------
 
@@ -556,7 +556,7 @@ export class HItemPengajuanComponent {
             panelClass: ['notif_failed']
           })
           return false;
-        }else if(el.IS_PPN == 'Y' && (Number(el.PPN) <= 0) || el.IS_PPH == 'Y' && (Number(el.PPH) <= 0)){
+        }else if(el.FLAG_PPN == 'Y' && (Number(el.PPN) <= 0) || el.FLAG_PPH == 'Y' && (Number(el.PPH) <= 0)){
 
           // ------------ PAJAK DETECT ------------
 
@@ -609,7 +609,7 @@ export class HItemPengajuanComponent {
         let str_rek = el['unf_rek'] 
         let arr_rek = str_rek?.split(' - ')
   
-        el['NO_REK'] =  arr_rek![2].toString()
+        el['NO_REK'] =  arr_rek![3].toString()
         el['BANK_NAME'] =  arr_rek![0].toString()
         el['NAMA_REK'] =  arr_rek![1].toString()
       })
@@ -669,9 +669,11 @@ export class HItemPengajuanComponent {
         file_data: this.act_file
       }
 
+      console.log(queryParams.data)
+
   
       xRes = await lastValueFrom(this.http.post(config.env_dev.host+'/api-eappr/new_pengajuan', queryParams));
-      console.log(xRes);
+      // console.log(xRes);
 
       // ----- NOTIF -----
       this.snackbar.open(xRes.message, undefined, {

@@ -6,7 +6,7 @@ import { config } from '../../config/config';
 import { lastValueFrom } from 'rxjs';
 import { get_user_detail } from '../shared/utils_general';
 import { Route, Router } from '@angular/router';
-import { CPengajuanTableComponent } from '../c-pengajuan-table/c-pengajuan-table.component';
+import { CPengajuanTableComponent } from '../c_/c-pengajuan-table/c-pengajuan-table.component';
 
 @Component({
     selector: 'app-p-cek-pengajuan',

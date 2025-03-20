@@ -14,6 +14,7 @@ import { PRequestDtlComponent } from './p-request-dtl/p-request-dtl.component';
 import { CSignaturePadComponent } from './p-request-dtl/c-signature-pad/c-signature-pad.component';
 import { PSuppliersComponent } from './p-suppliers/p-suppliers.component';
 import { PJenisPembayaranComponent } from './p-jenis-pembayaran/p-jenis-pembayaran.component';
+import { PPengajuanMemoInternalComponent } from './p-pengajuan-memo-internal/p-pengajuan-memo-internal.component';
 
 export const routes: Routes = [
     {
@@ -39,6 +40,7 @@ export const routes: Routes = [
             { path: 'suppliers', component: PSuppliersComponent},
             { path: 'jenis_pembayaran', component: PJenisPembayaranComponent},
             { path: 'd-sig', component: CSignaturePadComponent},
+            { path: 'pengajuan-mi', component: PPengajuanMemoInternalComponent},
         ]
     },
     {

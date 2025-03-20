@@ -161,7 +161,7 @@
                                             class="p-2 pr-0 w-full focus:ring-0 outline-none"
                                             type="number"
                                             (input)="getTotalHarga(i)"
-                                            [disabled]="item.IS_PPN == 'N'"
+                                            [disabled]="item.FLAG_PPN == 'N'"
                                             [(ngModel)]="item.PPN"
                                         >
                                         <div class="p-2 bg-[#eee]">
@@ -188,7 +188,7 @@
                                             class="p-2 pr-0 w-full focus:ring-0 outline-none"
                                             type="number"
                                             (input)="getTotalHarga(i)"
-                                            [disabled]="item.IS_PPH == 'N'"
+                                            [disabled]="item.FLAG_PPH == 'N'"
                                             [(ngModel)]="item.PPH"
                                         >
                                         <div class="p-2 bg-[#eee]">
