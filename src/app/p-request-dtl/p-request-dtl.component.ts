@@ -37,6 +37,7 @@ export class PRequestDtlComponent {
   send_to_dialog:any = {};
   order_create_date:String = '';
   base64_sig_data:any = null;
+  exporting_pdf:boolean = false;
 
 
   file_data = {
@@ -229,33 +230,39 @@ export class PRequestDtlComponent {
 
   async export_pdf() {
     let data:any = document.getElementById('printArea');  
+    this.exporting_pdf = true;
 
-    const canvas = await html2canvas(data, {
-      scale: 2,
-      useCORS: true,
-      onclone: (clonedDocument) => {
-        const clonedElement = clonedDocument.body.querySelector('printArea') as HTMLElement;
-      }
-    });
-
-    const imageData = canvas.toDataURL('image/png');
+    await setTimeout(async() => {
+      const canvas = await html2canvas(data, {
+        scale: 3,
+        useCORS: true,
+        onclone: (clonedDocument) => {
+          const clonedElement = clonedDocument.body.querySelector('printArea') as HTMLElement;
+        }
+      });
+  
+      const imageData = canvas.toDataURL('image/png',);
+      
+      
+      // const link = document.createElement('a');
+      // link.href = imageData;
+      // link.download = 'captured-image.png';
+      // link.click();
+  
+      // let pdf = new jspdf('p', 'mm', 'a4'); 
+      let pdf = new jspdf({orientation:'p', unit:'mm', format:'a4',putOnlyUsedFonts:true, compress:true}); 
+  
+      const pdfWidth = 210; // A4 width in mm
+      const imgWidth = pdfWidth;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width; // Maintain aspect ratio
     
-    
-    // const link = document.createElement('a');
-    // link.href = imageData;
-    // link.download = 'captured-image.png';
-    // link.click();
+      pdf.addImage(imageData, 'PNG', 0, 0, imgWidth, imgHeight);
+      pdf.save('Filename.pdf');     
 
-    let pdf = new jspdf('p', 'mm', 'a4'); 
+      this.exporting_pdf = false;
+    }, 100);
+  
 
-    const pdfWidth = 210; // A4 width in mm
-    const imgWidth = pdfWidth;
-    const imgHeight = (canvas.height * imgWidth) / canvas.width; // Maintain aspect ratio
-  
-    pdf.addImage(imageData, 'PNG', 0, 0, imgWidth, imgHeight);
-  
-    pdf.save('Filename.pdf');
-  
   }
 
   
