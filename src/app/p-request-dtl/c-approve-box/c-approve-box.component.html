@@ -1,10 +1,10 @@
 <div
-    class="w-fit h-fit rounded-md bg-white p-2 px-3"
+    class="sm:w-fit w-[96vw] h-fit rounded-md bg-white p-1 px-3"
 >
-    <div class="flex flex-row justify-start">
-        <p class="text-xl">Request ID :</p>
+    <div class="sm:text-xl text-md flex flex-row justify-start">
+        <p class="">Request ID :</p>
         <div class="mx-1"></div>
-        <p class="text-xl tracking-wide font-medium ">{{req_data['req_id']}}</p>
+        <p class="tracking-wide font-medium ">{{req_data['req_id']}}</p>
     </div>
     
     <div class="my-6"></div>
@@ -66,7 +66,7 @@
 
     <!-- =================== APPROVE BUTTON =================== -->
 
-    <div class="flex flex-row">
+    <div class="flex flex-row py-2">
         <button
             (click)="send_approve()"
             [ngClass]="{

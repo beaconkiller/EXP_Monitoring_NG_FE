@@ -66,15 +66,14 @@ export class PLoginComponent {
   async account_setup(data: any) {
     console.log(data);
 
-    
     localStorage.setItem('user_dtl', JSON.stringify(data));
     localStorage.setItem('q_paging', '1');
     localStorage.setItem('act_request_id', '');
     
     
-    let menuData:any = await this.getMenu();
-    console.log(menuData);
-    localStorage.setItem('menuData', JSON.stringify(menuData['data']));
+    // let menuData:any = await this.getMenu();
+    // console.log(menuData);
+    // localStorage.setItem('menuData', JSON.stringify(menuData['data']));
   }
 
 

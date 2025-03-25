@@ -1,29 +1,57 @@
-<div class="h-screen w-[220px] bg-white border-r-2  drop-shadow-lg ">
-    <ul class="p-4 flex flex-col">
-        <div class="">
-            <div class="w-full flex justify-center">
-                <div class="p-4 w-full flex justify-center">
-                    <img class="h-[14vh]" src='assets/img/w_nav_logo_small.png'>
+<div>
+    <div 
+        [ngClass]="{'ml-[-220px]' : is_expanded, 'ml-0':!is_expanded}"
+        class="h-screen w-[220px] border-r-2 drop-shadow-lg bg-white sm:relative fixed z-50 transition-all"
+    >
+    
+        <button 
+            (click)="f_expand()"
+            class="sm:hidden w-10 h-10 p-1 pr-2 rounded-r-full bg-[#b8aa5f] flex justify-center items-center fill-white text-white right-[-41px] bottom-[20lvh] absolute"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+                <path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"></path>
+            </svg>
+        </button>
+    
+    
+        <ul class="p-4 flex flex-col relative z-30">
+            <div class="">
+                <div class="w-full flex justify-center">
+                    <div class="p-4 w-full flex justify-center">
+                        <img class="h-[14vh]" src='assets/img/w_nav_logo_small.png'>
+                    </div>
+                </div>
+    
+                <div class="flex flex-col font-medium justify-center items-center">
+                    <p class="text-xl">
+                        Transpacific Finance
+                    </p>
+                    <p class="text-2xl">
+                        E-Approval
+                    </p>
                 </div>
             </div>
-
-            <div class="flex flex-col font-medium justify-center items-center">
-                <p class="text-xl">
-                    Transpacific Finance
-                </p>
-                <p class="text-2xl">
-                    E-Approval
-                </p>
+    
+            <div class="w-full h-[2px] bg-[#b8aa5f] mt-8"></div>
+    
+            <div class="flex flex-col mt-1">
+                <a *ngFor="let item of menuItems" [routerLink]="item.route" href={{item.route}}
+                    routerLinkActive="active-link" class="menu_c_con my-[4px] p-2 pb-[10px] text-sm rounded-md transition-all">
+                    {{item.name}}
+                </a>
             </div>
-        </div>
+        </ul>
+    
+    
+        
+    </div>
 
-        <div class="w-full h-[2px] bg-[#b8aa5f] mt-8"></div>
-
-        <div class="flex flex-col mt-1">
-            <a *ngFor="let item of menuItems" [routerLink]="item.route" href={{item.route}}
-                routerLinkActive="active-link" class="menu_c_con my-[4px] p-2 pb-[10px] text-sm rounded-md transition-all">
-                {{item.name}}
-            </a>
+    <div class="sm:hidden">
+        <div
+            (click)="f_close_menu()" 
+            [ngClass]="{'hidden':is_expanded, 'fixed':!is_expanded}" class=" bg-[#00000030] w-[200vw] h-[100vh] top-0 left-0 z-10">
         </div>
-    </ul>
+    </div>
+
+
 </div>

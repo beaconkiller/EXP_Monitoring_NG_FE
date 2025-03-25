@@ -10,6 +10,9 @@ import { CommonModule } from '@angular/common';
     styleUrl: './navleft.component.css'
 })
 export class NavleftComponent {
+  is_expanded:boolean = false;
+
+
   menuItems =
     [
       // { name: 'Home', route: 'home' },
@@ -22,4 +25,14 @@ export class NavleftComponent {
       { name: 'Suppliers', route: 'suppliers' },
       { name: 'Jenis Pembiayaan', route: 'jenis_pembayaran' },
     ]
+
+
+
+  f_expand(){
+    this.is_expanded = !this.is_expanded;
+  }    
+  
+  f_close_menu(){
+    this.is_expanded = true;
+  }
 }
