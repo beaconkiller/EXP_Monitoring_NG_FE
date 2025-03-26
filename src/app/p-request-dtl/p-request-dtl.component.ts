@@ -232,7 +232,7 @@ export class PRequestDtlComponent {
 
     console.log(this.req_id);
 
-    window.open("http://127.0.0.1:3026/api-eappr/get_pdf_export?req_id="+this.req_id, "_blank");
+    window.open(`${config.env_dev.host}/api-eappr/get_pdf_export?req_id=`+this.req_id, "_blank");
 
     // var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_pdf_export',{params:queryParams}));
     
