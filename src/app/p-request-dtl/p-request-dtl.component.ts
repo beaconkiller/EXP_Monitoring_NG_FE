@@ -12,12 +12,14 @@ import { get_user_detail } from '../shared/utils_general';
 
 import jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
+import { CLoadingSpinComponent } from '../c_/c-loading-spin/c-loading-spin.component';
+import { CLoadingWidgetComponent } from "../c_/c-loading-widget/c-loading-widget.component";
 
 
 
 @Component({
   selector: 'app-p-request-dtl',
-  imports: [HttpClientModule, CommonModule, FormsModule, CApproveBoxComponent],
+  imports: [HttpClientModule, CommonModule, FormsModule, CApproveBoxComponent, CLoadingSpinComponent, CLoadingWidgetComponent],
   templateUrl: './p-request-dtl.component.html',
   styleUrl: './p-request-dtl.component.css',
   standalone:true,
@@ -37,6 +39,8 @@ export class PRequestDtlComponent {
   send_to_dialog:any = {};
   order_create_date:String = '';
   base64_sig_data:any = null;
+  isFetching_file:boolean = true;
+  isFetching_approval:boolean = true;
   // exporting_pdf:boolean = true;
   exporting_pdf:boolean = false;
 
@@ -55,7 +59,7 @@ export class PRequestDtlComponent {
     this.req_id = localStorage.getItem('act_request_id');
 
     this.get_item_pengajuan();
-    await this.get_file_data();
+    this.get_file_data();
     this.get_approval_data();
     // this.get_image_file();
 
@@ -109,6 +113,7 @@ export class PRequestDtlComponent {
 
     console.log(xRes);
     this.file_data = xRes.data;
+    this.isFetching_approval = false;
   }
 
   
@@ -121,6 +126,7 @@ export class PRequestDtlComponent {
 
     // this.order_create_date = xRes.data[0]['CREATED_DATE'];
     this.arr_approval_data = xRes.data;
+    this.isFetching_file = false;
   }
 
 
