@@ -76,17 +76,25 @@ export class PRequestDtlComponent {
 
 
   async get_item_pengajuan(){
-    console.log('\n get_item_pengajuan \n');
+    try {      
+      console.log('\n get_item_pengajuan \n');
+  
+      let queryParams = {
+        req_id : this.req_id,
+      }
+  
+      var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_detail_pengajuan_item',{params:queryParams}));
+  
 
-    let queryParams = {
-      req_id : this.req_id,
+      console.log(queryParams);
+      console.log(xRes);
+  
+  
+      this.order_create_date = xRes.data[0]['TGL_PENGAJUAN'].split(' ')[0] ?? '!cek';
+      this.arr_item_pengajuan = xRes.data; 
+    } catch (error) {
+      console.log(error);
     }
-
-    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_detail_pengajuan_item',{params:queryParams}));
-
-
-    this.order_create_date = xRes.data[0]['TGL_PENGAJUAN'].split(' ')[0];
-    this.arr_item_pengajuan = xRes.data; 
   }
 
 

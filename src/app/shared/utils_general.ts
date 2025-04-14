@@ -17,3 +17,4 @@ export function get_user_detail() {
         return userDtl;
     }
 }
+

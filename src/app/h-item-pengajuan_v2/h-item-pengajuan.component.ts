@@ -81,6 +81,30 @@ export class HItemPengajuanComponent {
   
 
   arr_files = [];
+
+  items_default = [
+    {
+      KETERANGAN: "",
+      HARGA_SATUAN: 0,
+      QTY: 0,
+      PAJAK_TYPE: '-',
+      PAJAK_AMOUNT: '0',
+      FLAG_PPN: 'N',
+      PPN: 0,
+      FLAG_PPH: 'N',
+      PPH: 0,
+      TOTAL_HARGA: 0,
+      JENIS_PEMBIAYAAN: this.arr_request_type[0].NAME_TYPE,
+      NO_REK : null as String | null,
+      NAMA_REK : null as String | null,
+      BANK_NAME : null as String | null,
+      unf_rek: null as String | null,
+      FILE_NAME: '',
+      FILE_: '',
+      bind_calc: false,
+    },
+  ];
+
   
   items = [
     {
@@ -88,13 +112,13 @@ export class HItemPengajuanComponent {
       HARGA_SATUAN: 0,
       QTY: 0,
       PAJAK_TYPE: '-',
-      PAJAK_AMOUNT: null as String | number | null,
+      PAJAK_AMOUNT: '0',
       FLAG_PPN: 'N',
-      PPN: null as String | number | null,
+      PPN: 0,
       FLAG_PPH: 'N',
-      PPH: null as String | number | null,
+      PPH: 0,
       TOTAL_HARGA: 0,
-      JENIS_PEMBIAYAAN: null as String | null,
+      JENIS_PEMBIAYAAN: this.arr_request_type[0].NAME_TYPE,
       NO_REK : null as String | null,
       NAMA_REK : null as String | null,
       BANK_NAME : null as String | null,
@@ -155,11 +179,11 @@ export class HItemPengajuanComponent {
       HARGA_SATUAN: 0,
       QTY: 0,
       PAJAK_TYPE: '-',
-      PAJAK_AMOUNT: null,
+      PAJAK_AMOUNT: '0',
       FLAG_PPN: 'N',
-      PPN: null as String | number | null,
+      PPN: 0,
       FLAG_PPH: 'N',
-      PPH: null as String | number | null,
+      PPH: 0,
       TOTAL_HARGA: 0,
       unf_rek: null,
       NO_REK : null as String | null,
@@ -287,26 +311,26 @@ export class HItemPengajuanComponent {
 
   setInit(){
     this.items = [
-      {
-        KETERANGAN: "",
-        HARGA_SATUAN: 0,
-        QTY: 0,
-        PAJAK_TYPE: '-',
-        PAJAK_AMOUNT: null,
-        FLAG_PPN: 'N',
-        PPN: null as String | number | null,
-        FLAG_PPH: 'N',
-        PPH: null as String | number | null,  
-        TOTAL_HARGA: 0,
-        unf_rek: "",
-        NO_REK : null as String | null,
-        NAMA_REK : null as String | null,
-        BANK_NAME : null as String | null,  
-        JENIS_PEMBIAYAAN: this.arr_request_type[0].NAME_TYPE,
-        bind_calc:true,
-        FILE_NAME: '',
-        FILE_: '',
-      },
+      // {
+      //   KETERANGAN: "",
+      //   HARGA_SATUAN: 0,
+      //   QTY: 0,
+      //   PAJAK_TYPE: '-',
+      //   PAJAK_AMOUNT: null,
+      //   FLAG_PPN: 'N',
+      //   PPN: 0,
+      //   FLAG_PPH: 'N',
+      //   PPH: 0,  
+      //   TOTAL_HARGA: 0,
+      //   unf_rek: "",
+      //   NO_REK : null as String | null,
+      //   NAMA_REK : null as String | null,
+      //   BANK_NAME : null as String | null,  
+      //   JENIS_PEMBIAYAAN: this.arr_request_type[0].NAME_TYPE,
+      //   bind_calc:true,
+      //   FILE_NAME: '',
+      //   FILE_: '',
+      // },
     ];
 
     this.act_divisi = {
@@ -349,7 +373,7 @@ export class HItemPengajuanComponent {
       act_item.PPN = 0;
     }else{
       act_item.FLAG_PPN = 'N';
-      act_item.PPN = null;
+      act_item.PPN = 0;
     }
 
     this.getTotalHarga(i);
@@ -367,7 +391,7 @@ export class HItemPengajuanComponent {
       act_item.PPH = 0;
     }else{
       act_item.FLAG_PPH = 'N';
-      act_item.PPH = null;
+      act_item.PPH = 0;
     }
 
     this.getTotalHarga(i);
@@ -375,15 +399,21 @@ export class HItemPengajuanComponent {
   }
 
 
-  on_type_pengajuan_changed(event:Event){
-    console.log()
+  on_type_pengajuan_changed(event:Event, i:any){
+    const target = event.target as HTMLSelectElement; 
+    const value = target.value;
+    console.log(value); 
+
+    this.items[i]['JENIS_PEMBIAYAAN'] = value;
+
+    console.log(this.items[i]);
   }
 
 
   on_pajak_changed(event:Event, i:any){
     var val = (event.target as HTMLInputElement).value    
     this.items[i]['PAJAK_TYPE'] = val;
-    this.items[i]['PAJAK_AMOUNT'] = null;
+    this.items[i]['PAJAK_AMOUNT'] = '0';
     this.getTotalHarga(i)
   }
 
@@ -673,9 +703,9 @@ export class HItemPengajuanComponent {
 
   
       xRes = await lastValueFrom(this.http.post(config.env_dev.host+'/api-eappr/new_pengajuan', queryParams));
-      // console.log(xRes);
 
-      // ----- NOTIF -----
+      // -------- NOTIF --------
+
       this.snackbar.open(xRes.message, undefined, {
         duration: 5000,
         panelClass: ['notif_success']
@@ -702,9 +732,6 @@ export class HItemPengajuanComponent {
   // ===============================================
   // =================== UTILS =====================
   // ===============================================
-
-
-
 
   getTotal() {
     let total: number = 0;
@@ -752,24 +779,7 @@ export class HItemPengajuanComponent {
   async redirect_to_latest_pengajuan(){
     console.log("\n ======= redirect_to_latest_pengajuan() ======= \n")
 
-    let queryParams = {
-      EMPL_CODE : get_user_detail()['EMPL_CODE']
-    }
-
-    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_newest_pengajuan',{params:queryParams}));      
-    console.log(xRes);
-
-    let latest_request_id = xRes.data[0]['REQUEST_ID'];  
-
-    console.log(latest_request_id);
-
-    localStorage.setItem('act_request_id', latest_request_id);
-
-    this.router.navigate(['request-dtl'])
-
-    // setTimeout(() => {
-    //   this.router.navigate(['request-dtl'])
-    // }, 2000);        
+    this.router.navigate(['info-pengajuan'])
   }
 
 

@@ -87,7 +87,7 @@ export class HItemPengajuanComponent {
       HARGA_SATUAN: 0,
       QTY: 0,
       PAJAK_TYPE: '-',
-      PAJAK_AMOUNT: null as String | number | null,
+      PAJAK_AMOUNT: '0',
       TOTAL_HARGA: 0,
       JENIS_PEMBIAYAAN: null as String | null,
       NO_REK : null as String | null,
@@ -150,7 +150,7 @@ export class HItemPengajuanComponent {
       HARGA_SATUAN: 0,
       QTY: 0,
       PAJAK_TYPE: '-',
-      PAJAK_AMOUNT: null,
+      PAJAK_AMOUNT: '0',
       TOTAL_HARGA: 0,
       unf_rek: null,
       NO_REK : null as String | null,
@@ -281,7 +281,7 @@ export class HItemPengajuanComponent {
         HARGA_SATUAN: 0,
         QTY: 0,
         PAJAK_TYPE: '-',
-        PAJAK_AMOUNT: null,
+        PAJAK_AMOUNT: '0',
         TOTAL_HARGA: 0,
         unf_rek: "",
         NO_REK : null as String | null,
@@ -331,7 +331,7 @@ export class HItemPengajuanComponent {
   on_pajak_changed(event:Event, i:any){
     var val = (event.target as HTMLInputElement).value    
     this.items[i]['PAJAK_TYPE'] = val;
-    this.items[i]['PAJAK_AMOUNT'] = null;
+    this.items[i]['PAJAK_AMOUNT'] = '0';
     this.getTotalHarga(i)
   }
 

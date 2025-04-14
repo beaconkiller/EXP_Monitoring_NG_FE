@@ -114,8 +114,8 @@
 
 
                         <td>
-                            <select [value]="item.JENIS_PEMBIAYAAN"
-                                (change)="on_type_pengajuan_changed($event)"
+                            <select [(value)]="item.JENIS_PEMBIAYAAN"
+                                (change)="on_type_pengajuan_changed($event, i)"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 tracking-wider"
                             >
                                 <option *ngFor="let i_jenis_pembiayaan of arr_request_type"
