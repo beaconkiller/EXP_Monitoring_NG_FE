@@ -59,8 +59,8 @@ export class PRequestDtlComponent {
     this.req_id = localStorage.getItem('act_request_id');
 
     this.get_item_pengajuan();
-    this.get_file_data();
     this.get_approval_data();
+    this.get_file_data();
     // this.get_image_file();
 
     console.log(this.file_data);
@@ -113,7 +113,7 @@ export class PRequestDtlComponent {
 
     console.log(xRes);
     this.file_data = xRes.data;
-    this.isFetching_approval = false;
+    this.isFetching_file = false;
   }
 
   
@@ -126,7 +126,7 @@ export class PRequestDtlComponent {
 
     // this.order_create_date = xRes.data[0]['CREATED_DATE'];
     this.arr_approval_data = xRes.data;
-    this.isFetching_file = false;
+    this.isFetching_approval = false;
   }
 
 
