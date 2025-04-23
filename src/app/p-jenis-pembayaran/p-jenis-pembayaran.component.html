@@ -122,7 +122,7 @@
 
         <div
             *ngIf="!is_fetching_data"
-            class=" border rounded-md flex flex-col justify-between h-[560px]"
+            class=" border rounded-md flex flex-col justify-between h-[480px]"
         >
             <table class=" w-full table-fixed divide-y divide-gray-200  rounded-t-md text-sm">
     
@@ -160,7 +160,7 @@
     
             <div 
                 *ngIf="tableData.length == 0"
-                class="w-full flex items-center justify-center h-[420px]"
+                class="w-full flex items-center justify-center h-[480px]"
             >
                 No Data
             </div>
@@ -191,9 +191,10 @@
     
         <div
             *ngIf="is_fetching_data"
-            class="w-full h-[560px] flex items-center justify-center"
+            class="w-full h-[480px] flex items-center justify-center"
         >
             <p>Fetching data...</p>
+            <app-c-loading-spin></app-c-loading-spin>
         </div>
 
         <div class="py-8"></div>

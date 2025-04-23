@@ -6,10 +6,11 @@ import { get_user_detail } from '../../shared/utils_general';
 import { lastValueFrom } from 'rxjs';
 import { config } from '../../../config/config';
 import { FormsModule } from '@angular/forms';
+import { CLoadingSpinComponent } from "../c-loading-spin/c-loading-spin.component";
 
 @Component({
   selector: 'app-c-pengajuan-table',
-  imports: [HttpClientModule, CommonModule, FormsModule],
+  imports: [HttpClientModule, CommonModule, FormsModule, CLoadingSpinComponent],
   templateUrl: './c-pengajuan-table.component.html',
   styleUrl: './c-pengajuan-table.component.css'
 })
@@ -151,7 +152,9 @@ export class CPengajuanTableComponent {
 
     go_to_detail(req_id:string){
       localStorage.setItem('act_request_id', req_id);
-      this.route.navigate(['request-dtl']);
+      this.route.navigate(['request-dtl'],{queryParams:{
+        'id':req_id
+      }});
       console.log(req_id);
     }
 

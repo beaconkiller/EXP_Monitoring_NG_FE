@@ -7,6 +7,7 @@ import { lastValueFrom } from 'rxjs';
 import { config } from '../../config/config';
 import { get_user_code, get_user_detail } from '../shared/utils_general';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CLoadingSpinComponent } from "../c_/c-loading-spin/c-loading-spin.component";
 
 @Component({
   selector: 'app-p-jenis-pembayaran',
@@ -15,7 +16,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     CommonModule,
     NgSelectComponent,
     HttpClientModule,
-  ],
+    CLoadingSpinComponent
+],
   templateUrl: './p-jenis-pembayaran.component.html',
   styleUrl: './p-jenis-pembayaran.component.css'
 })

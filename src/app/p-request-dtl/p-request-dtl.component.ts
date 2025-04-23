@@ -14,6 +14,7 @@ import jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
 import { CLoadingSpinComponent } from '../c_/c-loading-spin/c-loading-spin.component';
 import { CLoadingWidgetComponent } from "../c_/c-loading-widget/c-loading-widget.component";
+import { ActivatedRoute } from '@angular/router';
 
 
 
@@ -25,7 +26,7 @@ import { CLoadingWidgetComponent } from "../c_/c-loading-widget/c-loading-widget
   standalone:true,
 })
 export class PRequestDtlComponent {
-  constructor(private http:HttpClient){}
+  constructor(private http:HttpClient, private act_route:ActivatedRoute){}
   @ViewChild('spawnApprove') spawnApprove!: ElementRef<HTMLDialogElement>;
   @ViewChild('captureDiv', { static: false }) captureDiv!: ElementRef;
 
@@ -56,7 +57,8 @@ export class PRequestDtlComponent {
   }
 
   async initLoad(){
-    this.req_id = localStorage.getItem('act_request_id');
+    this.req_id = this.act_route.snapshot.queryParams['id'];
+    // this.req_id = localStorage.getItem('act_request_id');
 
     this.get_item_pengajuan();
     this.get_approval_data();
@@ -73,7 +75,6 @@ export class PRequestDtlComponent {
     }
   }
 
-  
 
   // ================================================================
   // ========================= DATA GETTER ============================
