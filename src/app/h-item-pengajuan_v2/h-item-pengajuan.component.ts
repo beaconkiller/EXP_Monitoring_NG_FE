@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select'
 import { NgLabelTemplateDirective, NgOptionTemplateDirective, NgSelectComponent } from '@ng-select/ng-select';
-import { CSignaturePadComponent } from '../p-request-dtl/c-signature-pad/c-signature-pad.component';
+import { CSignaturePadComponent } from '../pages/p-request-dtl/c-signature-pad/c-signature-pad.component'; 
 import { CLoadingWidgetComponent } from "../c_/c-loading-widget/c-loading-widget.component";
 
 
@@ -435,8 +435,8 @@ export class HItemPengajuanComponent {
   }
 
   change_sig_data(e:Event){
-    this.base64_sig_data = e
-    this.allow_send_pengajuan()
+    this.base64_sig_data = e;
+    // this.allow_send_pengajuan();
   }
 
   // ====================================================================
@@ -617,7 +617,7 @@ export class HItemPengajuanComponent {
 
     // ------------ SIGNATURE / TANDA TANGAN / TTD APPROVE DETECT ------------
 
-    if(this.base64_sig_data == null){
+    if(this.base64_sig_data == null || this.base64_sig_data.length < 1800){
       let notif_str = 'Silahkan cek kembali tanda tangan pembuat.';
       this.snackbar.open(notif_str, undefined, {
         duration: 5000,

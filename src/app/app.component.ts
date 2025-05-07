@@ -5,6 +5,7 @@ import { lastValueFrom } from 'rxjs';
 import { config } from '../config/config';
 import { get_user_detail } from './shared/utils_general';
 
+
 @Component({
     selector: 'app-root',
     imports: [RouterOutlet, HttpClientModule],

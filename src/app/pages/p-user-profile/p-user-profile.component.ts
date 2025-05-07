@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { get_user_code, get_user_detail } from '../shared/utils_general';
+import { get_user_code, get_user_detail } from '../../shared/utils_general';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { lastValueFrom } from 'rxjs';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { config } from '../../config/config';
+import { config } from '../../../config/config';
 
 
 @Component({

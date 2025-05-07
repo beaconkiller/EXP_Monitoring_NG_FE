@@ -8,13 +8,14 @@ import { PLoginComponent } from './p-login/p-login.component';
 import { PCekPengajuanComponent } from './p-cek-pengajuan/p-cek-pengajuan.component';
 import { PApprovePengajuanComponent } from './p-approve-pengajuan/p-approve-pengajuan.component';
 import { PInfoPengajuanComponent } from './p-info-pengajuan/p-info-pengajuan.component';
-import { PRevisiPengajuanComponent } from './p-revisi-pengajuan/p-revisi-pengajuan.component';
-import { PUserProfileComponent } from './p-user-profile/p-user-profile.component';
-import { PRequestDtlComponent } from './p-request-dtl/p-request-dtl.component';
-import { CSignaturePadComponent } from './p-request-dtl/c-signature-pad/c-signature-pad.component';
-import { PSuppliersComponent } from './p-suppliers/p-suppliers.component';
+import { PRevisiPengajuanComponent } from './pages/p-revisi-pengajuan/p-revisi-pengajuan.component';
+import { PUserProfileComponent } from './pages/p-user-profile/p-user-profile.component';
+import { PRequestDtlComponent } from './pages/p-request-dtl/p-request-dtl.component'; 
+import { CSignaturePadComponent } from './pages/p-request-dtl/c-signature-pad/c-signature-pad.component'; 
+import { PSuppliersComponent } from './pages/p-suppliers/p-suppliers.component'; 
 import { PJenisPembayaranComponent } from './p-jenis-pembayaran/p-jenis-pembayaran.component';
 import { PPengajuanMemoInternalComponent } from './p-pengajuan-memo-internal/p-pengajuan-memo-internal.component';
+import { PNewMemoComponent } from './p-new-memo/p-new-memo.component';
 
 export const routes: Routes = [
     {
@@ -22,7 +23,6 @@ export const routes: Routes = [
         redirectTo: 'home', // Redirects base URL to '/home'
         pathMatch: 'full' // Ensures the entire path is matched
     },
-
     {
         path: '',
         component: PLayoutComponent,
@@ -41,6 +41,7 @@ export const routes: Routes = [
             { path: 'jenis_pembayaran', component: PJenisPembayaranComponent},
             { path: 'd-sig', component: CSignaturePadComponent},
             { path: 'pengajuan-mi', component: PPengajuanMemoInternalComponent},
+            { path: 'new-memo', component: PNewMemoComponent},
         ]
     },
     {

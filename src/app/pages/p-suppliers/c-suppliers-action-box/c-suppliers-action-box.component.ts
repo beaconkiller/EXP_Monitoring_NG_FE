@@ -2,9 +2,9 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, EventEmitter, Input, input, Output, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { lastValueFrom } from 'rxjs';
-import { config } from '../../../config/config';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { config } from '../../../../config/config';
 
 @Component({
   selector: 'app-c-suppliers-action-box',

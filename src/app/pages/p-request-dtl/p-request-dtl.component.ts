@@ -1,19 +1,19 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { config } from '../../config/config';
+import { config } from '../../../config/config';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CApproveBoxComponent } from './c-approve-box/c-approve-box.component';
-import { get_user_detail } from '../shared/utils_general';
+import { get_user_detail } from '../../shared/utils_general';
 // import pdfMake from "pdfmake/build/pdfmake";
 // import pdfFonts from "pdfmake/build/vfs_fonts";
 // pdfMake.vfs = pdfFonts.vfs;
 
 import jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
-import { CLoadingSpinComponent } from '../c_/c-loading-spin/c-loading-spin.component';
-import { CLoadingWidgetComponent } from "../c_/c-loading-widget/c-loading-widget.component";
+import { CLoadingSpinComponent } from '../../c_/c-loading-spin/c-loading-spin.component';
+import { CLoadingWidgetComponent } from "../../c_/c-loading-widget/c-loading-widget.component";
 import { ActivatedRoute } from '@angular/router';
 
 

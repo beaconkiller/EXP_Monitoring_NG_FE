@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CSignaturePadComponent } from '../c-signature-pad/c-signature-pad.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { config } from '../../../config/config';
+import { config } from '../../../../config/config'; 
 import { lastValueFrom } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';

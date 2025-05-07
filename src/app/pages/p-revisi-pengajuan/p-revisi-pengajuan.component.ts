@@ -4,12 +4,12 @@ import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
-import { config } from '../../config/config';
-import { get_user_code, get_user_detail } from '../shared/utils_general';
+import { config } from '../../../config/config';
+import { get_user_code, get_user_detail } from '../../shared/utils_general';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgSelectComponent } from '@ng-select/ng-select';
-import { CSignaturePadComponent } from '../p-request-dtl/c-signature-pad/c-signature-pad.component';
+import { CSignaturePadComponent } from '../p-request-dtl/c-signature-pad/c-signature-pad.component'; 
 
 @Component({
     selector: 'app-p-revisi-pengajuan',
