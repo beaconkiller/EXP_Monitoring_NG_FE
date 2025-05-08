@@ -4,75 +4,72 @@
         <p class="text-3xl">User Info</p>
     </div>
 
-    <div class="my-6"></div>
+    <div class="my-2"></div>
 
-    <div class="flex flex-row items-center">
+    <div class="flex flex-col justify-center">
         <p class="text-sm w-40">Nama : </p>
-        <div class="mx-2"></div>
         <input 
             [value]="empl_name"
             disabled
-            class="p-1 px-2 w-[26vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"            
+            class="p-1 px-2 w-full sm:w-[26vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"            
         >
     </div>
 
-    <div class="my-1"></div>
+    <div class="my-2"></div>
 
-    <div class="flex flex-row items-center">
+    <div class="flex flex-col justify-center">
         <p class="text-sm w-40">NIK : </p>
-        <div class="mx-2"></div>
         <input 
             [value]="empl_code"
             disabled
-            class="p-1 px-2 w-[26vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"            
+            class="p-1 px-2 w-full sm:w-[26vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"            
         >
     </div>
 
-    <div class="my-1"></div>
+    <div class="my-2"></div>
 
-    <div class="flex flex-row items-center">
+    <div class="flex flex-col justify-center">
         <p class="text-sm w-40">Branch : </p>
-        <div class="mx-2"></div>
         <input 
             [value]="empl_branch"
             disabled
-            class="p-1 px-2 w-[26vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"            
+            class="p-1 px-2 w-full sm:w-[26vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"            
         >
     </div>
 
 
-    <div class="my-1"></div>
+    <div class="my-2"></div>
 
     <div class="flex flex-col">
-        <div class="flex flex-row items-center">
+        <div class="flex flex-col justify-center">
             <p class="text-sm w-40">Email :</p>
-            <div class="mx-2"></div>
+            <p class="text-sm text-[12px] text-gray-500">Contoh john&#64;transfinance.co.id</p>
             <input 
                 (keyup)="listen_canSave_email($event)"
                 [(value)]="empl_mail"
-                class="p-1 px-2 w-[26vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"            
+                class="p-1 px-2 w-full sm:w-[26vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"            
             >
         </div>
 
-        <div class="my-1"></div>
+        <div class="my-2"></div>
 
-        <div class="flex flex-row items-center">
+        <div class="flex flex-col justify-center">
             <p class="text-sm w-40">Nomor Handphone :</p>
-            <div class="mx-2"></div>
+            <p class="text-sm text-[12px] text-gray-500">Contoh 085522223333</p>
             <input 
                 type="number"
                 (keyup)="listen_canSave_phone($event)"
                 [(value)]="empl_hp"
-                class="p-1 px-2 w-[26vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"            
+                class="p-1 px-2 w-full sm:w-[26vw] tracking-wide rounded-md border-gray-200 border-2 focus:ring-0 outline-blue-200 transition-all"            
             >
         </div>
 
-        <div class="my-1"></div>
+        <div class="my-2"></div>
 
         <button
             [ngClass]="{'bg-green-600 opacity-100' : canSave , 'opacity-40' : !canSave, 'opacity-50' : isFetching_save_email}"
             (click)="save_email()"
-            class="w-[calc(10rem+28vw)] text-sm p-[6px] px-8 pb-[7px] tracking-wide text-white bg-[#888] rounded-md transition-all"
+            class="w-full sm:w-[26vw] text-sm p-[6px] px-8 pb-[7px] tracking-wide text-white bg-[#888] rounded-md transition-all"
         >
             Save 
         </button>
