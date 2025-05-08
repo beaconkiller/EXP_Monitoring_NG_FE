@@ -721,7 +721,6 @@ export class HItemPengajuanComponent {
 
     await this.redirect_to_latest_pengajuan();
 
-
     this.is_fetching=false;
     return true;
   }

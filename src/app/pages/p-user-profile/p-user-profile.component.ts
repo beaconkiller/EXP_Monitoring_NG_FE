@@ -19,9 +19,12 @@ export class PUserProfileComponent {
 
   empl_name:String = '';
   empl_code:String = '';
-  empl_mail:String = '';
   empl_branch:String = '';
+  empl_mail:String = '';
+  empl_hp:String = '';
+  new_empl_hp:String = '';
   new_empl_mail:String = '';
+  canSave:boolean = false;
   canSave_email:boolean = false; 
   isFetching_save_email:boolean = false;
   
@@ -41,20 +44,43 @@ export class PUserProfileComponent {
   // =================== LISTENER =================
   // =============================================
 
+  inp_listener(){
+    console.log('asdasd');
+    console.log(this.empl_hp);
+    console.log(this.new_empl_hp);
+  }
+
   listen_canSave_email(event:any){
     var val = (event.target as HTMLInputElement).value;
 
     this.new_empl_mail = val;
     
+    console.log(this.new_empl_mail);
+
     if(val != this.empl_mail){
-      this.canSave_email = true;
+      this.canSave = true;
     }else{
-      this.canSave_email = false;
+      this.canSave = false;
+    }
+  }
+
+  listen_canSave_phone(event:any){
+    var val = (event.target as HTMLInputElement).value;
+
+    this.new_empl_hp = val;
+    
+    console.log(this.new_empl_hp);
+
+    if(val != this.empl_hp){
+      this.canSave = true;
+    }else{
+      this.canSave = false;
     }
   }
 
   detect_save_mail(){
     let str = this.new_empl_mail;
+    let str_phone = this.new_empl_hp;
 
     if(!str.includes('@') || !str.includes('.')){
       let notif_str = 'Format email tidak sesuai'; 
@@ -66,6 +92,7 @@ export class PUserProfileComponent {
         })
 
       return false;
+    
     }else{
       return true;
     }
@@ -85,6 +112,10 @@ export class PUserProfileComponent {
     this.empl_code = user_info['EMPL_CODE'];
     this.empl_branch = user_info['NAME_FULL'];
     this.empl_mail = user_info['email'];
+    this.empl_hp = user_info['NO_HP'];
+
+    this.new_empl_hp = this.empl_hp;
+    this.new_empl_mail = this.empl_mail;
   };
 
   async save_new_user_detail(){
@@ -102,7 +133,7 @@ export class PUserProfileComponent {
     console.log(this.isFetching_save_email)
     console.log(this.new_empl_mail);
 
-    if(this.canSave_email && !this.isFetching_save_email){
+    if(this.canSave && !this.isFetching_save_email){
       if(!this.detect_save_mail()){
         return;
       };
@@ -111,13 +142,14 @@ export class PUserProfileComponent {
         this.isFetching_save_email = true;
         let queryParams = {
           empl_code: get_user_code(),
-          mail_to_change : this.new_empl_mail
+          mail_to_change : this.new_empl_mail,
+          phone_to_change : this.new_empl_hp
         }
   
     
         var xRes:any = await lastValueFrom(this.http.post(config.env_dev.host+'/api-eappr/user_change_email', queryParams));
         
-        // ----- NOTIF -----
+        // -------------- NOTIF --------------
         this.snackbar.open(xRes.message, undefined, {
           duration: 5000,
           panelClass: ['notif_success']
@@ -131,6 +163,7 @@ export class PUserProfileComponent {
           console.log(userDtl);
 
           userDtl['email'] = this.new_empl_mail;
+          userDtl['NO_HP'] = this.new_empl_hp;
 
           localStorage.setItem('user_dtl', JSON.stringify({
             "isSuccess" : true,
