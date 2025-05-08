@@ -6,7 +6,7 @@ for /f "tokens=2 delims==" %%I in ('"wmic os get localdatetime /value"') do set 
 set date=%datetime:~0,4%-%datetime:~4,2%-%datetime:~6,2%
 
 
-@REM ------------------------- GIT PUSH ON FLUTTER -------------------------
+@REM ------------------------- GIT PUSH ON ANGULAR FE -------------------------
 
 cd /d "%src%"
 git switch dev_branch_0.1 && ^
