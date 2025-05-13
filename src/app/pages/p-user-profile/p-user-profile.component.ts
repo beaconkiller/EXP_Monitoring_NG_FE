@@ -6,11 +6,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { lastValueFrom } from 'rxjs';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { config } from '../../../config/config';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
     selector: 'app-p-user-profile',
-    imports: [CommonModule, HttpClientModule],
+    imports: [CommonModule, HttpClientModule, FormsModule],
     templateUrl: './p-user-profile.component.html',
     styleUrl: './p-user-profile.component.css'
 })
@@ -22,8 +23,10 @@ export class PUserProfileComponent {
   empl_branch:String = '';
   empl_mail:String = '';
   empl_hp:String = '';
+  empl_hp_2:String = '';
   new_empl_hp:String = '';
   new_empl_mail:String = '';
+  new_empl_hp_2:String = '';
   canSave:boolean = false;
   canSave_email:boolean = false; 
   isFetching_save_email:boolean = false;
@@ -45,9 +48,17 @@ export class PUserProfileComponent {
   // =============================================
 
   inp_listener(){
-    console.log('asdasd');
-    console.log(this.empl_hp);
-    console.log(this.new_empl_hp);
+    if(
+      this.empl_hp_2 != this.new_empl_hp_2 
+      || this.empl_hp != this.new_empl_hp 
+      || this.empl_mail != this.new_empl_mail
+    ){
+      this.canSave = true;
+    }else{
+      this.canSave = false;
+    }
+
+    console.log(this.canSave);
   }
 
   listen_canSave_email(event:any){
@@ -113,13 +124,25 @@ export class PUserProfileComponent {
     this.empl_branch = user_info['NAME_FULL'];
     this.empl_mail = user_info['email'];
     this.empl_hp = user_info['NO_HP'];
+    this.empl_hp_2 = user_info['NO_HP_2'];
 
-    this.new_empl_hp = this.empl_hp;
     this.new_empl_mail = this.empl_mail;
+    this.new_empl_hp = this.empl_hp;
+    this.new_empl_hp_2 = this.empl_hp_2;
   };
 
-  async save_new_user_detail(){
 
+  is_null(val:any){
+    console.log(val);
+    
+    if(val == null){
+      return ''
+    }
+
+    if(val.toString().trim() == ''){
+      return '';
+    }
+    return val.toString().trim();
   }
 
 
@@ -129,24 +152,26 @@ export class PUserProfileComponent {
   }
 
   async save_email(){
-    console.log(this.canSave_email)
-    console.log(this.isFetching_save_email)
-    console.log(this.new_empl_mail);
+    // console.log(this.canSave_email)
+    // console.log(this.isFetching_save_email)
+    // console.log(this.new_empl_mail, this.empl_mail);
+    // console.log(this.new_empl_hp, this.empl_hp);
+    // console.log(this.new_empl_hp_2, this.empl_hp_2);
 
     if(this.canSave && !this.isFetching_save_email){
-      if(!this.detect_save_mail()){
-        return;
-      };
+      // if(!this.detect_save_mail()){
+      //   return;
+      // };
       
       try {
         this.isFetching_save_email = true;
-        let queryParams = {
+        const queryParams = {
           empl_code: get_user_code(),
-          mail_to_change : this.new_empl_mail,
-          phone_to_change : this.new_empl_hp
+          mail_to_change : this.is_null(this.new_empl_mail),
+          phone_to_change : this.is_null(this.new_empl_hp),
+          phone_to_change_2 : this.is_null(this.new_empl_hp_2),
         }
-  
-    
+      
         var xRes:any = await lastValueFrom(this.http.post(config.env_dev.host+'/api-eappr/user_change_email', queryParams));
         
         // -------------- NOTIF --------------
@@ -154,6 +179,7 @@ export class PUserProfileComponent {
           duration: 5000,
           panelClass: ['notif_success']
         })
+        // -----------------------------------
 
 
         if(xRes.status == 200){
@@ -164,6 +190,7 @@ export class PUserProfileComponent {
 
           userDtl['email'] = this.new_empl_mail;
           userDtl['NO_HP'] = this.new_empl_hp;
+          userDtl['NO_HP_2'] = this.new_empl_hp_2;
 
           localStorage.setItem('user_dtl', JSON.stringify({
             "isSuccess" : true,
