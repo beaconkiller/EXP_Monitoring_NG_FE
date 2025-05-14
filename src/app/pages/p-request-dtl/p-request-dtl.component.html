@@ -3,19 +3,28 @@
         <div class="">
             <p class="text-xl mb-4 font-medium tracking-wide rounded-md w-fit">Detail Pengajuan</p>
 
-            <div class="flex flex-row items-center">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center">
                 <div class="flex flex-col">
-                    <p class="text-sm tracking-wider rounded-sm">Nomor Order</p>
-                    <p class="text-md mb-2 font-medium tracking-wider rounded-sm">{{req_id}}</p>
+                    <p class="text-sm tracking-wider rounded-sm">Judul Pengajuan</p>
+                    <p class="text-md mb-2 font-medium tracking-wide rounded-sm text-[18px]">{{judul_pengajuan}}</p>
                 </div>
 
-                <div class="px-6">
-                    <div class="w-[2px] h-12 bg-[#ccc]"></div>
+                <div class="py-2 pt-1 sm:pt-0 sm:px-6">
+                    <div class="w-[86vw] sm:w-[2px] h-[2px] sm:h-12 bg-[#ccc]"></div>
+                </div>
+
+                <div class="flex flex-col">
+                    <p class="text-sm tracking-wider rounded-sm">Nomor Order</p>
+                    <p class="text-md mb-2 font-medium tracking-wider rounded-sm text-[18px]">{{req_id}}</p>
+                </div>
+
+                <div class="py-2 pt-1 sm:pt-0 sm:px-6">
+                    <div class="w-[86vw] sm:w-[2px] h-[2px] sm:h-12 bg-[#ccc]"></div>
                 </div>
 
                 <div class="flex flex-col">
                     <p class="text-sm tracking-wider rounded-sm">Tanggal Order</p>
-                    <p class="text-md mb-2 font-medium tracking-wider rounded-sm">{{order_create_date}}</p>
+                    <p class="text-md mb-2 font-medium tracking-wider rounded-sm text-[18px]">{{order_create_date}}</p>
                 </div>
             </div>
 

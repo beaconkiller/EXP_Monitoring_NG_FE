@@ -39,6 +39,7 @@ export class PRequestDtlComponent {
   spawn_box_approve:boolean = false;
   send_to_dialog:any = {};
   order_create_date:String = '';
+  judul_pengajuan:any = '';
   base64_sig_data:any = null;
   isFetching_file:boolean = true;
   isFetching_approval:boolean = true;
@@ -95,7 +96,8 @@ export class PRequestDtlComponent {
       console.log(xRes);
   
   
-      this.order_create_date = xRes.data[0]['TGL_PENGAJUAN'].split(' ')[0] ?? '!cek';
+      this.order_create_date = xRes.data[0]['TGL_PENGAJUAN'] ?? '!cek';
+      this.judul_pengajuan = xRes.data[0]['KATEGORI_REQUEST'] ?? '!cek';
       this.arr_item_pengajuan = xRes.data; 
     } catch (error) {
       console.log(error);
