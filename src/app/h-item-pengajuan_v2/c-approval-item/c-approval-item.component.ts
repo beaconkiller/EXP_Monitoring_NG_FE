@@ -1,39 +1,45 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component, EventEmitter, input, Input,Output } from '@angular/core';
+import { Component, EventEmitter, input, Input, Output } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { config } from '../../../config/config';
 import { get_user_detail } from '../../shared/utils_general';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { repo_user } from '../../../repository/repo.user';
 
 @Component({
   selector: 'app-c-approval-item',
   imports: [HttpClientModule, CommonModule, FormsModule],
   templateUrl: './c-approval-item.component.html',
   styleUrl: './c-approval-item.component.css',
-  standalone:true,
+  standalone: true,
 })
 export class CApprovalItemComponent {
-  constructor(private http: HttpClient){}
+  constructor(
+    private http: HttpClient,
+    private repUser: repo_user
+  ) { }
 
   @Input() itemData!: any;
   @Input() itemIndex!: any;
-  @Input() total_i! : any;
+  @Input() total_i!: any;
   @Output() itemDataChange = new EventEmitter<any>();
   @Output() deleteThis = new EventEmitter<any>();
 
-  itemDataVal:any;
-  act_cabang:any | null;
+  itemDataVal: any;
+  act_user: any;
+  act_cabang: any | null;
   act_sub_area: any | null;
-  act_job:any | null;
-  act_person:any | null;
-  act_person_obj:any | null;
+  act_job: any | null;
+  act_person: any | null;
+  act_person_obj: any | null;
   act_checker: any | null;
-  last_item:any = false;
+  last_item: any = false;
+  exl_empl_code: any;
 
-  lov_cabang:any;
-  lov0:any;
-  lov1:any;
+  lov_cabang: any;
+  lov0: any;
+  lov1: any;
 
   fetching_cabang = true;
   fetching_subarea = true;
@@ -45,23 +51,24 @@ export class CApprovalItemComponent {
   ]
 
 
-  ngOnInit(){
+  ngOnInit() {
     this.initLoad();
   }
-  
-  async initLoad(){
+
+  async initLoad() {
     this.set_init();
     await this.get_cabang();
+    this.act_user = this.repUser.get_usr_empl_code();
   }
 
 
 
-  
+
   // =======================================================
   // ======================= INITLOAD ========================
   // =======================================================
 
-  set_init(){
+  set_init() {
     this.itemDataVal = { ...this.itemData };
     this.act_cabang = '-';
     this.act_person = null;
@@ -69,7 +76,7 @@ export class CApprovalItemComponent {
 
     this.last_item = (this.itemIndex + 1) == this.total_i ? true : false;
 
-    console.log(this.itemIndex+1)
+    console.log(this.itemIndex + 1)
     console.log(this.total_i)
 
     // console.log(this.act_sub_area)
@@ -81,14 +88,14 @@ export class CApprovalItemComponent {
   // ======================= INPUTS ========================
   // =======================================================
 
-  async on_lov_cabang_change(event:Event) {
+  async on_lov_cabang_change(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
-    const branch_code = selectElement.value; 
-    const branch_name = selectElement.options[selectElement.selectedIndex].text; 
+    const branch_code = selectElement.value;
+    const branch_name = selectElement.options[selectElement.selectedIndex].text;
     const i = selectElement.selectedIndex;
 
     let selected_cabang = this.lov_cabang[i];
-    
+
     this.act_cabang = branch_code
     this.act_job = null;
     this.act_person = null;
@@ -118,10 +125,10 @@ export class CApprovalItemComponent {
     await this.get_appr_subarea();
   }
 
-  async on_lov0_change(event:Event){
+  async on_lov0_change(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
-    const subArea = selectElement.value; 
-    const empl_job = selectElement.options[selectElement.selectedIndex].text; 
+    const subArea = selectElement.value;
+    const empl_job = selectElement.options[selectElement.selectedIndex].text;
 
     this.act_sub_area = subArea
     this.act_job = empl_job
@@ -137,9 +144,9 @@ export class CApprovalItemComponent {
   }
 
 
-  async on_lov1_change(event:Event){
+  async on_lov1_change(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
-    const i = selectElement.options[selectElement.selectedIndex].index; 
+    const i = selectElement.options[selectElement.selectedIndex].index;
     this.act_person_obj = this.lov1[i];
 
     // ------ RESET LOWER LEVEL LOV ------
@@ -148,7 +155,7 @@ export class CApprovalItemComponent {
   }
 
 
-  on_checker_change(event:Event){
+  on_checker_change(event: Event) {
     const selElement = event.target as HTMLSelectElement;
     const i = selElement.selectedIndex;
 
@@ -156,7 +163,7 @@ export class CApprovalItemComponent {
   }
 
 
-  change_act_person(){
+  change_act_person() {
     // console.log('======== change act person  ==========')
 
     // console.log(this.act_person_obj);
@@ -183,7 +190,7 @@ export class CApprovalItemComponent {
   // ==================== GETTING DATA ====================
   // ======================================================
 
-  async get_cabang(){
+  async get_cabang() {
     // console.log('get_user_cabang');
     this.fetching_cabang = true;
 
@@ -192,9 +199,9 @@ export class CApprovalItemComponent {
       EMPL_BRANCH: get_user_detail()['EMPL_BRANCH']
     }
 
-    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_user_cabang',{params:queryParams}))
-    this.lov_cabang = xRes.data;  
-    
+    var xRes: any = await lastValueFrom(this.http.get(config.env_dev.host + '/api-eappr/get_user_cabang', { params: queryParams }))
+    this.lov_cabang = xRes.data;
+
 
     // ------ RESET LOWER LEVEL LOV ------
     this.act_cabang = null;
@@ -204,19 +211,19 @@ export class CApprovalItemComponent {
   }
 
 
-  async get_appr_subarea(){
+  async get_appr_subarea() {
     console.log('get_appr_subarea');
     this.fetching_subarea = true;
 
     let queryParams = {
-      empl_branch : this.act_cabang,
-      empl_subarea : this.act_sub_area,
+      empl_branch: this.act_cabang,
+      empl_subarea: this.act_sub_area,
     }
 
-    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_appr_subarea',{params:queryParams}))
+    var xRes: any = await lastValueFrom(this.http.get(config.env_dev.host + '/api-eappr/get_appr_subarea', { params: queryParams }))
     this.act_sub_area = null; // ---- NEED TO RESET SO THE LOV DEFAULT WOULD BE NULL
-    this.lov0 = xRes.data;  
-    
+    this.lov0 = xRes.data;
+
     // ------ RESET LOWER LEVEL LOV ------
     this.act_job = null;
     this.act_person = null;
@@ -224,19 +231,20 @@ export class CApprovalItemComponent {
     this.fetching_subarea = false;
   }
 
-  
-  async get_appr_person(){
+
+  async get_appr_person() {
     console.log('get_user_cabang');
     this.fetching_person = true
 
     let queryParams = {
-      EMPL_BRANCH : this.act_cabang,
-      empl_subarea : this.act_sub_area,
-      ACT_JOB : this.act_job,
+      EMPL_BRANCH: this.act_cabang,
+      empl_subarea: this.act_sub_area,
+      ACT_JOB: this.act_job,
+      act_user: this.act_user
     }
 
-    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_appr_person',{params:queryParams}))
-    this.lov1 = xRes.data;  
+    var xRes: any = await lastValueFrom(this.http.get(config.env_dev.host + '/api-eappr/get_appr_person', { params: queryParams }))
+    this.lov1 = xRes.data;
 
     // ------ RESET LOWER LEVEL LOV ------
     this.act_person_obj = null;

@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CSignaturePadComponent } from '../c-signature-pad/c-signature-pad.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { config } from '../../../../config/config'; 
+import { config } from '../../../../config/config';
 import { lastValueFrom } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -15,19 +15,19 @@ import { Router } from '@angular/router';
   styleUrl: './c-approve-box.component.css'
 })
 export class CApproveBoxComponent {
-  constructor(private http:HttpClient, private snackbar:MatSnackBar, private route:Router){}
+  constructor(private http: HttpClient, private snackbar: MatSnackBar, private route: Router) { }
 
   @Output() dialog_exit = new EventEmitter<any>();
-  @Input() req_data:any;
+  @Input() req_data: any;
 
-  arr_approval:any = [
+  arr_approval: any = [
     {
-      appr:'AP',
-      appr_name:'Approve'
+      appr: 'AP',
+      appr_name: 'Approve'
     },
     {
-      appr:'RJ',
-      appr_name:'Reject'
+      appr: 'RJ',
+      appr_name: 'Reject'
     },
     // {
     //   appr:'RC',
@@ -35,18 +35,18 @@ export class CApproveBoxComponent {
     // },
   ]
 
-  canSend:boolean = false;
-  isFetching:boolean = false;
-  act_appr:any;
-  act_reason:any = '';
-  base64_sig_data:any;
+  canSend: boolean = false;
+  isFetching: boolean = false;
+  act_appr: any;
+  act_reason: any = '';
+  base64_sig_data: any;
 
-  ngOnInit(){
+  ngOnInit() {
     this.initLoad()
   }
 
 
-  initLoad(){
+  initLoad() {
     this.act_appr = this.arr_approval[0]['appr']
 
     console.log(this.req_data);
@@ -60,42 +60,42 @@ export class CApproveBoxComponent {
   // ======================================================
 
 
-  change_sig(e:Event){
+  change_sig(e: Event) {
     this.base64_sig_data = e;
     this.canSend_bool();
   }
 
-  on_appr_change(e:Event){
+  on_appr_change(e: Event) {
     let val = (e.target as HTMLSelectElement).value;
     this.act_appr = val;
   }
 
-  onExit(){
+  onExit() {
     this.dialog_exit.emit()
   }
 
 
-  async send_approve(){
+  async send_approve() {
     console.log('send_approve');
     console.log(this.act_reason);
     console.log(this.canSend);
 
-    if(this.canSend){
+    if (this.canSend) {
       this.isFetching = true;
-  
-      let queryParams = {
-        REQ_ID : this.req_data['req_id'],
-        EMPL_CODE : this.req_data['empl_code'],
-        STATUS : this.act_appr,
-        REASON : this.act_reason,
-        FILE_NAME : this.get_file_name(),
-        FILE_DATA : this.get_file_data()
-      }
-  
-      var xRes:any = await lastValueFrom(this.http.post(config.env_dev.host+'/api-eappr/approval_approve',{queryParams}));      
-      const msg = xRes.data;  
 
-      if(msg.toString().toLowerCase().includes('berhasil')){
+      let queryParams = {
+        REQ_ID: this.req_data['req_id'],
+        EMPL_CODE: this.req_data['empl_code'],
+        STATUS: this.act_appr,
+        REASON: this.act_reason,
+        FILE_NAME: this.get_file_name(),
+        FILE_DATA: this.get_file_data()
+      }
+
+      var xRes: any = await lastValueFrom(this.http.post(config.env_dev.host + '/api-eappr/approval_approve', { queryParams }));
+      const msg = xRes.data;
+
+      if (msg.toString().toLowerCase().includes('berhasil')) {
 
         // --------------------------------------------------------
         // ----------------------- SUCCESS --------------------------
@@ -109,21 +109,21 @@ export class CApproveBoxComponent {
 
 
         // ------------- REDIRECT TO LIST APPROVAL PAGE -------------
-        
+
         this.route.navigate(['approve-pengajuan'])
-        
+
         // setTimeout(() => {
         //   this.route.navigate(['approve-pengajuan'])
         // }, 2000);        
 
-      }else{
+      } else {
 
         // --------------------------------------------------------
         // ----------------------- FAILED --------------------------
         // --------------------------------------------------------
 
         // ----- NOTIF -----
-        this.snackbar.open(msg, undefined, {
+        this.snackbar.open('Approval gagal.', undefined, {
           duration: 5000,
           panelClass: ['notif_neutral']
         })
@@ -134,17 +134,17 @@ export class CApproveBoxComponent {
   }
 
 
-  on_reason_change(e:Event){
+  on_reason_change(e: Event) {
     let val = (e.target as HTMLInputElement).value;
     this.act_reason = val
 
     this.canSend_bool();
-  } 
+  }
 
-  canSend_bool(){
-    if(this.act_reason != '' && this.base64_sig_data != null && !this.isFetching){
+  canSend_bool() {
+    if (this.act_reason != '' && this.base64_sig_data != null && !this.isFetching) {
       this.canSend = true
-    }else{
+    } else {
       this.canSend = false
     }
 
@@ -156,19 +156,18 @@ export class CApproveBoxComponent {
   // ======================== UTILS =======================
   // ======================================================
 
-  get_file_name(){
-    let file_ext = this.base64_sig_data.split(';')[0].split('/')[1] ;
+  get_file_name() {
+    let file_ext = this.base64_sig_data.split(';')[0].split('/')[1];
     // console.log(file_ext)
 
 
     let final_str = `${this.req_data['req_id']}_${this.req_data['empl_code']}.${file_ext}`
-
     return final_str;
   }
 
-  get_file_data(){
+  get_file_data() {
     let file_data = this.base64_sig_data.split(',')[1];
-    
+
     // console.log(file_data)
     return file_data;
   }

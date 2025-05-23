@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select'
 import { NgLabelTemplateDirective, NgOptionTemplateDirective, NgSelectComponent } from '@ng-select/ng-select';
-import { CSignaturePadComponent } from '../pages/p-request-dtl/c-signature-pad/c-signature-pad.component'; 
+import { CSignaturePadComponent } from '../pages/p-request-dtl/c-signature-pad/c-signature-pad.component';
 import { CLoadingWidgetComponent } from "../c_/c-loading-widget/c-loading-widget.component";
 
 
@@ -34,51 +34,51 @@ import { CLoadingWidgetComponent } from "../c_/c-loading-widget/c-loading-widget
     NgSelectComponent,
     CSignaturePadComponent,
     CLoadingWidgetComponent
-],
+  ],
   standalone: true,
   templateUrl: './h-item-pengajuan.component.html',
   styleUrl: './h-item-pengajuan.component.css'
 })
 export class HItemPengajuanComponent {
-  constructor(private http: HttpClient, private snackbar:MatSnackBar, private router:Router) { };
+  constructor(private http: HttpClient, private snackbar: MatSnackBar, private router: Router) { };
 
   arr_rek_data = [];
-  
+
 
   arr_request_type = [
     {
-      NAME_TYPE : ''
+      NAME_TYPE: ''
     }
   ];
 
   act_pengajuan = this.arr_request_type[0]['NAME_TYPE'];
 
   arr_pajak = [
-      { pajak_type: '-', pajak_code: '0' },
-      { pajak_type: 'PPH', pajak_code: '1' },
-      { pajak_type: 'PPN', pajak_code: '2' },
+    { pajak_type: '-', pajak_code: '0' },
+    { pajak_type: 'PPH', pajak_code: '1' },
+    { pajak_type: 'PPN', pajak_code: '2' },
   ];
 
   act_divisi = {
-    EMPL_JOB : null as String | null,
-    EMPL_JOB_NAME : null as String | null,
+    EMPL_JOB: null as String | null,
+    EMPL_JOB_NAME: null as String | null,
   }
 
-  
+
   act_file = {
-    file_name : '',
-    file_base64 : '',
+    file_name: '',
+    file_base64: '',
   };
 
-  
+
   arr_tipe_pajak = [
     { pajak_type: '-', pajak_code: '0' },
     { pajak_type: 'PPH', pajak_code: '1' },
     { pajak_type: 'PPN', pajak_code: '2' },
   ]
-  
-  
-  
+
+
+
 
   arr_files = [];
 
@@ -95,9 +95,9 @@ export class HItemPengajuanComponent {
       PPH: 0,
       TOTAL_HARGA: 0,
       JENIS_PEMBIAYAAN: this.arr_request_type[0].NAME_TYPE,
-      NO_REK : null as String | null,
-      NAMA_REK : null as String | null,
-      BANK_NAME : null as String | null,
+      NO_REK: null as String | null,
+      NAMA_REK: null as String | null,
+      BANK_NAME: null as String | null,
       unf_rek: null as String | null,
       FILE_NAME: '',
       FILE_: '',
@@ -105,7 +105,7 @@ export class HItemPengajuanComponent {
     },
   ];
 
-  
+
   items = [
     {
       KETERANGAN: "",
@@ -119,21 +119,21 @@ export class HItemPengajuanComponent {
       PPH: 0,
       TOTAL_HARGA: 0,
       JENIS_PEMBIAYAAN: this.arr_request_type[0].NAME_TYPE,
-      NO_REK : null as String | null,
-      NAMA_REK : null as String | null,
-      BANK_NAME : null as String | null,
+      NO_REK: null as String | null,
+      NAMA_REK: null as String | null,
+      BANK_NAME: null as String | null,
       unf_rek: null as String | null,
       FILE_NAME: '',
       FILE_: '',
       bind_calc: false,
     },
   ];
-  
+
   arr_kom_type = [
     { POSISION: 'APPROVE' },
     { POSISION: 'CEK' },
   ]
-  
+
   items_kom_approve = [
     {
       EMPL_NAME: null as String | null,
@@ -142,7 +142,7 @@ export class HItemPengajuanComponent {
       LVL: null as number | String | null,
     },
   ];
-  
+
   arr_office = [
     { office_name: 'Grogol', office_code: '903' },
     { office_name: 'Depok', office_code: '904' },
@@ -155,13 +155,13 @@ export class HItemPengajuanComponent {
     // 'MI',
   ]
 
-  str_info_pengajuan:any = '';
-  act_office:any = this.arr_office[0]['office_code'];
-  is_fetching:boolean = false;
-  base64_sig_data:any = null;
-  user_cabang:any
+  str_info_pengajuan: any = '';
+  act_office: any = this.arr_office[0]['office_code'];
+  is_fetching: boolean = false;
+  base64_sig_data: any = null;
+  user_cabang: any
   act_tipe_pengajuan = '';
-  
+
 
   ngOnInit() {
     this.initLoad();
@@ -186,13 +186,13 @@ export class HItemPengajuanComponent {
       PPH: 0,
       TOTAL_HARGA: 0,
       unf_rek: null,
-      NO_REK : null as String | null,
-      NAMA_REK : null as String | null,
-      BANK_NAME : null as String | null,
+      NO_REK: null as String | null,
+      NAMA_REK: null as String | null,
+      BANK_NAME: null as String | null,
       JENIS_PEMBIAYAAN: this.arr_request_type[0].NAME_TYPE,
       FILE_NAME: '',
       FILE_: '',
-      bind_calc:true,
+      bind_calc: true,
     });
 
     console.log(this.items);
@@ -216,7 +216,7 @@ export class HItemPengajuanComponent {
         EMPL_NAME: null as String | null,
         EMPL_CODE: null as String | null,
         POSISION: null as String | null,
-        LVL: null as number | String | null,  
+        LVL: null as number | String | null,
       },
     )
   }
@@ -267,8 +267,8 @@ export class HItemPengajuanComponent {
   // ===============================================================
   // ========================== INIT LOAD ===========================
   // ===============================================================
-  
-  async initLoad(){
+
+  async initLoad() {
     this.get_rekening();
     this.get_request_type();
 
@@ -277,29 +277,29 @@ export class HItemPengajuanComponent {
     this.setInit();
   }
 
-  
-  async get_rekening(){
+
+  async get_rekening() {
     // console.log('get_rekening');
 
     let queryParams = {
-      data:'test',
+      data: 'test',
     }
 
-    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_rekening',{params:queryParams}));
-    this.arr_rek_data = xRes.data;    
+    var xRes: any = await lastValueFrom(this.http.get(config.env_dev.host + '/api-eappr/get_rekening', { params: queryParams }));
+    this.arr_rek_data = xRes.data;
     // console.log(this.arr_rek_data);
   }
 
 
-  async get_request_type(){
+  async get_request_type() {
     // console.log('get_request_type');
 
     let queryParams = {
-      data:'test',
+      data: 'test',
     }
 
-    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_request_type',{params:queryParams}));
-    this.arr_request_type = xRes.data; 
+    var xRes: any = await lastValueFrom(this.http.get(config.env_dev.host + '/api-eappr/get_request_type', { params: queryParams }));
+    this.arr_request_type = xRes.data;
 
     // console.log(xRes);
 
@@ -309,7 +309,7 @@ export class HItemPengajuanComponent {
   }
 
 
-  setInit(){
+  setInit() {
     this.items = [
       // {
       //   KETERANGAN: "",
@@ -334,8 +334,8 @@ export class HItemPengajuanComponent {
     ];
 
     this.act_divisi = {
-      EMPL_JOB : get_user_detail()['EMPL_JOB'],
-      EMPL_JOB_NAME : get_user_detail()['JOB_DESCRIPTION'],
+      EMPL_JOB: get_user_detail()['EMPL_JOB'],
+      EMPL_JOB_NAME: get_user_detail()['JOB_DESCRIPTION'],
     }
 
     this.user_cabang = get_user_detail()['NAME_FULL']
@@ -348,13 +348,13 @@ export class HItemPengajuanComponent {
   // ===============================================================
 
 
-  on_rek_changed(event:Event, index:any){
+  on_rek_changed(event: Event, index: any) {
     const val = event;
     let cur_item = this.items[index]
 
-    if(val){
-      cur_item['unf_rek'] = val.toString(); 
-    }else{
+    if (val) {
+      cur_item['unf_rek'] = val.toString();
+    } else {
       cur_item['unf_rek'] = null;
     }
 
@@ -362,16 +362,16 @@ export class HItemPengajuanComponent {
   }
 
 
-  isPPN_clicked(event:any, i:any){
+  isPPN_clicked(event: any, i: any) {
     let act_item = this.items[i];
 
     let val = event.target.checked;
     console.log(val);
 
-    if(val){
+    if (val) {
       act_item.FLAG_PPN = 'Y';
       act_item.PPN = 0;
-    }else{
+    } else {
       act_item.FLAG_PPN = 'N';
       act_item.PPN = 0;
     }
@@ -381,15 +381,15 @@ export class HItemPengajuanComponent {
   }
 
 
-  isPPH_clicked(event:any, i:any){
+  isPPH_clicked(event: any, i: any) {
     let act_item = this.items[i];
 
     let val = event.target.checked;
 
-    if(val){
+    if (val) {
       act_item.FLAG_PPH = 'Y';
       act_item.PPH = 0;
-    }else{
+    } else {
       act_item.FLAG_PPH = 'N';
       act_item.PPH = 0;
     }
@@ -399,10 +399,10 @@ export class HItemPengajuanComponent {
   }
 
 
-  on_type_pengajuan_changed(event:Event, i:any){
-    const target = event.target as HTMLSelectElement; 
+  on_type_pengajuan_changed(event: Event, i: any) {
+    const target = event.target as HTMLSelectElement;
     const value = target.value;
-    console.log(value); 
+    console.log(value);
 
     this.items[i]['JENIS_PEMBIAYAAN'] = value;
 
@@ -410,31 +410,31 @@ export class HItemPengajuanComponent {
   }
 
 
-  on_pajak_changed(event:Event, i:any){
-    var val = (event.target as HTMLInputElement).value    
+  on_pajak_changed(event: Event, i: any) {
+    var val = (event.target as HTMLInputElement).value
     this.items[i]['PAJAK_TYPE'] = val;
     this.items[i]['PAJAK_AMOUNT'] = '0';
     this.getTotalHarga(i)
   }
 
 
-  remove_appr_person(v:any){
-    this.items_kom_approve.splice(v,1);
+  remove_appr_person(v: any) {
+    this.items_kom_approve.splice(v, 1);
   }
 
 
-  lockThis(i:any){
+  lockThis(i: any) {
     console.log(i);
     this.items[i]['bind_calc'] = !this.items[i]['bind_calc'];
 
-    if(this.items[i]['bind_calc']){
+    if (this.items[i]['bind_calc']) {
       this.getTotalHarga(i)
-    }else{
+    } else {
       this.items[i]['TOTAL_HARGA'] = 0
     }
   }
 
-  change_sig_data(e:Event){
+  change_sig_data(e: Event) {
     this.base64_sig_data = e;
     // this.allow_send_pengajuan();
   }
@@ -491,11 +491,11 @@ export class HItemPengajuanComponent {
         reader.onload = () => {
           const base64String = reader.result as string;
           this.act_file = {
-            file_name : files[0].name,
-            file_base64 : base64String
+            file_name: files[0].name,
+            file_base64: base64String
           }
 
-          this.items.forEach((el)=>{
+          this.items.forEach((el) => {
             el.FILE_NAME = files[0].name
           })
         }
@@ -506,7 +506,7 @@ export class HItemPengajuanComponent {
   }
 
 
-  clear_file(){
+  clear_file() {
     this.act_file.file_base64 = '';
     this.act_file.file_name = '';
   }
@@ -533,12 +533,12 @@ export class HItemPengajuanComponent {
 
 
   filter_kom_approve() {
-    let arr_send = [ ...this.items_kom_approve ];
+    let arr_send = [...this.items_kom_approve];
 
     console.log(arr_send);
 
     let i = 1;
-    for(let el of arr_send){
+    for (let el of arr_send) {
       el['LVL'] = i;
       i++;
       // console.log(el)
@@ -553,9 +553,10 @@ export class HItemPengajuanComponent {
     // console.log('allow_send_pengajuan');
     // this.notif_str = '';
 
+
     // ------------ ITEMS DETECT ------------
 
-    if(this.act_tipe_pengajuan == 'FPPU'){
+    if (this.act_tipe_pengajuan == 'FPPU') {
       for (let el of this.items) {
         if (el.KETERANGAN == '' || el.HARGA_SATUAN == 0 || el.QTY == 0 || el.unf_rek == '') {
           let notif_str = 'Data pengajuan belum lengkap.';
@@ -564,7 +565,7 @@ export class HItemPengajuanComponent {
             panelClass: ['notif_failed']
           })
           return false;
-        }else if(el.FLAG_PPN == 'Y' && (Number(el.PPN) <= 0) || el.FLAG_PPH == 'Y' && (Number(el.PPH) <= 0)){
+        } else if (el.FLAG_PPN == 'Y' && (Number(el.PPN) <= 0) || el.FLAG_PPH == 'Y' && (Number(el.PPH) <= 0)) {
 
           // ------------ PAJAK DETECT ------------
 
@@ -572,21 +573,21 @@ export class HItemPengajuanComponent {
           this.snackbar.open(notif_str, undefined, {
             duration: 5000,
             panelClass: ['notif_failed']
-          })          
+          })
 
           return false;
         }
       }
-    }else{
+    } else {
       for (let el of this.items) {
-        if (el.KETERANGAN == '' || el.HARGA_SATUAN == 0 || el.QTY == 0 ) {
+        if (el.KETERANGAN == '' || el.HARGA_SATUAN == 0 || el.QTY == 0) {
           let notif_str = 'Data pengajuan belum lengkap.';
           this.snackbar.open(notif_str, undefined, {
             duration: 5000,
             panelClass: ['notif_failed']
           })
           return false;
-        }else if(el.FLAG_PPN == 'Y' && (Number(el.PPN) <= 0) || el.FLAG_PPH == 'Y' && (Number(el.PPH) <= 0)){
+        } else if (el.FLAG_PPN == 'Y' && (Number(el.PPN) <= 0) || el.FLAG_PPH == 'Y' && (Number(el.PPH) <= 0)) {
 
           // ------------ PAJAK DETECT ------------
 
@@ -594,7 +595,7 @@ export class HItemPengajuanComponent {
           this.snackbar.open(notif_str, undefined, {
             duration: 5000,
             panelClass: ['notif_failed']
-          })          
+          })
 
           return false;
         }
@@ -604,20 +605,44 @@ export class HItemPengajuanComponent {
 
     // ------------ KOM APPROVE DETECT ------------
 
-    for(let el of this.items_kom_approve){
-      if(el['EMPL_CODE'] == null){
+    for (let el of this.items_kom_approve) {
+      if (el['EMPL_CODE'] == null) {
         let notif_str = 'Silahkan cek kembali komite approval.';
         this.snackbar.open(notif_str, undefined, {
           duration: 5000,
           panelClass: ['notif_failed']
         })
         return false
-      }    
+      }
     }
+
+
+
+    // ------------ KOM APPROVE DUPLICATION DETECT ------------
+
+    for (let el of this.items_kom_approve) {
+      let count = 0;
+      for (let el2 of this.items_kom_approve) {
+        if (el['EMPL_CODE'] == el2['EMPL_CODE']) {
+          count += 1;
+        }
+      }
+      console.log(count);
+      if (count > 1) {
+        let notif_str = 'Tidak boleh ada duplikat di komite approval.'
+        this.snackbar.open(notif_str, undefined, {
+          duration: 5000,
+          panelClass: ['notif_failed']
+        })
+        return false;
+      }
+    }
+
+
 
     // ------------ SIGNATURE / TANDA TANGAN / TTD APPROVE DETECT ------------
 
-    if(this.base64_sig_data == null || this.base64_sig_data.length < 1800){
+    if (this.base64_sig_data == null || this.base64_sig_data.length < 1800) {
       let notif_str = 'Silahkan cek kembali tanda tangan pembuat.';
       this.snackbar.open(notif_str, undefined, {
         duration: 5000,
@@ -631,31 +656,31 @@ export class HItemPengajuanComponent {
 
 
 
-  filter_rek(){
+  filter_rek() {
     // (3) ['BCA', 'Aldi', '1231231010']
 
-    if(this.act_tipe_pengajuan == 'FPPU'){
+    if (this.act_tipe_pengajuan == 'FPPU') {
       this.items.forEach(el => {
-        let str_rek = el['unf_rek'] 
+        let str_rek = el['unf_rek']
         let arr_rek = str_rek?.split(' - ')
-  
-        el['NO_REK'] =  arr_rek![3].toString()
-        el['BANK_NAME'] =  arr_rek![0].toString()
-        el['NAMA_REK'] =  arr_rek![1].toString()
+
+        el['NO_REK'] = arr_rek![3].toString()
+        el['BANK_NAME'] = arr_rek![0].toString()
+        el['NAMA_REK'] = arr_rek![1].toString()
       })
     }
   }
 
 
-    
-  filter_file(){
-    if(this.act_file.file_name == ''){
+
+  filter_file() {
+    if (this.act_file.file_name == '') {
       this.act_file = {
-        file_name : '',
+        file_name: '',
         file_base64: '',
       }
 
-      this.items.forEach(el=>{
+      this.items.forEach(el => {
         el['FILE_NAME'] = '';
       })
     }
@@ -674,7 +699,7 @@ export class HItemPengajuanComponent {
     this.is_fetching = true;
     let xRes: any;
 
-    
+
     if (!this.allow_send_pengajuan()) {
       this.is_fetching = false;
       return false;
@@ -686,14 +711,14 @@ export class HItemPengajuanComponent {
 
     console.log(this.items)
 
-    try {      
+    try {
       let queryParams = {
         user_data: {
           empl_code: get_user_code(),
           office_code: this.act_office,
           pengajuan_type: this.str_info_pengajuan,
-          selected_file : this.act_file,
-          base64_sig_data : this.base64_sig_data,
+          selected_file: this.act_file,
+          base64_sig_data: this.base64_sig_data,
         },
         data: { pengajuan: this.items, komite_approve: ordered_array },
         file_data: this.act_file
@@ -701,8 +726,8 @@ export class HItemPengajuanComponent {
 
       console.log(queryParams.data)
 
-  
-      xRes = await lastValueFrom(this.http.post(config.env_dev.host+'/api-eappr/new_pengajuan', queryParams));
+
+      xRes = await lastValueFrom(this.http.post(config.env_dev.host + '/api-eappr/new_pengajuan', queryParams));
 
       // -------- NOTIF --------
 
@@ -721,7 +746,7 @@ export class HItemPengajuanComponent {
 
     await this.redirect_to_latest_pengajuan();
 
-    this.is_fetching=false;
+    this.is_fetching = false;
     return true;
   }
 
@@ -744,7 +769,7 @@ export class HItemPengajuanComponent {
 
   getTotalHarga(i: any) {
     console.log(i);
-    if(this.items[i]['bind_calc']){
+    if (this.items[i]['bind_calc']) {
       let act_item = this.items[i];
       let qty = act_item.QTY;
       let hrg_satuan = act_item.HARGA_SATUAN;
@@ -752,12 +777,12 @@ export class HItemPengajuanComponent {
       let hrg_total = qty * hrg_satuan;
 
       let ppn = 0;
-      if(act_item['PPN'] != null || 0 || '0'){
+      if (act_item['PPN'] != null || 0 || '0') {
         ppn = (Number(act_item['PPN']) / 100) * hrg_total;
       }
 
       let pph = 0;
-      if(act_item['PPH'] != null || 0 || '0'){
+      if (act_item['PPH'] != null || 0 || '0') {
         pph = (Number(act_item['PPH']) / 100) * hrg_total;
       }
 
@@ -775,14 +800,14 @@ export class HItemPengajuanComponent {
   }
 
 
-  async redirect_to_latest_pengajuan(){
+  async redirect_to_latest_pengajuan() {
     console.log("\n ======= redirect_to_latest_pengajuan() ======= \n")
 
     this.router.navigate(['info-pengajuan'])
   }
 
 
-  debug_(){
+  debug_() {
     console.log()
   }
 }
