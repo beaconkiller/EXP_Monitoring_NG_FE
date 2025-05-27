@@ -14,6 +14,7 @@ import { NgSelectModule } from '@ng-select/ng-select'
 import { NgLabelTemplateDirective, NgOptionTemplateDirective, NgSelectComponent } from '@ng-select/ng-select';
 import { CSignaturePadComponent } from '../pages/p-request-dtl/c-signature-pad/c-signature-pad.component';
 import { CLoadingWidgetComponent } from "../c_/c-loading-widget/c-loading-widget.component";
+import { repo_validator } from '../../repository/repo.validator';
 
 
 
@@ -40,7 +41,12 @@ import { CLoadingWidgetComponent } from "../c_/c-loading-widget/c-loading-widget
   styleUrl: './h-item-pengajuan.component.css'
 })
 export class HItemPengajuanComponent {
-  constructor(private http: HttpClient, private snackbar: MatSnackBar, private router: Router) { };
+  constructor(
+    private http: HttpClient,
+    private snackbar: MatSnackBar,
+    private router: Router,
+    private repValid: repo_validator,
+  ) { };
 
   arr_rek_data = [];
 
@@ -716,7 +722,7 @@ export class HItemPengajuanComponent {
         user_data: {
           empl_code: get_user_code(),
           office_code: this.act_office,
-          pengajuan_type: this.str_info_pengajuan,
+          pengajuan_type: this.repValid.enc_str(this.str_info_pengajuan),
           selected_file: this.act_file,
           base64_sig_data: this.base64_sig_data,
         },
@@ -728,6 +734,18 @@ export class HItemPengajuanComponent {
 
 
       xRes = await lastValueFrom(this.http.post(config.env_dev.host + '/api-eappr/new_pengajuan', queryParams));
+
+      if (xRes.status != 200) {
+        // -------- NOTIF --------
+
+        this.snackbar.open(xRes.message, undefined, {
+          duration: 5000,
+          panelClass: ['notif_failed']
+        })
+
+        this.is_fetching = false;
+        return false;
+      }
 
       // -------- NOTIF --------
 
@@ -748,6 +766,7 @@ export class HItemPengajuanComponent {
 
     this.is_fetching = false;
     return true;
+
   }
 
 

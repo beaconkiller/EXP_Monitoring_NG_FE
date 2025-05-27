@@ -15,6 +15,7 @@ import html2canvas from 'html2canvas';
 import { CLoadingSpinComponent } from '../../c_/c-loading-spin/c-loading-spin.component';
 import { CLoadingWidgetComponent } from "../../c_/c-loading-widget/c-loading-widget.component";
 import { ActivatedRoute } from '@angular/router';
+import { repo_validator } from '../../../repository/repo.validator';
 
 
 
@@ -23,41 +24,46 @@ import { ActivatedRoute } from '@angular/router';
   imports: [HttpClientModule, CommonModule, FormsModule, CApproveBoxComponent, CLoadingSpinComponent, CLoadingWidgetComponent],
   templateUrl: './p-request-dtl.component.html',
   styleUrl: './p-request-dtl.component.css',
-  standalone:true,
+  standalone: true,
 })
 export class PRequestDtlComponent {
-  constructor(private http:HttpClient, private act_route:ActivatedRoute){}
+  constructor(
+    private http: HttpClient,
+    private act_route: ActivatedRoute,
+    private repVal: repo_validator,
+  ) { }
+
   @ViewChild('spawnApprove') spawnApprove!: ElementRef<HTMLDialogElement>;
   @ViewChild('captureDiv', { static: false }) captureDiv!: ElementRef;
 
 
-  req_id:any;
-  arr_item_pengajuan:any = [];
-  arr_approval_data:any = [];
-  pengajuan_header:any = {};
-  arr_img_data:any = [];
-  spawn_box_approve:boolean = false;
-  send_to_dialog:any = {};
-  order_create_date:String = '';
-  judul_pengajuan:any = '';
-  base64_sig_data:any = null;
-  isFetching_file:boolean = true;
-  isFetching_approval:boolean = true;
+  req_id: any;
+  arr_item_pengajuan: any = [];
+  arr_approval_data: any = [];
+  pengajuan_header: any = {};
+  arr_img_data: any = [];
+  spawn_box_approve: boolean = false;
+  send_to_dialog: any = {};
+  order_create_date: String = '';
+  judul_pengajuan: any = '';
+  base64_sig_data: any = null;
+  isFetching_file: boolean = true;
+  isFetching_approval: boolean = true;
   // exporting_pdf:boolean = true;
-  exporting_pdf:boolean = false;
+  exporting_pdf: boolean = false;
 
 
   file_data = {
-    file_name : null as any,
+    file_name: null as any,
     data: null as any,
   };
-  
 
-  ngOnInit(){
+
+  ngOnInit() {
     this.initLoad()
   }
 
-  async initLoad(){
+  async initLoad() {
     this.req_id = this.act_route.snapshot.queryParams['id'];
     // this.req_id = localStorage.getItem('act_request_id');
 
@@ -71,8 +77,8 @@ export class PRequestDtlComponent {
 
 
     this.send_to_dialog = {
-      req_id : this.req_id,
-      empl_code : get_user_detail()['EMPL_CODE'],
+      req_id: this.req_id,
+      empl_code: get_user_detail()['EMPL_CODE'],
     }
   }
 
@@ -81,51 +87,51 @@ export class PRequestDtlComponent {
   // ========================= DATA GETTER ============================
   // ================================================================
 
-  async get_item_pengajuan(){
-    try {      
+  async get_item_pengajuan() {
+    try {
       console.log('\n get_item_pengajuan \n');
-  
+
       let queryParams = {
-        req_id : this.req_id,
+        req_id: this.req_id,
       }
-  
-      var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_detail_pengajuan_item',{params:queryParams}));
-  
+
+      var xRes: any = await lastValueFrom(this.http.get(config.env_dev.host + '/api-eappr/get_detail_pengajuan_item', { params: queryParams }));
+
 
       console.log(queryParams);
       console.log(xRes);
-  
-  
+
+
       this.order_create_date = xRes.data[0]['TGL_PENGAJUAN'] ?? '!cek';
       this.judul_pengajuan = xRes.data[0]['KATEGORI_REQUEST'] ?? '!cek';
-      this.arr_item_pengajuan = xRes.data; 
+      this.arr_item_pengajuan = xRes.data;
     } catch (error) {
       console.log(error);
     }
   }
 
 
-  async get_file_data(){
+  async get_file_data() {
     // console.log('get_file_data')
 
     let queryParams = {
-      req_id : this.req_id,
+      req_id: this.req_id,
     }
 
-    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_file_data',{params:queryParams}));
+    var xRes: any = await lastValueFrom(this.http.get(config.env_dev.host + '/api-eappr/get_file_data', { params: queryParams }));
 
     console.log(xRes);
     this.file_data = xRes.data;
     this.isFetching_file = false;
   }
 
-  
-  async get_approval_data(){
+
+  async get_approval_data() {
     let queryParams = {
-      req_id : this.req_id,
+      req_id: this.req_id,
     }
 
-    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_approval_data',{params:queryParams}));
+    var xRes: any = await lastValueFrom(this.http.get(config.env_dev.host + '/api-eappr/get_approval_data', { params: queryParams }));
 
     // this.order_create_date = xRes.data[0]['CREATED_DATE'];
     this.arr_approval_data = xRes.data;
@@ -133,13 +139,13 @@ export class PRequestDtlComponent {
   }
 
 
-  async get_image_file(){
+  async get_image_file() {
     console.log('get_image_file')
     let queryParams = {
-      req_id : this.req_id
+      req_id: this.req_id
     }
 
-    var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_sig_img_data',{params:queryParams}));
+    var xRes: any = await lastValueFrom(this.http.get(config.env_dev.host + '/api-eappr/get_sig_img_data', { params: queryParams }));
 
     console.log(xRes)
 
@@ -153,7 +159,7 @@ export class PRequestDtlComponent {
   // ========================= INPUTS ============================
   // ==============================================================
 
-  file_view(){
+  file_view() {
 
     let base64Data = this.file_data.data;
 
@@ -172,7 +178,7 @@ export class PRequestDtlComponent {
   }
 
 
-  file_download(){
+  file_download() {
     let base64Data = this.file_data.data;
     const fileName = "download.pdf";
     const dataUrl = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${base64Data}`;
@@ -189,16 +195,16 @@ export class PRequestDtlComponent {
   }
 
 
-  dialog_approve_exit(){
+  dialog_approve_exit() {
     this.spawn_box_approve = false;
   }
 
-  
-  dialog_approve_spawn(){
+
+  dialog_approve_spawn() {
     this.spawn_box_approve = true;
   }
 
-  
+
   // async export_pdf() {
   //   let data:any = document.getElementById('printArea');  
   //   this.exporting_pdf = true;
@@ -211,54 +217,54 @@ export class PRequestDtlComponent {
   //         const clonedElement = clonedDocument.body.querySelector('printArea') as HTMLElement;
   //       }
   //     });
-  
+
   //     const imageData = canvas.toDataURL('image/png',);
-      
-      
+
+
   //     // const link = document.createElement('a');
   //     // link.href = imageData;
   //     // link.download = 'captured-image.png';
   //     // link.click();
-  
+
   //     // let pdf = new jspdf('p', 'mm', 'a4'); 
   //     let pdf = new jspdf({orientation:'p', unit:'mm', format:'a4',putOnlyUsedFonts:true, compress:true}); 
-  
+
   //     const pdfWidth = 210; // A4 width in mm
   //     const imgWidth = pdfWidth;
   //     const imgHeight = (canvas.height * imgWidth) / canvas.width; // Maintain aspect ratio
-    
+
   //     pdf.addImage(imageData, 'PNG', 0, 0, imgWidth, imgHeight);
   //     pdf.save('Filename.pdf');     
 
   //     this.exporting_pdf = false;
   //   }, 100);
-  
+
 
   // }
 
-  
+
 
   async export_pdf() {
-    let data:any = document.getElementById('export_pdf()');  
+    let data: any = document.getElementById('export_pdf()');
     this.exporting_pdf = true;
-    
-    
+
+
     let queryParams = {
-      req_id : this.req_id
+      req_id: this.req_id
     }
 
     console.log(this.req_id);
 
-    window.open(`${config.env_dev.host}/api-eappr/get_pdf_export?req_id=`+this.req_id, "_blank");
+    window.open(`${config.env_dev.host}/api-eappr/get_pdf_export?req_id=` + this.req_id, "_blank");
 
     // var xRes:any = await lastValueFrom(this.http.get(config.env_dev.host+'/api-eappr/get_pdf_export',{params:queryParams}));
-    
+
     // console.log(xRes)
 
     // this.exporting_pdf = false;
   }
 
-  
+
 
 
 
@@ -267,21 +273,25 @@ export class PRequestDtlComponent {
   // ========================= FORMATTER ============================
   // ==============================================================
 
-  format_rp(v:any){
+  format_rp(v: any) {
     // console.log(v)
     return v
   }
 
-  format_status_str(v:any){
-    if(v == 'AP'){
+  format_status_str(v: any) {
+    if (v == 'AP') {
       return 'Approve'
-    }else if(v == 'RJ'){
+    } else if (v == 'RJ') {
       return 'Reject'
-    }else if(v == 'RC'){
+    } else if (v == 'RC') {
       return 'Re-check'
-    }else{
+    } else {
       return '-'
     }
+  }
+
+  dec_string(val: String) {
+    return this.repVal.dec_str(val);
   }
 
 }

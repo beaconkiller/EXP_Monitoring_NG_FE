@@ -6,7 +6,8 @@
             <div class="flex flex-col sm:flex-row items-start sm:items-center">
                 <div class="flex flex-col">
                     <p class="text-sm tracking-wider rounded-sm">Judul Pengajuan</p>
-                    <p class="text-md mb-2 font-medium tracking-wide rounded-sm text-[18px]">{{judul_pengajuan}}</p>
+                    <p class="text-md mb-2 font-medium tracking-wide rounded-sm text-[18px]">
+                        {{dec_string(judul_pengajuan)}}</p>
                 </div>
 
                 <div class="py-2 pt-1 sm:pt-0 sm:px-6">
@@ -221,7 +222,7 @@
                     <div class="flex flex-col mt-2">
                         <p>Reason :</p>
                         <div class="border-2 h-24 w-full rounded-md border-[#c2c2c2] mt-2">
-                            <p class="m-2 text-xs">{{item_approval['REASON']}}</p>
+                            <p class="m-2 text-xs">{{dec_string(item_approval['REASON'])}}</p>
                         </div>
                     </div>
 

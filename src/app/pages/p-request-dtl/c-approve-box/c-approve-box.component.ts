@@ -7,6 +7,7 @@ import { config } from '../../../../config/config';
 import { lastValueFrom } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { repo_validator } from '../../../../repository/repo.validator';
 
 @Component({
   selector: 'app-c-approve-box',
@@ -15,7 +16,12 @@ import { Router } from '@angular/router';
   styleUrl: './c-approve-box.component.css'
 })
 export class CApproveBoxComponent {
-  constructor(private http: HttpClient, private snackbar: MatSnackBar, private route: Router) { }
+  constructor(
+    private http: HttpClient,
+    private snackbar: MatSnackBar,
+    private route: Router,
+    private repVal: repo_validator,
+  ) { }
 
   @Output() dialog_exit = new EventEmitter<any>();
   @Input() req_data: any;
@@ -87,7 +93,7 @@ export class CApproveBoxComponent {
         REQ_ID: this.req_data['req_id'],
         EMPL_CODE: this.req_data['empl_code'],
         STATUS: this.act_appr,
-        REASON: this.act_reason,
+        REASON: this.repVal.enc_str(this.act_reason),
         FILE_NAME: this.get_file_name(),
         FILE_DATA: this.get_file_data()
       }
@@ -170,6 +176,10 @@ export class CApproveBoxComponent {
 
     // console.log(file_data)
     return file_data;
+  }
+
+  dec_string(val: String) {
+    return this.repVal.dec_str(val);
   }
 
 }
