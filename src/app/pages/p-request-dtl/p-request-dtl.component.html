@@ -41,24 +41,20 @@
         <div class="w-fit border border-[#666] rounded-md overflow-auto">
 
 
-            <div class="overflow-y-auto h-fit pb-2 border-b-2  text-xs">
+            <div class="overflow-y-auto h-fit border-b-2 text-xs ">
                 <table class=" w-fit table-fixed divide-y divide-gray-200 rounded-t-md">
                     <thead class="bg-[#f8f8f8] mb-2">
                         <tr>
-                            <th class="w-[60px] border-slate-500 font-medium pl-2 py-4">No</th>
-                            <th class="w-[200px] border-slate-500 font-medium">Keterangan</th>
-                            <th class="w-[200px] border-slate-500 font-medium">Jenis Pembiayaan</th>
-                            <th class="w-[300px] border-slate-500 font-medium">Bank</th>
-                            <th class="w-[120px] border-slate-500 font-medium">Harga Satuan</th>
-                            <th class="w-[60px] border-slate-500 font-medium">Quantity</th>
-                            <th class="w-[60px] border-slate-500 font-medium">PPN</th>
-                            <th class="w-[60px] border-slate-500 font-medium">PPH</th>
-                            <th class="w-[120px] border-slate-500 font-medium">Total Harga</th>
+                            <th class="w-[60px] border-x border-l-0 border-gray-200 font-medium pl-2 py-4">No</th>
+                            <th class="w-[200px] border-x border-gray-200 font-medium">Keterangan</th>
+                            <th class="w-[200px] border-x border-gray-200 font-medium">Jenis Pembiayaan</th>
+                            <th class="w-[300px] border-x border-gray-200 font-medium">Bank</th>
+                            <th class="w-[120px] border-x border-gray-200 font-medium">Harga Satuan</th>
+                            <th class="w-[60px] border-x border-gray-200 font-medium">Quantity</th>
+                            <th class="w-[60px] border-x border-gray-200 font-medium">PPN</th>
+                            <th class="w-[60px] border-x border-gray-200 font-medium">PPH</th>
+                            <th class="w-[120px] border-x border-r-0 border-gray-200 font-medium">Total Harga</th>
 
-                            <!-- <th class="w-40 border-slate-500 font-medium">Jumlah Pajak</th>
-                            <th class="w-40 border-slate-500 font-medium">Total Harga</th>
-                            <th class="w-[50px] border-slate-500 font-medium"></th>
-                            <th class="w-[50px] border-slate-500 font-medium"></th> -->
                         </tr>
                     </thead>
 
@@ -66,46 +62,43 @@
                     <tbody class="border-separate pt-10 ">
                         <tr *ngFor="let item of arr_item_pengajuan; let i = index" class="">
 
-                            <td class=" ">
+                            <td class="border px-2">
                                 <div class="flex py-2 justify-center">{{ i + 1 }}</div>
                             </td>
 
-                            <td class=" ">
+                            <td class="border px-2">
                                 <div class="flex py-2 justify-start">{{ item['KETERANGAN'] }}</div>
                             </td>
 
-                            <td class=" ">
+                            <td class="border px-2">
                                 <div class="flex py-2 justify-start">{{ item['JENIS_PEMBIAYAAN'] }}</div>
                             </td>
 
-                            <td class=" ">
+                            <td class="border px-2">
                                 <div class="flex py-2 justify-start text-start flex-col mr-8">
                                     <p>{{item['BANK_NAME'] + ' - ' + item['NO_REK'] + ' - ' + item['NAMA_REK']}}</p>
-                                    <!-- <div>{{item['BANK_NAME']}}</div>
-                                    <div>{{item['NO_REK']}}</div>
-                                    <div>{{item['NAMA_REK']}}</div> -->
                                 </div>
                             </td>
 
-                            <td class=" ">
+                            <td class="border px-2">
                                 <div class="flex py-2 justify-end mr-8">{{ format_rp(item['HARGA_SATUAN']) | number:
                                     '2.'}}</div>
                             </td>
 
-                            <td class=" ">
+                            <td class="border px-2">
                                 <div class="flex py-2 justify-center">{{ item['QTY'] }}</div>
                             </td>
 
-                            <td class=" ">
+                            <td class="border px-2">
                                 <div class="flex py-2 justify-center">{{ item['PPN'] ? item['PPN']+'%' : '-'}}</div>
                             </td>
 
-                            <td class=" ">
+                            <td class="border px-2">
                                 <div class="flex py-2 justify-center">{{ item['PPH'] ? item['PPH']+'%' : '-' }}</div>
                             </td>
 
 
-                            <td class=" ">
+                            <td class="border px-2">
                                 <div class="flex py-2 justify-end mr-8">{{ item['TOTAL_HARGA'] | number: '2.'}}</div>
                             </td>
 

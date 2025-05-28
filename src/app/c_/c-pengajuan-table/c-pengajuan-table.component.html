@@ -55,40 +55,41 @@
     <div class="my-4"></div>
 
     <div *ngIf="!fetching_tableData" class=" border rounded-md h-[550px] flex flex-col justify-between overflow-y-auto">
-        <table class="sm:w-full w-fit table-fixed divide-y divide-gray-200  rounded-t-md text-sm">
+        <table class="sm:w-full w-fit table-fixed divide-y divide-gray-200  rounded-t-md text-xs">
             <thead class="w-full  divide-y">
                 <tr class="">
-                    <th class="w-[30px] border-slate-500 font-medium pl-2 py-4">NO</th>
-                    <th class="w-[140px] border-slate-500 font-medium pl-2 py-4">REQUEST ID</th>
-                    <th class="w-[130px] border-slate-500 font-medium pl-2 py-4">CABANG</th>
-                    <th class="w-[150px] border-slate-500 font-medium pl-2 py-4">KATEGORI REQUEST</th>
+                    <th class="w-[30px] border-x border-b border-l-0 border-gray-200 font-medium pl-2 py-4">NO</th>
+                    <th class="w-[140px] border-x border-b border-gray-200 font-medium pl-2 py-4">REQUEST ID</th>
+                    <th class="w-[130px] border-x border-b border-gray-200 font-medium pl-2 py-4">CABANG</th>
+                    <th class="w-[150px] border-x border-b border-gray-200 font-medium pl-2 py-4">KATEGORI REQUEST</th>
 
-                    <th *ngIf="q_page_code != 1" class="w-[80px]  border-slate-500 font-medium pl-2 py-4">
+                    <th *ngIf="q_page_code != 1"
+                        class="w-[80px] border-x border-b border-gray-200 font-medium pl-2 py-4">
                         STATUS
                     </th>
 
-                    <th class="w-[160px]  border-slate-500 font-medium pl-2 py-4">TANGGAL DIBUAT</th>
-                    <th class="w-[80px] border-slate-500 font-medium pl-2 py-4">ACTION</th>
+                    <th class="w-[160px] border-x border-b border-gray-200 font-medium pl-2 py-4">TANGGAL DIBUAT</th>
+                    <th class="w-[80px] border-x border-b border-l-0 border-gray-200 font-medium pl-2 py-4">ACTION</th>
                 </tr>
             </thead>
 
-            <tbody class="border-separate pt-10 text-sm">
+            <tbody class="border-separate pt-10 text-xs">
                 <tr *ngFor="let item of tableData; let i = index" class="h-8 flex-grow-0 odd:bg-gray-100 ">
-                    <td class="text-center">{{i+1}}</td>
-                    <td class="text-center">{{item.REQUEST_ID}}</td>
-                    <td class="text-center py-4">{{item.NAME_FULL}}</td>
-                    <td class="text-start">{{dec_str(item.KATEGORI_REQUEST)}}</td>
+                    <td class="text-center border border-l-0">{{i+1}}</td>
+                    <td class="text-center border">{{item.REQUEST_ID}}</td>
+                    <td class="text-center border py-2">{{item.NAME_FULL}}</td>
+                    <td class="text-start border px-2">{{dec_str(item.KATEGORI_REQUEST)}}</td>
 
-                    <td class="text-center" *ngIf="q_page_code != 1">
+                    <td class="text-center border" *ngIf="q_page_code != 1">
                         <div [ngClass]="{'text-green-600':item.STATUS == 'AP'}">
                             {{item.STATUS}}
                         </div>
                     </td>
 
-                    <td class="text-center py-2">{{give_date(item.CREATED_DATE)}}</td>
-                    <td class="text-center py-2">
+                    <td class="text-center border py-2">{{give_date(item.CREATED_DATE)}}</td>
+                    <td class="text-center border border-r-0 py-2">
                         <button (click)="go_to_detail(item.REQUEST_ID)"
-                            class="mx-2 p-2 rounded-md  py-1 pb-[5px] bg-[#303030] fill-white text-white flex flex-row">
+                            class="mx-2 p-2 rounded-md  py-1 pb-[5px] text-sm bg-[#303030] fill-white text-white flex flex-row">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256">
                                 <path
                                     d="M88,96a8,8,0,0,1,8-8h64a8,8,0,0,1,0,16H96A8,8,0,0,1,88,96Zm8,40h64a8,8,0,0,0,0-16H96a8,8,0,0,0,0,16Zm32,16H96a8,8,0,0,0,0,16h32a8,8,0,0,0,0-16ZM224,48V156.69A15.86,15.86,0,0,1,219.31,168L168,219.31A15.86,15.86,0,0,1,156.69,224H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32H208A16,16,0,0,1,224,48ZM48,208H152V160a8,8,0,0,1,8-8h48V48H48Zm120-40v28.7L196.69,168Z">

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CPengajuanTableComponent } from '../c_/c-pengajuan-table/c-pengajuan-table.component';
+import { CPengajuanTableComponent } from '../../c_/c-pengajuan-table/c-pengajuan-table.component';
 
 
 @Component({
