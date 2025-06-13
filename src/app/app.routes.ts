@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { PLayoutComponent } from './p-layout/p-layout.component';
 import { PHomeComponent } from './pages/p-home/p-home.component';
-import { PNewApprovalComponent } from './.p-new-approval/p-new-approval.component';
+import { PNewApprovalComponent } from './pages/p-new-approval/p-new-approval.component';
 import { PNewApprovalV2Component } from './p-new-approval-v2/p-new-approval-v2.component';
 import { AuthGuard } from './auth.guard';
 import { PLoginComponent } from './pages/p-login/p-login.component';

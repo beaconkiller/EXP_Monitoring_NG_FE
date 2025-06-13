@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { FPembelianMateraiComponent } from '../f-pembelian-materai/f-pembelian-materai.component';
 import { FBiayaOperasionalComponent } from '../f-biaya-operasional/f-biaya-operasional.component';
 // import { HItemPengajuanComponent } from '../h-item-pengajuan_v1/h-item-pengajuan.component';
-import { HItemPengajuanComponent } from '../h-item-pengajuan_v2/h-item-pengajuan.component';
+import { HItemPengajuanComponent } from '../pages/p-new-approval/h-item-pengajuan_v2/h-item-pengajuan.component';
 
 @Component({
     selector: 'app-p-new-approval-v2',

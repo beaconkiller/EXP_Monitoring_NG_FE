@@ -2,7 +2,7 @@ import { Component, ViewChild, viewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 // import { HItemPengajuanComponent } from "../h-item-pengajuan_v1/h-item-pengajuan.component";
-import { HItemPengajuanComponent } from "../h-item-pengajuan_v2/h-item-pengajuan.component";
+import { HItemPengajuanComponent } from "./h-item-pengajuan_v2/h-item-pengajuan.component";
 
 @Component({
   selector: 'app-p-new-approval',

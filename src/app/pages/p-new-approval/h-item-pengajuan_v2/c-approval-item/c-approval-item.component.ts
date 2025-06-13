@@ -1,11 +1,11 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, EventEmitter, input, Input, Output } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { config } from '../../../config/config';
-import { get_user_detail } from '../../shared/utils_general';
+import { config } from '../../../../../config/config';
+import { get_user_detail } from '../../../../shared/utils_general';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { repo_user } from '../../../repository/repo.user';
+import { repo_user } from '../../../../../repository/repo.user';
 
 @Component({
   selector: 'app-c-approval-item',

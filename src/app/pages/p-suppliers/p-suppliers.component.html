@@ -78,7 +78,7 @@
 
         <div *ngIf="show_suppl_action_box">
             <app-c-suppliers-action-box (closePopupEvent)="this.show_suppl_action_box = false"
-                [supplData]="act_suppl"></app-c-suppliers-action-box>
+                [supplData]="act_suppl" (getApproval)="get_suppliers()"></app-c-suppliers-action-box>
         </div>
 
         <!-- =================== FILTER / SEARCH DIV ================= -->
@@ -129,12 +129,12 @@
                 <tbody class="border-separate pt-10 ">
                     <tr *ngFor="let item of tableData; let i = index" class="h-8 flex-grow-0 odd:bg-gray-100 border-b">
                         <td class="px-2 border border-l-0 text-center">{{i+1}}</td>
-                        <td class="px-2 border text-left">{{item.SUPPLIER_NAME}}</td>
-                        <td class="px-2 border text-start">{{item.REK_NAME}}</td>
-                        <td class="px-2 border text-center py-4">{{item.REK_NO}}</td>
-                        <td class="px-2 border text-center">{{item.BANK_NAME}}</td>
-                        <td class="px-2 border text-center py-2">{{item.CREATED_BY}}</td>
-                        <td class="px-2 border text-center py-2">{{item.CREATED_DATE}}</td>
+                        <td class="px-2 border text-left" [ngClass]="{'text-gray-400':item.IS_ACTIVE == 'N'}">{{item.SUPPLIER_NAME}}</td>
+                        <td class="px-2 border text-start" [ngClass]="{'text-gray-400':item.IS_ACTIVE == 'N'}">{{item.REK_NAME}}</td>
+                        <td class="px-2 border text-center py-4" [ngClass]="{'text-gray-400':item.IS_ACTIVE == 'N'}">{{item.REK_NO}}</td>
+                        <td class="px-2 border text-center" [ngClass]="{'text-gray-400':item.IS_ACTIVE == 'N'}">{{item.BANK_NAME}}</td>
+                        <td class="px-2 border text-center py-2" [ngClass]="{'text-gray-400':item.IS_ACTIVE == 'N'}">{{item.CREATED_BY}}</td>
+                        <td class="px-2 border text-center py-2" [ngClass]="{'text-gray-400':item.IS_ACTIVE == 'N'}">{{item.CREATED_DATE}}</td>
                         <td class="px-2 border border-r-0 text-center py-2">
                             <button (click)="f_show_suppl_action_box(i)"
                                 class="mx-2 rounded-full px-4 py-1 bg-[#242424] text-white">

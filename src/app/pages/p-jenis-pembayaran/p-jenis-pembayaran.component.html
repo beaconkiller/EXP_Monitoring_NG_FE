@@ -57,16 +57,19 @@
 
         <p class="text-2xl mb-4 font-medium tracking-wide rounded-md w-fit">Jenis Pembiayaan</p>
 
+
+
         <!-- =================== SPAWN THIS LATER ================= -->
         <!-- =================== SPAWN THIS LATER ================= -->
         <!-- =================== SPAWN THIS LATER ================= -->
 
-        <!-- <div *ngIf="show_suppl_action_box">
-            <app-c-suppliers-action-box 
-                (closePopupEvent)="this.show_suppl_action_box = false"
-                [supplData]="act_suppl"
-            ></app-c-suppliers-action-box>
-        </div> -->
+        <div *ngIf="spawn_jenis">
+            <!-- <app-c-suppliers-action-box (closePopupEvent)="this.show_suppl_action_box = false"
+                [supplData]="act_suppl" (getApproval)="get_suppliers()"></app-c-suppliers-action-box> -->
+            <app-c-jenis-pemb-action-box (out_closeThis)="closeSpawn()"></app-c-jenis-pemb-action-box>
+        </div>
+
+
 
         <!-- =================== FILTER / SEARCH DIV ================= -->
         <!-- =================== FILTER / SEARCH DIV ================= -->
@@ -130,13 +133,13 @@
 
                 <tbody class="border-separate pt-10 ">
                     <tr *ngFor="let item of tableData; let i = index" class="h-8 flex-grow-0 odd:bg-gray-100 ">
-                        <td class="px-2 border-2 border-gray-200 border-l-0 text-center">{{i+1}}</td>
-                        <td class="px-2 border-2 border-gray-200 text-left">{{item.NAME_TYPE}}</td>
-                        <td class="px-2 border-2 border-gray-200 text-center">{{item.group_type}}</td>
-                        <td class="px-2 border-2 border-gray-200 text-center py-2">{{item.is_active}}</td>
-                        <td class="px-2 border-2 border-gray-200 text-center py-2">{{item.created_by}}</td>
-                        <td class="px-2 border-2 border-gray-200 border-r-0 text-center py-2">{{item.created_date}}</td>
-                        <td *ngIf="jobCheck_it()" class="px-2 text-center py-2">
+                        <td class="px-2 border-2 border-gray-200 border-l-0 text-center" [ngClass]="{'text-gray-400':item.IS_ACTIVE == 'N'}">{{i+1}}</td>
+                        <td class="px-2 border-2 border-gray-200 text-left" [ngClass]="{'text-gray-400':item.IS_ACTIVE == 'N'}">{{item.NAME_TYPE}}</td>
+                        <td class="px-2 border-2 border-gray-200 text-center" [ngClass]="{'text-gray-400':item.IS_ACTIVE == 'N'}">{{item.group_type}}</td>
+                        <td class="px-2 border-2 border-gray-200 text-center py-2" [ngClass]="{'text-gray-400':item.IS_ACTIVE == 'N'}">{{item.is_active}}</td>
+                        <td class="px-2 border-2 border-gray-200 text-center py-2" [ngClass]="{'text-gray-400':item.IS_ACTIVE == 'N'}">{{item.created_by}}</td>
+                        <td class="px-2 border-2 border-gray-200 border-r-0 text-center py-2" [ngClass]="{'text-gray-400':item.IS_ACTIVE == 'N'}">{{item.created_date}}</td>
+                        <td *ngIf="jobCheck_it()" class="px-2 border-2 border-gray-200 border-r-0 text-center py-2">
                             <button (click)="f_show_jenis_pemb_action_box(i)"
                                 class="mx-2 rounded-full px-4 py-1 bg-[#242424] text-white">
                                 Action

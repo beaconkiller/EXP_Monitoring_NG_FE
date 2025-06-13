@@ -94,8 +94,6 @@ export class CApproveBoxComponent {
         EMPL_CODE: this.req_data['empl_code'],
         STATUS: this.act_appr,
         REASON: this.repVal.enc_str(this.act_reason),
-        FILE_NAME: this.get_file_name(),
-        FILE_DATA: this.get_file_data()
       }
 
       var xRes: any = await lastValueFrom(this.http.post(config.env_dev.host + '/api-eappr/approval_approve', { queryParams }));
@@ -148,7 +146,7 @@ export class CApproveBoxComponent {
   }
 
   canSend_bool() {
-    if (this.act_reason != '' && this.base64_sig_data != null && !this.isFetching) {
+    if (this.act_reason != '' && !this.isFetching) {
       this.canSend = true
     } else {
       this.canSend = false

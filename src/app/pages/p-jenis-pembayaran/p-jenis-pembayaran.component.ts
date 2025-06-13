@@ -8,6 +8,8 @@ import { config } from '../../../config/config';
 import { get_user_code, get_user_detail } from '../../shared/utils_general';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CLoadingSpinComponent } from "../../c_/c-loading-spin/c-loading-spin.component";
+import { repo_jenis_pembayaran } from './repo.jenis_pemb';
+import { CJenisPembActionBoxComponent } from "./c-jenis-pemb-action-box/c-jenis-pemb-action-box.component";
 
 @Component({
   selector: 'app-p-jenis-pembayaran',
@@ -16,13 +18,18 @@ import { CLoadingSpinComponent } from "../../c_/c-loading-spin/c-loading-spin.co
     CommonModule,
     NgSelectComponent,
     HttpClientModule,
-    CLoadingSpinComponent
-  ],
+    CLoadingSpinComponent,
+    CJenisPembActionBoxComponent
+],
   templateUrl: './p-jenis-pembayaran.component.html',
   styleUrl: './p-jenis-pembayaran.component.css'
 })
 export class PJenisPembayaranComponent {
-  constructor(private http: HttpClient, private snackbar: MatSnackBar) { }
+  constructor(
+    private http: HttpClient, 
+    private snackbar: MatSnackBar,
+    private repJenis: repo_jenis_pembayaran,
+  ) { }
 
   is_fetching = true;
   is_fetching_data = false;
@@ -32,6 +39,7 @@ export class PJenisPembayaranComponent {
   act_jenis_pemb = '';
   act_jenis_pemb_group = '';
   allow_add_jenis_pemb = false;
+  spawn_jenis:boolean = false;
 
   arr_jenis_pemb_group = [
     'P_CABANG',
@@ -99,7 +107,8 @@ export class PJenisPembayaranComponent {
   }
 
   f_show_jenis_pemb_action_box(i: any) {
-    console.log(i);
+    this.repJenis.set_jenis_pemb(this.tableData[i]);
+    this.spawn_jenis = true;
   }
 
   async add_jenis_pemb() {
@@ -150,6 +159,10 @@ export class PJenisPembayaranComponent {
   clear_act_pemb_group() {
     this.act_jenis_pemb = '';
     this.listen_inps();
+  }
+
+  closeSpawn(){
+    this.spawn_jenis = false;
   }
 
 }

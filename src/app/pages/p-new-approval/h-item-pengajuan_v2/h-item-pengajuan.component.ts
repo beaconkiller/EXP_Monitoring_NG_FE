@@ -1,20 +1,20 @@
 import { Component, ComponentRef, ViewChild, viewChild, ViewContainerRef } from '@angular/core';
-import { CItemPengajuanComponent } from '../c_/c-item-pengajuan/c-item-pengajuan.component';
+import { CItemPengajuanComponent } from '../../../c_/c-item-pengajuan/c-item-pengajuan.component';
 import { FormsModule, NgSelectOption } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CdkDrag, CdkDragDrop, CdkDropList, DragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { config } from '../../config/config';
+import { config } from '../../../../config/config';
 import { lastValueFrom } from 'rxjs';
-import { get_user_code, get_user_detail } from '../shared/utils_general';
+import { get_user_code, get_user_detail } from '../../../shared/utils_general';
 import { CApprovalItemComponent } from "./c-approval-item/c-approval-item.component";
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select'
 import { NgLabelTemplateDirective, NgOptionTemplateDirective, NgSelectComponent } from '@ng-select/ng-select';
-import { CSignaturePadComponent } from '../pages/p-request-dtl/c-signature-pad/c-signature-pad.component';
-import { CLoadingWidgetComponent } from "../c_/c-loading-widget/c-loading-widget.component";
-import { repo_validator } from '../../repository/repo.validator';
+import { CSignaturePadComponent } from '../../p-request-dtl/c-signature-pad/c-signature-pad.component';
+import { CLoadingWidgetComponent } from "../../../c_/c-loading-widget/c-loading-widget.component";
+import { repo_validator } from '../../../../repository/repo.validator';
 
 
 
@@ -559,6 +559,7 @@ export class HItemPengajuanComponent {
     // console.log('allow_send_pengajuan');
     // this.notif_str = '';
 
+    
 
     // ------------ ITEMS DETECT ------------
 
@@ -609,6 +610,7 @@ export class HItemPengajuanComponent {
     }
 
 
+
     // ------------ KOM APPROVE DETECT ------------
 
     for (let el of this.items_kom_approve) {
@@ -648,14 +650,19 @@ export class HItemPengajuanComponent {
 
     // ------------ SIGNATURE / TANDA TANGAN / TTD APPROVE DETECT ------------
 
-    if (this.base64_sig_data == null || this.base64_sig_data.length < 1800) {
-      let notif_str = 'Silahkan cek kembali tanda tangan pembuat.';
-      this.snackbar.open(notif_str, undefined, {
-        duration: 5000,
-        panelClass: ['notif_failed']
-      })
-      return false;
-    }
+    // if (this.base64_sig_data == null || this.base64_sig_data.length < 1800) {
+    //   let notif_str = 'Silahkan cek kembali tanda tangan pembuat.';
+    //   this.snackbar.open(notif_str, undefined, {
+    //     duration: 5000,
+    //     panelClass: ['notif_failed']
+    //   })
+    //   return false;
+    // }
+
+
+    // -----------------------------------------------------------------------
+    // ------------ SIGNATURE / TANDA TANGAN / TTD APPROVE DETECT ------------
+    // -----------------------------------------------------------------------
 
     return true;
   }

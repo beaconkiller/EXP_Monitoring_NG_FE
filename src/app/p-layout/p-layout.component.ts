@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PNewApprovalComponent } from "../.p-new-approval/p-new-approval.component";
+import { PNewApprovalComponent } from "../pages/p-new-approval/p-new-approval.component";
 import { NavleftComponent } from "../c_/navleft/navleft.component";
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { CNavtopComponent } from "../c_/c-navtop/c-navtop.component";
