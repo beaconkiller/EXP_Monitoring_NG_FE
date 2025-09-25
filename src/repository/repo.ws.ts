@@ -61,15 +61,18 @@ export class repo_ws {
 
         if (msg['type'] == 'give_storage') {
             this.set_storage(msg);
-
         }
     }
 
 
     map_clients(arr_clients: any) {
+        console.log(arr_clients)
+
         arr_clients.forEach((el: any) => {
             this.arr_clients.set(el['device_id'], {
                 device_id: el['device_id'],
+                arr_storage: null,
+                summary_storage: null,
             });
         })
 
@@ -99,7 +102,7 @@ export class repo_ws {
         console.log(this.arr_clients);
 
         this.arr_clients.forEach((el: any) => {
-            console.log(el)
+            this.get_storage(el['device_id']);
         })
     }
 
@@ -108,8 +111,9 @@ export class repo_ws {
     set_storage(msg: any) {
         let arr_storage = this.rwp.parse_storage(msg['message']);
         let act_obj = this.arr_clients.get(msg['device_id']);
+        let summary_storage = this.rwp.get_summary_storage(arr_storage)
 
-        const newObj = { ...act_obj, arr_storage };
+        const newObj = { ...act_obj, arr_storage, summary_storage };
 
         this.arr_clients.set(msg['device_id'], newObj);
 
@@ -144,6 +148,12 @@ export class repo_ws {
 
     getter_cients() {
         return this.arr_clients;
+    }
+
+
+
+    getter_client_by_id(device_id: any) {
+        return this.arr_clients.get(device_id);
     }
 
 }

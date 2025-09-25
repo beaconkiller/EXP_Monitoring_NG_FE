@@ -1,0 +1,70 @@
+<div *ngIf="inp_device_id != null" class="flex flex-col space-y-4 p-3 overflow-y-scroll h-full">
+    <p class="text-xl">{{server_data!['device_id']}}</p>
+
+    <p class="text-lg">Storage Detail</p>
+
+    <div class="border border-gray-300 rounded-md">
+        <table class="table-fixed">
+            <thead class="divide-y border-b-gray-300 border-b text-sm">
+                <tr>
+                    <th class="w-[40px] border-slate-500 font-medium py-1">No</th>
+                    <th class="w-[200px] border-x border-gray-300 font-medium">Filesystem</th>
+                    <th class="w-[300px] border-x border-gray-300 font-medium">Size</th>
+                    <th class="w-[300px] border-x border-gray-300 font-medium">Avail</th>
+                    <th class="w-[300px] border-x border-gray-300 font-medium">Used</th>
+                    <th class="w-[300px] border-x border-gray-300 font-medium">Use%</th>
+                    <th class="w-[300px] border-x border-gray-300 font-medium">Mounted On</th>
+                    <th class="w-[200px] border-x border-gray-300 font-medium border-r-0">Action</th>
+                </tr>
+            </thead>
+
+            <tbody class="text-sm">
+                <tr *ngFor="let item of server_data!['arr_storage'], index as i">
+                    <td class="border-x px-3 border-gray-300 border-l-0 ">
+                        <p class="flex py-1 justify-center">{{ i+1 }}</p>
+                    </td>
+
+                    <td class="border-x px-3 border-gray-300">
+                        <p class=""> {{item['Filesystem']}}</p>
+                    </td>
+
+                    <td class="border-x px-3 border-gray-300">
+                        <p class=""> {{item['Size']}}</p>
+                    </td>
+
+                    <td class="border-x px-3 border-gray-300">
+                        <p class=""> {{item['Avail']}}</p>
+                    </td>
+
+                    <td class="border-x px-3 border-gray-300">
+                        <p class=""> {{item['Used']}}</p>
+                    </td>
+
+                    <td class="border-x px-3 border-gray-300">
+                        <div class="flex flex-row space-x-2 items-center">
+                            <p class="w-8"> {{item['Use%']}}</p>
+                            <div class="w-full h-2 bg-gray-300 rounded-full overflow-hidden">
+                                <div [style.width.%]="item['Use%'].replaceAll('%','')" [class]="'bg-blue-500 h-2'">
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td class="border-x px-3 border-gray-300">
+                        <p class=""> {{item['Mounted On']}}</p>
+                    </td>
+
+                    <!-- <td class="">
+                        <div class="flex justify-center items-center">
+                            <app-btn-comp btn_str="View Storage" (btn_func)="get_storage(item['device_id'])"
+                                btn_custom="text-[12px] tracking-wide rounded-[4px]"></app-btn-comp>
+                        </div>
+                    </td> -->
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>

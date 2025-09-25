@@ -4,10 +4,12 @@ import { repo_ws } from '../../../repository/repo.ws';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CdkVirtualScrollableElement } from "@angular/cdk/scrolling";
+import { CServerStorageComponent } from "../../c_/c-server-storage/c-server-storage.component";
 
 @Component({
   selector: 'app-p-servers',
-  imports: [CommonModule, FormsModule, BtnCompComponent],
+  imports: [CommonModule, FormsModule, BtnCompComponent, CdkVirtualScrollableElement, CServerStorageComponent],
   templateUrl: './p-servers.component.html',
   styleUrl: './p-servers.component.css'
 })
@@ -19,11 +21,12 @@ export class PServersComponent {
 
   wsSub?: Subscription;
   arr_connection: Array<any> = [];
+  act_server: any = null;
+  bool_detail_expand: boolean = false;
 
 
   ngOnInit() {
     this.initLoad();
-    this.get_clients();
   }
 
 
@@ -34,17 +37,14 @@ export class PServersComponent {
 
   async initLoad() {
     this.sub_ws();
+    this.get_clients();
   }
 
 
   sub_ws() {
     this.wsSub = this.rws.getter_messages().subscribe({
       next: (msg) => {
-
-
-        if (msg['type'] == 'get_clients') {
-          this.get_clients();
-        }
+        this.get_clients();
       }
     });
   }
@@ -55,20 +55,31 @@ export class PServersComponent {
 
     this.arr_connection = [];
 
+    let arr_tmp: any = [];
     x.forEach((el: any) => {
-      console.log(el);
-      console.log(el['device_id'])
-      this.arr_connection.push(el)
-    })
+      arr_tmp.push(el)
+    });
+
+    this.arr_connection = arr_tmp;
   }
 
 
   get_storage(client: any) {
     this.rws.get_storage(client);
+    this.get_clients();
   }
 
 
-  get_storage_all(){
+  get_storage_all() {
     this.rws.get_storage_all()
+  }
+
+
+  set_act_server(device_id: any) {
+    if (this.act_server == device_id) {
+      this.act_server = null;
+    } else {
+      this.act_server = device_id;
+    }
   }
 }
