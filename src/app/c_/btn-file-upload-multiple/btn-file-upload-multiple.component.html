@@ -1,0 +1,45 @@
+<div class="text-sm tracking-wide flex">
+    <div class="flex flex-col">
+        <div (click)="chooseFile_v2($event)"
+            class="w-fit flex flex-row items-center rounded-md border-2 border-gray-300 px-1.5 p-1 bg-gray-200 hover:bg-gray-100 transition-all cursor-pointer">
+            <ng-icon [name]="'heroPaperClipSolid'"></ng-icon>
+            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="fill-black p-1"
+                    viewBox="0 0 256 256">
+                    <path
+                        d="M209.66,122.34a8,8,0,0,1,0,11.32l-82.05,82a56,56,0,0,1-79.2-79.21L147.67,35.73a40,40,0,1,1,56.61,56.55L105,193A24,24,0,1,1,71,159L154.3,74.38A8,8,0,1,1,165.7,85.6L82.39,170.31a8,8,0,1,0,11.27,11.36L192.93,81A24,24,0,1,0,159,47L59.76,147.68a40,40,0,1,0,56.53,56.62l82.06-82A8,8,0,0,1,209.66,122.34Z">
+                    </path>
+                </svg> -->
+            <p class="ml-1 mr-1 text-nowrap">Upload Multiple Attachment</p>
+        </div>
+    </div>
+
+    <div class="px-1"></div>
+
+    <div *ngIf="arr_files.length > 0" class="flex flex-col items-center rounded-md border border-gray-300 p-1">
+
+        <div class="px-1"></div>
+
+        <div *ngIf="arr_files.length > 0" class="h-20 flex flex-col overflow-y-scroll items-start space-y-1">
+
+            <div *ngFor="let item of arr_files, index as i"
+                class="flex w-full justify-between flex-row space-x-2 items-center">
+                <p class="pb-0.5">{{item['file_name']}}</p>
+
+                <svg (click)="clear_file(i)" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                    class="fill-[#d34b4b] cursor-pointer hover:fill-[#fff] hover:bg-[#d34b4b] rounded-full transition-all"
+                    viewBox="0 0 256 256">
+                    <path
+                        d="M165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z">
+                    </path>
+                </svg>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+</div>

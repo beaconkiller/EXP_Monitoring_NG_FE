@@ -18,7 +18,7 @@ export class AppComponent {
   title = 'TF_E_Approval';
 
   ngOnInit(){
-    this.checkSession();
+    // this.checkSession();
   }
 
 

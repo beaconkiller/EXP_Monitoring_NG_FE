@@ -1,0 +1,5 @@
+<div>
+    <select [(ngModel)]="act_opt" class="border-2 border-gray-300 rounded-md p-1.5 px-1 text-sm outline-none focus:border-blue-400">
+        <option *ngFor="let item of inp_arr_items" [value]="item['key']">{{item['val']}}</option>
+    </select>
+</div>

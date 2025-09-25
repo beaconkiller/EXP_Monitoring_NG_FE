@@ -1,0 +1,16 @@
+<div>
+    <div class="flex flex-row space-x-2">
+        <app-btn-comp (btn_func)="get_clients()" btn_str="Get all connection"></app-btn-comp>
+        <app-btn-comp (btn_func)="get_storage_all()" btn_str="Get all storage"></app-btn-comp>
+    </div>
+
+    <div class="py-2"></div>
+
+    <div class="grid grid-cols-4 gap-4">
+        <div *ngFor="let item of arr_connection" class="rounded-md border border-gray-300 p-2 flex flex-col space-y-2">
+            <p class="text-lg"> {{item['device_id']}}</p>
+            <app-btn-comp btn_str="View Storage" (btn_func)="get_storage(item['device_id'])" btn_custom="text-[14px] tracking-wide rounded-[4px]"></app-btn-comp>
+        </div>
+    </div>
+
+</div>

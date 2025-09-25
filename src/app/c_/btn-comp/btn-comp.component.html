@@ -1,0 +1,9 @@
+<button (click)="run_btn_func()" [class]="'rounded-md p-1 px-2 text-md bg-green-700 text-white transition-all ' + btn_custom" 
+    [ngClass]="{
+        'opacity-40':!btn_active,
+        'text-sm':btn_text_size == 'text-sm',
+        'text-md':btn_text_size == 'text-md',
+        'text-lg':btn_text_size == 'text-lg',
+    }">
+    {{btn_str}}
+</button>
