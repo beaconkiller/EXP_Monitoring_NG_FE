@@ -76,10 +76,16 @@ export class PServersComponent {
 
 
   set_act_server(device_id: any) {
+    console.log(device_id);
+
+
     if (this.act_server == device_id) {
       this.act_server = null;
     } else {
-      this.act_server = device_id;
+      this.act_server = null;
+      setTimeout(() => {
+        this.act_server = device_id;
+      }, 1);
     }
   }
 }

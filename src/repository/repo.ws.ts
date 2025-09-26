@@ -90,6 +90,7 @@ export class repo_ws {
 
 
     get_storage(device_id: any) {
+        console.log(`get storage : ${device_id}`);
         this.send({
             type: 'get_storage',
             payload: device_id,
