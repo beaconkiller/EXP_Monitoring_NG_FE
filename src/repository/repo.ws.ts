@@ -53,7 +53,7 @@ export class repo_ws {
 
 
     handler_message(msg: any) {
-        console.log(msg);
+        // console.log(msg);
 
         if (msg['type'] == 'get_clients') {
             this.map_clients(msg['message']);
@@ -61,6 +61,10 @@ export class repo_ws {
 
         if (msg['type'] == 'give_storage') {
             this.set_storage(msg);
+        }
+
+        if (msg['type'] == 'server_info') {
+            this.set_server_info(msg);
         }
     }
 
@@ -105,6 +109,24 @@ export class repo_ws {
         this.arr_clients.forEach((el: any) => {
             this.get_storage(el['device_id']);
         })
+    }
+
+
+
+    set_server_info(msg: any) {
+        // console.log(msg);
+
+        let device_id = msg['device_id'];
+        let server_info = JSON.parse(msg['message']);
+
+        // console.log(server_info);
+
+        let act_client = this.arr_clients.get(device_id);
+        if (act_client) {
+            const newObj = { ...act_client, server_info };
+            this.arr_clients.set(device_id, newObj);
+            // console.log(this.arr_clients);
+        }
     }
 
 
