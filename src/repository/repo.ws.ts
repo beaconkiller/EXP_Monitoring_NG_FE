@@ -67,11 +67,19 @@ export class repo_ws {
         if (msg['type'] == 'server_info') {
             this.set_server_info(msg);
         }
+
+        if (msg['type'] == 'give_installed_db') {
+            this.set_installed_db(msg);
+        }
+
+        if (msg['type'] == 'give_status_active_postgree') {
+            this.set_postgree_status(msg);
+        }
     }
 
 
     map_clients(arr_clients: any) {
-        console.log(arr_clients)
+        // console.log(arr_clients)
 
         arr_clients.forEach((el: any) => {
             this.arr_clients.set(el['device_id'], {
@@ -105,7 +113,7 @@ export class repo_ws {
 
 
     get_storage_all() {
-        console.log(this.arr_clients);
+        // console.log(this.arr_clients);
 
         this.arr_clients.forEach((el: any) => {
             this.get_storage(el['device_id']);
@@ -142,6 +150,41 @@ export class repo_ws {
         this.arr_clients.set(msg['device_id'], newObj);
 
         console.log(this.arr_clients);
+    }
+
+
+
+    set_installed_db(msg: any) {
+        let device_id = msg['device_id'];
+        let installed_db = this.rwp.parse_installed_db(msg['message']);
+
+        let act_client = this.arr_clients.get(device_id);
+        if (act_client) {
+            const newObj = { ...act_client, installed_db };
+            this.arr_clients.set(device_id, newObj);
+        }
+    }
+
+
+
+    set_postgree_status(msg: any) {
+        console.log('set_postgree_status(msg: any)');
+
+        let device_id = msg['device_id'];
+
+        let act_client = this.arr_clients.get(device_id);
+
+        if (!act_client) { return; }
+        if (!act_client['installed_db']) { return; }
+
+        let old_installed_db = [...act_client['installed_db']];
+        for (var el of old_installed_db) {
+            if (el['db_name'] == 'postgresql') {
+                el['db_status'] = msg['message'].replace('\n', '');
+            }
+        }
+        
+        console.log(old_installed_db);
     }
 
 

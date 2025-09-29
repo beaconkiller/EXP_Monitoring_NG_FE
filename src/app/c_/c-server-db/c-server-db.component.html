@@ -1,1 +1,47 @@
-<p>c-server-db works!</p>
+<div>
+
+    <div class="text-lg">Installed DB</div>
+
+    <div class="py-1"></div>
+
+    <div *ngIf="arr_installed_db.length == 0">
+        <p class="text-gray-400">No DB Installed</p>
+    </div>
+
+    <div *ngIf="arr_installed_db.length != 0" class="border border-gray-300 rounded-md text-xs w-fit">
+        <table class="table-fixed w-fit">
+            <thead class="divide-y border-b-gray-300 border-b ">
+                <tr>
+                    <th class="w-[40px] border-slate-500 font-medium py-1">No</th>
+                    <th class="w-[150px] border-x border-gray-300 font-medium">DB</th>
+                    <th class="w-[150px] border-x border-gray-300 font-medium">Status</th>
+                </tr>
+            </thead>
+
+            <tbody class="">
+                <tr *ngFor="let item_db of arr_installed_db, index as i">
+
+                    <td class="border-x px-3 border-gray-300 border-l-0 ">
+                        <p class="flex py-1 justify-center">{{ i+1 }}</p>
+                    </td>
+
+                    <td class="border-x px-3 border-gray-300 border-l-0 ">
+                        <p>{{item_db['db_name']}}</p>
+                    </td>
+
+                    <td class="border-x px-3 border-gray-300 border-l-0 ">
+                        <p>{{item_db['db_status']}}</p>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- <div *ngIf="arr_installed_db.length != 0" class="flex flex-row space-y-2">
+        <div *ngFor="let item_db of arr_installed_db" class="flex flex-col">
+            <p>{{item_db}}</p>
+        </div>
+    </div> -->
+</div>
