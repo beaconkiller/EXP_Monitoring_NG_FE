@@ -17,7 +17,8 @@ export class repo_ws {
 
 
     async connect() {
-        this.socket$ = webSocket('ws://localhost:4099');
+        const host = window.location.hostname;
+        this.socket$ = webSocket(`ws://${host}:4099`);
 
         this.socket$.subscribe({
             next: (msg) => {
