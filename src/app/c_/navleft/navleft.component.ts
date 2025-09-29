@@ -15,7 +15,7 @@ export class NavleftComponent {
 
   menuItems =
     [
-      { name: 'Home', route: 'home' },
+      // { name: 'Home', route: 'home' },
       { name: 'Servers', route: 'servers' },
     ]
 

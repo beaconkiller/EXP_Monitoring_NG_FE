@@ -150,6 +150,16 @@ export class repo_ws {
     }
 
 
+    ws_send(type: string, payload: string) {
+        console.log(type);
+        console.log(payload);
+
+        this.send({
+            type: type,
+            payload: payload,
+        });
+    }
+
 
     getter_socket() {
         return this.socket$;

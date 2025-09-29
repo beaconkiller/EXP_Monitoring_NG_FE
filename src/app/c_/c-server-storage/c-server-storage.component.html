@@ -1,5 +1,11 @@
 <div *ngIf="inp_device_id != null" class="flex flex-col p-3 h-full">
-    <p class="text-xl">{{server_data!['device_id']}}</p>
+
+    <p class="text-2xl font-medium">Server Detail</p>
+
+    <div class="py-2"></div>
+    
+    <p class="text-base">Client : </p>
+    <p class="text-lg tracking-wide font-medium">{{server_data!['device_id']}}</p>
 
     <div class="py-2"></div>
 
@@ -57,17 +63,14 @@
                         <p class=""> {{item['Mounted On']}}</p>
                     </td>
 
-                    <!-- <td class="">
-                        <div class="flex justify-center items-center">
-                            <app-btn-comp btn_str="View Storage" (btn_func)="get_storage(item['device_id'])"
-                                btn_custom="text-[12px] tracking-wide rounded-[4px]"></app-btn-comp>
-                        </div>
-                    </td> -->
-
                 </tr>
             </tbody>
         </table>
     </div>
+
+    <div class="py-2"></div>
+
+    <app-c-server-db [inp_device_id]="inp_device_id"></app-c-server-db>
 
 
 </div>

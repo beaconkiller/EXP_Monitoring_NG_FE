@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "TF_E_Approval": {
+    "EXP_Monitoring": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/tf-e-approval",
+            "outputPath": "dist/exp-monitoring",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -61,10 +61,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "TF_E_Approval:build:production"
+              "buildTarget": "EXP_Monitoring:build:production"
             },
             "development": {
-              "buildTarget": "TF_E_Approval:build:development"
+              "buildTarget": "EXP_Monitoring:build:development"
             }
           },
           "defaultConfiguration": "development"
