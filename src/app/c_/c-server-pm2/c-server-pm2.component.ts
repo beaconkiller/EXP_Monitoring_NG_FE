@@ -45,6 +45,11 @@ export class CServerPm2Component {
     this.rws.ws_send('get_pm2_list', this.inp_device_id);
     // this.rws.ws_send('get_pm2_sudo_list', this.inp_device_id);
   }
+  
+  
+  get_pm2_list(){
+    this.rws.ws_send('get_pm2_list', this.inp_device_id);
+  }
 
 
   // ================== FORMATTER ==================
