@@ -54,7 +54,7 @@ export class repo_ws {
 
 
     handler_message(msg: any) {
-        console.log(msg);
+        // console.log(msg);
 
         if (msg['type'] == 'get_clients') {
             this.map_clients(msg['message']);
@@ -74,6 +74,10 @@ export class repo_ws {
 
         if (msg['type'] == 'give_status_active_postgree') {
             this.set_postgree_status(msg);
+        }
+
+        if (msg['type'] == 'give_pm2_list') {
+            this.set_pm2_list(msg);
         }
     }
 
@@ -103,7 +107,7 @@ export class repo_ws {
 
 
     get_storage(device_id: any) {
-        console.log(`get storage : ${device_id}`);
+        // console.log(`get storage : ${device_id}`);
         this.send({
             type: 'get_storage',
             payload: device_id,
@@ -149,7 +153,7 @@ export class repo_ws {
 
         this.arr_clients.set(msg['device_id'], newObj);
 
-        console.log(this.arr_clients);
+        // console.log(this.arr_clients);
     }
 
 
@@ -168,7 +172,7 @@ export class repo_ws {
 
 
     set_postgree_status(msg: any) {
-        console.log('set_postgree_status(msg: any)');
+        // console.log('set_postgree_status(msg: any)');
 
         let device_id = msg['device_id'];
 
@@ -184,7 +188,33 @@ export class repo_ws {
             }
         }
 
-        console.log(old_installed_db);
+        // console.log(old_installed_db);
+    }
+
+
+
+    set_pm2_list(msg: any) {
+        // console.log('set_pm2_list');
+
+        let device_id = msg['device_id'];
+        let act_client = this.arr_clients.get(device_id);
+        if (!act_client) { return; }
+
+        let pm2 = JSON.parse(msg['message']);
+
+        // console.log(pm2);
+
+        if (!act_client['pm2_list']) {
+            act_client['pm2_list'] = [];
+        }
+
+        if (act_client) {
+            const newObj = { ...act_client, pm2 };
+            this.arr_clients.set(device_id, newObj);
+        }
+
+
+        // console.log(this.arr_clients);
     }
 
 
@@ -195,8 +225,8 @@ export class repo_ws {
 
 
     ws_send(type: string, payload: string) {
-        console.log(type);
-        console.log(payload);
+        // console.log(type);
+        // console.log(payload);
 
         this.send({
             type: type,

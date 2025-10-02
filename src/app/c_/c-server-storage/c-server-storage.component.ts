@@ -5,10 +5,11 @@ import { repo_ws } from '../../../repository/repo.ws';
 import { Subscription } from 'rxjs';
 import { BtnCompComponent } from "../btn-comp/btn-comp.component";
 import { CServerDbComponent } from "../c-server-db/c-server-db.component";
+import { CServerPm2Component } from "../c-server-pm2/c-server-pm2.component";
 
 @Component({
   selector: 'app-c-server-storage',
-  imports: [CommonModule, FormsModule, BtnCompComponent, CServerDbComponent],
+  imports: [CommonModule, FormsModule, BtnCompComponent, CServerDbComponent, CServerPm2Component],
   templateUrl: './c-server-storage.component.html',
   styleUrl: './c-server-storage.component.css'
 })
