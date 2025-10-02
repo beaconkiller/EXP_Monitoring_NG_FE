@@ -36,7 +36,7 @@ export class repo_ws {
             }
         });
 
-        this.socket$.next({ type: 'register', deviceId: 'HOST_21' });
+        this.socket$.next({ type: 'register', deviceId: `HOST_21_${(new Date()).getTime()}`, device_type: 'host' });
     }
 
 
@@ -54,7 +54,7 @@ export class repo_ws {
 
 
     handler_message(msg: any) {
-        // console.log(msg);
+        console.log(msg);
 
         if (msg['type'] == 'get_clients') {
             this.map_clients(msg['message']);
@@ -183,7 +183,7 @@ export class repo_ws {
                 el['db_status'] = msg['message'].replace('\n', '');
             }
         }
-        
+
         console.log(old_installed_db);
     }
 
